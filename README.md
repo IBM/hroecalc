@@ -1,4 +1,4 @@
-# HROE Calculator (ROI in AI Ethics)
+# HROE Calculator
 The paper titled, "The Return on Investment in AI Ethics: A Holistic Framework" (https://arxiv.org/pdf/2309.13057)
 proposes a comprehensive approach to understanding the returns on investments in AI ethics. It introduces the Holistic
 Return on Ethics (HROE) framework, which considers not only direct economic returns but also intangible benefits related
@@ -22,8 +22,10 @@ returns to their present value and summing up the total returns from economic, r
 This multi-year approach allows organizations to better evaluate the long-term benefits of their AI ethics investments,
 providing a clearer picture of how these investments impact their overall performance and strategic flexibility.
 
-![hroecalc-screenshot](https://github.com/user-attachments/assets/80b14aaa-a561-47f1-8361-bdccd711a6c8)
+![2024-12-04_23-28-39](https://github.ibm.com/jdejesus/hroecalculator/assets/7868/d63ccb55-0960-48e7-94cd-473707980949)
 
+# Slated for Open-Source
+We are excited to announce our plans to make this calculator open source in close collaboration with the University of Notre Dame's AI Ethics Lab. I had the privilege of presenting the calculator at the 2024 Responsible AI in Finance event held at the University of Notre Dame, where it was met with great enthusiasm.
 
 # Early Reviews
 "Great job, Jose! Keep up the good work!"<br/>
@@ -32,7 +34,7 @@ providing a clearer picture of how these investments impact their overall perfor
 "Thanks Jose De Jesus... Keep up the great work on the AI ethics ROI calculator!"<br/>
 --**Francesca Rossi, IBM Fellow and AI Ethics Global Leader**
 
-"The ROI calculator that Jose developed takes a theoretical framework and puts it into the hands of practitioners in a user friendly tool. The calculator was demoed live during the AI in Finance event held at Notre Dame University in November 2024. The feedback from the audience of Chief Financial Officers and other executives was overwhelmingly positive. The calculator will be a critical tool in the tool of business leaders that are working to implement AI ethics and governance practices, which makes its development both a contribution to the organizations that use it and to society as a whole.... The calculator will be of great interest to me and many other leaders in AI Governance."<br/>
+"The ROI calculator that Jose developed takes a theoretical framework and puts it into the hands of practitioners in a user friendly tool. The calculator was demoed live during the AI in Finance event held at Notre Dame University in November 2024. The feedback from the audience of Chief Financial Officers and other executives was overwhelmingly positive. The calculator will a critical tool in the tool of business leaders that are working to implement AI ethics and governance practices, which makes its development both a contribution to the organizations that use it and to society as a whole.... The calculator will be of great interest to me and many other leaders in AI Governance."<br/>
 -- **Heather Domin, PhD, Global Leader, Responsible AI Initiatives, IBM Office of Privacy and Responsible Technology**
 
 "In publishing our ROI paper, the goal was to eventually produce some sort of tool that would help organizations determine their ultimate return on investments in AI ethics. Thanks to Jose we now have such a tool. Without being asked to do so and only after reading the paper, Jose proactively took the initiative to draft a calculator and bring it to the team's attention. He continuously asked for input and ways to improve it. Due to all of his hard work, it was extremely well received by academics and practitioners alike, and will greatly contribute to not only our existing research but also to the work that organizations are conducting in the field of AI ethics."<br/>
@@ -40,3 +42,19 @@ providing a clearer picture of how these investments impact their overall perfor
 
 # Instructions to Run the Program Locally
 To run the program locally, simply clone the repository onto any folder of your computer and open the HROE.html file from your browser. You can right-click the file and select Open With… Chrome, for example, or open the HROE.html file from within your browser (e.g., File > Open…).
+
+# Python (Command-line) Version of the Program
+There is also an older, command-line version of the program written in Python. Follow these instructions to run it.
+
+**1. Install Python**<br>
+Ensure you have Python installed on your system. You can download it from the official Python website.
+
+**2. Install Required Libraries**<br>
+Open a terminal or command prompt and run the following commands to install the required libraries:
+
+`pip install colorama`
+
+**3. Run the program**<br>
+
+`python hroe.py`
+
