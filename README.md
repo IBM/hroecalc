@@ -15,7 +15,7 @@ comprehensive view of how AI ethics investments can contribute to an organizatio
 making it easier to justify and sustain these critical initiatives.
 
 In line with this holistic approach, this program uses the formulas provided in the paper with a slight addition
-to calculate the extended ROI of AI ethics investments over multiple years. This program, which you can try ![here(https://ibm.github.io/hroecalc/)], prompts users for inputs
+to calculate the extended ROI of AI ethics investments over multiple years. This program, which you can try [here](https://ibm.github.io/hroecalc/), prompts users for inputs
 related to economic returns, reputational returns, and capability returns for each year, as well as the discount factor
 and initial investment costs. By incorporating these variables, the program computes the HROE by discounting future
 returns to their present value and summing up the total returns from economic, reputational, and capability investments.
