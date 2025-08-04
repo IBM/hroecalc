@@ -24,8 +24,7 @@ providing a clearer picture of how these investments impact their overall perfor
 
 ![2024-12-04_23-28-39](./hroecalc-screenshot.png)
 
-# Slated for Open-Source
-We are excited to announce our plans to make this calculator open source in close collaboration with the University of Notre Dame's AI Ethics Lab. I had the privilege of presenting the calculator at the 2024 Responsible AI in Finance event held at the University of Notre Dame, where it was met with great enthusiasm.
+We have made this calculator open source in close collaboration with the University of Notre Dame's AI Ethics Lab. I had the privilege of presenting the calculator at the 2024 Responsible AI in Finance event held at the University of Notre Dame, where it was met with great enthusiasm.
 
 # Early Reviews
 "Great job, Jose! Keep up the good work!"<br/>
