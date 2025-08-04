@@ -22,7 +22,7 @@ returns to their present value and summing up the total returns from economic, r
 This multi-year approach allows organizations to better evaluate the long-term benefits of their AI ethics investments,
 providing a clearer picture of how these investments impact their overall performance and strategic flexibility.
 
-![2024-12-04_23-28-39](https://github.ibm.com/jdejesus/hroecalculator/assets/7868/d63ccb55-0960-48e7-94cd-473707980949)
+![2024-12-04_23-28-39](https://github.com/IBM/hroecalc/hroecalc-screenshot.png)
 
 # Slated for Open-Source
 We are excited to announce our plans to make this calculator open source in close collaboration with the University of Notre Dame's AI Ethics Lab. I had the privilege of presenting the calculator at the 2024 Responsible AI in Finance event held at the University of Notre Dame, where it was met with great enthusiasm.
