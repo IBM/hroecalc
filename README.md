@@ -41,19 +41,3 @@ We have made this calculator open source in close collaboration with the Univers
 
 # Instructions to Run the Program Locally
 To run the program locally, simply clone the repository onto any folder of your computer and open the HROE.html file from your browser. You can right-click the file and select Open With… Chrome, for example, or open the HROE.html file from within your browser (e.g., File > Open…).
-
-# Python (Command-line) Version of the Program
-There is also an older, command-line version of the program written in Python. Follow these instructions to run it.
-
-**1. Install Python**<br>
-Ensure you have Python installed on your system. You can download it from the official Python website.
-
-**2. Install Required Libraries**<br>
-Open a terminal or command prompt and run the following commands to install the required libraries:
-
-`pip install colorama`
-
-**3. Run the program**<br>
-
-`python hroe.py`
-
