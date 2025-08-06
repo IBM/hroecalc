@@ -1,0 +1,1247 @@
+:root {
+    --shift-spaces: 2;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    min-width: 1280px;
+    min-height: 1024px;
+}
+
+.mainfont {
+    font-size: 18px;
+}
+
+.container {
+    width: 1280px;
+    height: 1024px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    perspective: 1000px;
+    max-width: 1280px;
+    max-height: 1024px;
+}
+
+.flipper {
+    position: relative;
+    width: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.7s;
+}
+
+.flipped {
+    transform: rotateY(-180deg);
+}
+
+.front {
+    position: absolute;
+    width: 100%;
+    backface-visibility: hidden;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 26px;
+    padding-left: 22px;
+    padding-right: 22px;
+    z-index: 1000;
+}
+
+.back {
+    position: absolute;
+    width: 100%;
+    backface-visibility: hidden;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 26px;
+    padding-left: 22px;
+    padding-right: 22px;
+}
+
+.back {
+    transform: rotateY(180deg);
+}
+
+.centercontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+.leftcontainer {
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    height: 50px;
+    padding-top: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-radius: 10px 10px 0 0;
+    background-color: #3498db;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.header h1 {
+    margin: 0;
+    flex: 1;
+    text-align: center;
+    font-weight: 300;
+}
+
+.hroebutton.disabled {
+    pointer-events: none;
+    /* Disable click events */
+    opacity: 0.5;
+    /* Make it look disabled */
+    cursor: not-allowed;
+    /* Change the cursor to indicate it's disabled */
+}
+
+#hroeDisplay {
+    position:relative;
+    font-size:33px;
+    top:-26px;
+}
+#initial_hroe_value {
+    position:relative;
+    font-size:33px;
+    color:#3586BD;
+}
+
+.hroebutton {
+    font-size: 18px;
+    position: relative;
+    top: -48px;
+    left: 12px;
+    background-color: #2980b9;
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.hroebutton:hover {
+    background-color: #1c5988;
+}
+
+.hroebutton:not(.disabled):hover {
+    background-color: #1c5988;
+    /* Darker shade on hover when enabled */
+}
+
+.paperbutton {
+    font-size: 18px;
+    margin-left: 20px;
+    background-color: #2980b9;
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.paperbutton:hover {
+    background-color: #1c5988;
+}
+
+.toggleFormulaIcon {
+    position: relative;
+    top: 48px;
+    left: -48px;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+}
+
+.toggle-img {
+    position: relative;
+    top: -9px;
+    left: 56px;
+}
+
+.toggle-img img {
+    width: 22px;
+    height: 22px;
+}
+
+.leftcontainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hroe-result {
+    margin: 0;
+}
+
+
+
+.form-group {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-size: 18px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    font-size: 18px;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #2980b9;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+button:hover {
+    background-color: #1c5988;
+}
+
+#generatePDFButton {
+    text-align: center;
+    margin-left: 38%;
+    font-size: 1em;
+}
+
+.card {
+    position: relative;
+    top: -60px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    padding-top: 40px;
+    margin: 20px;
+    margin-right: 2px;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.card-top-right {
+    position: relative;
+    font-size: 0.85em;
+    top: 20px;
+    left: 86%;
+    color: #333;
+    cursor: pointer;
+    padding-bottom: 20px;
+    z-index: 200;
+}
+
+.save-defaults {
+    position: relative;
+    font-size: 0.85em;
+    top: 58px;
+    left: 90%;
+    color: #333;
+    cursor: pointer;
+    padding-bottom: 10px;
+    z-index: 90;
+}
+
+#timestampDisplay {
+    position: absolute;
+    display: inline;
+    /* right:30%; */
+    top: -20px;
+    left: -340px;
+    padding: 0px;
+    margin: 0px;
+    font-size: 10px;
+    color: #2980b9;
+}
+
+.blinkingText {
+    display: inline;
+    animation: blinkingText .7s infinite;
+}
+
+@keyframes blinkingText {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.nolocalstorage {
+    padding: 20px;
+    text-align: center;
+}
+
+.tooltip-custom {
+    position: absolute;
+    padding: 5px 10px;
+    /* border-radius: 5px; */
+    font-size: 14px;
+    z-index: 300;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
+    border: 1px solid #2980B9;
+    background-color: rgb(253, 253, 253);
+    color: black;
+    /* Default white text */
+    max-width: 200px;
+    /* Fixed width for wrapping */
+    word-wrap: break-word;
+    /* Ensure long words are wrapped */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    /* Add shadow */
+}
+
+.tooltip-warning {
+    background-color: #FDF9D7;
+    border-radius: 5px;
+    border: 2px dotted black;
+    color: black;
+    /* border: 2px dotted #808384;
+    color: #808384; */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip-visible {
+    opacity: 1;
+}
+
+.svgimage {
+    filter: none;
+    width: 22px;
+    height: 22px;
+}
+
+.svgimage:hover {
+    filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(900%) hue-rotate(175deg) brightness(80%) contrast(90%);
+    cursor: pointer;
+}
+
+.svgimagedisabled {
+    filter: brightness(99%) saturate(0%) contrast(0%) grayscale(100%);
+}
+
+.svgimagedisabled:hover {
+    cursor: default;
+}
+
+.memory-menu-container {
+    background-color: white;
+    /* background-color: #f3f3ff; */
+    /* background-color: #fefefe; */
+    /* background-color: #F4F6F7; */
+    /* background-color: #e8e8e8; */
+    /* background-color: #eaf2fc; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    border: 1px solid #ddd;
+    padding: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    position: relative;
+    cursor: default;
+    top: -35px;
+    left: -507px;
+    margin: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.memory-menu-container img {
+    width: 22px;
+    height: 22px;
+}
+
+.erase-form-text {
+    color: black;
+    position: relative;
+    display: inline;
+    padding: 8px;
+    padding-top: 10px;
+    left: 1px;
+    font-size: 14px;
+}
+
+.erase-form-text:hover {
+    color: #007bff;
+    cursor: pointer;
+}
+
+/* .memory-button-icon {
+    border: none;
+    display: inline;
+   
+    margin-right: 35px;
+    
+    cursor: pointer;
+    z-index: 90;
+} */
+
+.future {
+    /* color:gray; */
+    /* border:2px dashed black; */
+    display: inline;
+    font-size: 14px;
+    position: relative;
+    top: 1px;
+    left: 140px;
+    /* padding:7px; */
+}
+
+.save-memory-text {
+    color: black;
+    position: relative;
+    display: inline;
+    left: 48px;
+    font-size: 14px;
+    padding: 8px;
+    padding-top: 10px;
+    padding-right: 9px;
+}
+
+.save-memory-text:hover {
+    color: #2980b9;
+}
+
+.populate-container {
+    left: 3%;
+    position: relative;
+    padding: 6px;
+    padding-top: 5px;
+    display: inline;
+}
+
+
+.populate-icon {
+    color: black;
+    display: inline;
+    position: relative;
+    left: 2px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+input[readonly] {
+    background-color: #f9f9f9;
+    color: #555;
+    cursor: not-allowed;
+}
+
+
+.startupMessageOverlay {
+    /* display: none; */
+    position: absolute;
+    top: 10px;
+    /* Adjust based on where you want the message to appear */
+    left: -440px;
+    /* Adjust to position from the left */
+    z-index: 300;
+    /* Ensure it's above other elements */
+    background-color: rgba(250, 250, 239, 1);
+    /* Optional: semi-transparent background */
+    border-bottom: 2px solid #FEE57C;
+    padding: 0px;
+    /* padding-bottom:0px;
+    padding-right:0px; */
+    border-radius: 7px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    /* Optional: add some shadow */
+}
+
+.startupMessageText {
+    display: inline-block;
+    margin-left: 3px;
+    /* Space between exclamation and text */
+}
+
+.startupMessageLine1 {
+    position: relative;
+    color: #333;
+    /* color: #E22B22; */
+    left: -20px;
+    top: 4px;
+    font-size: 18px;
+    font-style: italic;
+}
+
+.startupMessageLine2 {
+    position: relative;
+    color: #333;
+    left: -20px;
+    top: 2px;
+    font-size: 18px;
+    font-style: italic;
+    padding: none;
+}
+
+.startupMessageContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: none;
+}
+
+
+.startupMessageExcl1 {
+    flex-shrink: 0;
+    margin-right: 10px;
+    position: relative;
+    display: inline;
+    left: 3px;
+    /* top: 0px; */
+    color: #7a0000;
+    font-size: 40px;
+    /* font-size: 20px; */
+}
+
+#exampleMessage {
+    display: inline-block;
+    color: black;
+    left: -7px;
+    top: -1px;
+    width: 152px;
+    /* Adjust this width based on the longest expected text */
+    text-align: center;
+    /* Center-align the text */
+    white-space: nowrap;
+    /* Prevent the text from wrapping */
+    overflow: hidden;
+    /* Ensure any overflow is hidden */
+    font-size: 16px;
+    position: relative;
+    /* top:3px; */
+}
+
+#exampleForm:hover {
+    color: black;
+}
+
+.default-text {
+    color: black;
+    position: relative;
+    display: inline;
+    left: -7px;
+    top: -5px;
+    font-size: 14px;
+}
+
+
+.card-top-right:hover {
+    color: #007bff;
+}
+
+.card-button {
+    color: #007bff;
+    float: right;
+    top: 0px;
+    padding: 05px 10px;
+    cursor: pointer;
+}
+
+.card-button:hover {
+    background-color: green;
+}
+
+.results {
+    margin-top: 10px;
+    margin-left:-8px;
+}
+
+.results-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.results-left {
+    width: 32%;
+}
+
+.results-right {
+    width: 68%;
+}
+
+.results h2 {
+    color: #3498db;
+}
+
+.results p {
+    margin: 0;
+}
+
+.positive-value {
+    color: green;
+}
+
+.negative-value {
+    color: red;
+}
+
+.hidden {
+    display: none;
+}
+
+.explanation {
+    font-size: 16px;
+    background-color: white;
+    width: 98%;
+    margin: 12px;
+    margin-top: 10px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.varvalue {
+    display: inline-block;
+    font-weight: 200;
+    color: #3498db;
+}
+
+.varvaluestrong {
+    display: inline-block;
+    font-weight: bold;
+    color: #3498db;
+}
+
+.table {
+    display: table;
+    width: 100%;
+}
+
+.row {
+    display: table-row;
+}
+
+.icon-column,
+.details-column {
+    display: table-cell;
+}
+
+.icon-column {
+    width: 40px;
+    vertical-align: sub;
+    /* Set the width according to your icon size */
+}
+
+.details-column {
+    vertical-align: text-top;
+    position:relative;
+    top: -5px;
+}
+
+/* Make the table "invisible" */
+.table,
+.row,
+.icon-column,
+.details-column {
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+}
+
+.icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+#hroeformula {
+    position:relative;
+    top:-18px;
+    color:#3284BC;
+    font-weight:200;
+    text-align: center;
+}
+
+#paperSection {
+   position:relative;
+   font-size:15px;
+   top:-40px;
+   text-align: center;
+}
+
+.formula-container {
+    background-color: #f4f6f7;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    max-width: 100%;
+    height: 65px;
+    /* min-height:100px; */
+    position: relative;
+    text-align:center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+#formulaExplanationContainer {
+    padding:12px;
+    padding-top:16px;
+    padding-bottom:0px;
+    background-color:#f4f6f7;
+    text-align:center;
+}
+
+#formula_explanation {
+    font-size:16px;
+    text-align: left;
+}
+
+.formula {
+    background-color: #f4f6f7;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    max-width: 100%;
+    height:380px;
+    /* min-height:100px; */
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+#dividerFull {
+    display:flex;
+    position:relative;
+    border:none;
+    margin:0px;
+    border-top:1px solid black;
+    width:566px;
+    margin-left:26px;
+    text-align:center;
+}
+#dividerReputational {
+    display:flex;
+    position:relative;
+    border:none;
+    margin:0px;
+    border-top:1px solid black;
+    width:420px;
+    margin-left:92px;
+    text-align:center;
+}
+#dividerEconomic {
+    display:flex;
+    position:relative;
+    border:none;
+    margin:0px;
+    border-top:1px solid black;
+    width:320px;
+    margin-left:142px;
+    text-align:center;
+}
+
+#helpButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+#helpButton img {
+    width: 24px;
+    height: 24px;
+}
+
+#helpPopup {
+    display: none;
+    position: fixed;
+    top: 500px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    padding: 10px;
+    background-color: #fefeff;
+    border: 3px solid #3498db;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    max-height: 980px;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+#helpPopupTitle {
+    padding-left: 20px;
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0px;
+}
+
+#helpFormToolbar {
+    display: none;
+    position: fixed;
+    top: 500px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    padding: 10px;
+    background-color: #fefeff;
+    border: 5px solid #99b6d9;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    z-index: 300;
+    max-height: 980px;
+    overflow: hidden;
+}
+
+#closeDisclaimer {
+    position: relative;
+    top: -12px;
+    right: -7px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: black;
+}
+
+#closeHelp {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: black;
+}
+
+.formula-leftpanel {
+    width: 100%;
+    padding: 10px;
+    padding-top: 20px;
+    padding-right: 50px;
+    overflow: auto;
+    text-align: left;
+    /* max-width: calc(35% - 5px); */
+    vertical-align: middle;
+    font-style: italic;
+}
+
+.note-box {
+    width: 70%;
+    /* Adjust between 70% to 80% based on preference */
+    margin: 20px auto;
+    /* Centering the box within the container */
+    padding: 20px;
+    background-color: #faf3b0;
+    /* Sticky note yellow color */
+    border: 2px solid #e6c200;
+    /* Border to give a defined edge */
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+    /* Shadow for a lifted look */
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    /* Fun font to resemble handwritten text */
+    font-size: 1em;
+    line-height: 1.3em;
+    transform: rotate(-3deg);
+    /* Slight tilt to mimic a real sticky note */
+    position: relative;
+    /* z-index: 300; */
+}
+
+.note-box::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    width: 50px;
+    height: 10px;
+    background-color: #fef4ac;
+    border-bottom: 2px solid #e6c200;
+    transform: rotate(-12deg);
+}
+
+/* Ensure table header is fixed and body scrolls */
+#tableContainer {
+    max-height: 200px;
+    /* Set this to your desired height */
+    overflow-y: auto;
+    /* Allow vertical scrolling */
+    overflow-x: hidden;
+    /* Prevent horizontal scrolling */
+    position: relative;
+    width: 100%;
+}
+
+#tableContainer table {
+    width: 100%;
+    /* Ensure the table takes up full container width */
+    border-collapse: collapse;
+    /* table-layout: fixed; */
+    /* Ensures the table layout stays within the container */
+}
+
+#tableContainer thead th {
+    position: sticky;
+    top: 0px;
+    font-weight: 500;
+    /* background-color: #EAF2FC; */
+    background-color: #2e96db;
+    color:white;
+    z-index: 1;
+    border-bottom: 1px solid #ccc;
+    padding: 2px;
+    text-align: center;
+    /* Center-align the header titles */
+    white-space: normal;
+    /* Allow header text to wrap onto two lines */
+}
+#tableContainer th,
+#tableContainer td {
+    /* margin-top:10px; */
+    padding: 8px;
+    text-align: left;
+    /* Left-align or center the table content as needed */
+    border-bottom: 1px solid #ddd;
+    overflow: hidden;
+    /* Ensures no horizontal scroll */
+    text-overflow: ellipsis;
+    /* Adds ellipsis (...) to truncated text */
+}
+
+#tableContainer tbody {
+    top: -40px;
+    overflow-y: auto;
+}
+
+#tableContainer tbody td {
+    text-align: center;
+    /* Center-align cell values */
+    vertical-align: middle;
+    /* Vertically center the content */
+}
+
+.outer-group {
+    border: 1px solid #fff;
+    padding:10px;
+}
+
+/* Set a specific width for the Year column */
+.year-column {
+    width: 70px; /* Adjust as needed for desired width */
+}
+
+.year-column2 {
+    width: 60px;
+}
+
+
+
+#dataTable th,
+#dataTable td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+}
+
+#dataTable th {
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+#dataTable td {
+    text-align: right;
+}
+
+#dataTable {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+#editableDataTable th,
+#editableDataTable td {
+    border: 1px solid #d4d4d4;
+    padding: 8px;
+}
+
+#editableDataTable th {
+    background-color: #fff;
+    text-align: center;
+}
+
+#editableDataTable td {
+    text-align: right;
+}
+
+#editableDataTable {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+
+
+.signature-box {
+    width: 100%;
+    margin-top: 30px;
+    padding: 7px;
+    font-size: 0.77em;
+    font-style: normal;
+    color: #333;
+    /* Subtle text color */
+    text-align: center;
+    border-top: 1px solid #ccc;
+    /* Light border at the top */
+    position: absolute;
+    bottom: 0;
+    left: 0px;
+    background-color: white;
+    z-index: 100;
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.signature-box a {
+    color: #3498db;
+    /* Color for the link */
+    text-decoration: none;
+}
+
+.signature-box a:hover {
+    text-decoration: underline;
+    /* Underline on hover */
+}
+
+.bluefont {
+    display:inline;
+    color:#3586BD;
+    font-weight:200;
+}
+
+.formula {
+    width: 97%;
+    /* margin-top: -22px; */
+    padding: 3px;
+    margin-left:12px;
+    padding-bottom: 42px;
+    margin-bottom:50px;
+    border-radius: 5px;
+    text-align: center;
+    overflow: hidden;
+    font-size: 1.5em;
+    color: #4f4f4f;
+}
+
+.fraction {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    width:100%;
+}
+
+.numerator {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 22px;
+    font-kerning: none;
+    /* border-bottom: 1px solid #000; */
+    padding-bottom: 5px;
+}
+
+.denominator {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 22px;
+    padding-top: 5px;
+}
+
+.shift {
+    position: relative;
+    display: inline-block;
+    --shift-value: 0px;
+}
+
+.darkblue {
+    display: inline-block;
+    color: darkblue;
+}
+
+.right {
+    left: var(--shift-value);
+}
+
+.left {
+    left: calc(var(--shift-value) * -1);
+}
+
+.enlargefont {
+    font-weight: 100;
+    font-size: var(--fontsize);
+}
+
+.message-panel {
+    border: 1px solid #ccc;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 2px;
+    background-color: #f5ffff;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.3);
+    color: #333;
+    font-family: Arial, sans-serif;
+    min-height: 42px;
+}
+
+.bottom-panel {
+    position: relative;
+    top: -57px;
+    background-color: white;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.2s ease-in-out;
+    margin-left: 20px;
+    margin-right: 2px;
+}
+
+.bottom-panel:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.chart-container {
+    /* position:relative;
+    top:-70px; */
+    padding-top: 12px;
+    width: 100%;
+}
+
+.columns {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.left-column {
+    font-size: 22px;
+    width: 48%;
+    padding: 20px;
+    padding-top: 20px;
+    margin-top: 12px;
+    margin-right: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.right-column {
+    width: 50%;
+    margin-top: 12px;
+}
+
+iframe {
+    width: 100%;
+    height: 80vh;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 200;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus {
+    border-color: #0066cc;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12), 0 0 5px rgba(0, 102, 204, 0.5);
+    outline: none;
+}
+
+#returns,
+#investments,
+#yrs,
+#costcap {
+    color:#2980B9;
+}
+
+fieldset.field-group {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    transition: box-shadow 0.2s ease-in-out;
+    background-color: white;
+    margin-bottom: 20px;
+}
+
+fieldset.field-group:hover {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    transition: box-shadow 0.2s ease-in-out;
+    background-color: white;
+    margin-bottom: 20px;
+}
+
+fieldset.field-group legend {
+    padding: 0 10px;
+    font-weight: 500;
+    color: #333;
+}

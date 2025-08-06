@@ -40,4 +40,11 @@ We have made this calculator open source in close collaboration with the Univers
 -- **Marialena Bevilacqua, PhD Student in Analytics, Mendoza College of Business, University of Notre Dame**
 
 # Instructions to Run the Program Locally
-To run the program locally, simply clone the repository onto any folder of your computer and open the HROE.html file from your browser. You can right-click the file and select Open With… Chrome, for example, or open the HROE.html file from within your browser (e.g., File > Open…).
+To run the program locally, simply clone the repository onto any folder of your computer. Open the project directory in a terminal and the npm commands below. The app is confirmed to run on node v20.19.4
+
+```bash
+nvm use # sets node version to .nvmrc if using nvm
+npm install
+npm run dev
+```
+The applicatin will be served at http://localhost:5173, accessible from your browser. The app is currently behind a simple access code (authenticated with the firebase function in the /functions directory) to prevent unintended access while we have it hosted for internal review. This should be removed before making widely available.
