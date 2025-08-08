@@ -26,6 +26,11 @@ GitHub: [@jdejesus-oss](https://github.com/jdejesus-oss)
 Email: [jdejesus@us.ibm.com](mailto:jdejesus@us.ibm.com)  
 Website: [https://josedejesus.com](https://josedejesus.com)
 
+### Michael Kennel
+**Contributor, vue refactor, feature expansion**
+GitHub: [@mikennel](https://github.com/mikennel)
+Email: [mkennel@nd.edu](mailto:mkennel@nd.edu)
+
 ---
 
 ## Special Thanks
