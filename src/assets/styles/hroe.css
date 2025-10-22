@@ -220,6 +220,11 @@ body {
     box-sizing: border-box;
 }
 
+.form-group input[readonly] {
+    border: none !important;
+    box-shadow: none !important;
+}
+
 button {
     padding: 10px 20px;
     background-color: #2980b9;
