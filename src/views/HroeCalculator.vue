@@ -1,9 +1,13 @@
 <script>
 import * as hroe from "@/scripts/hroe.js"
+import translationsData from "@/scripts/hroe-translations.js";
 import Translation from "@/components/Translation.vue";
 import EditableTable from "@/components/EditableTable.vue";
 import DisclaimerModal from "@/components/DisclaimerModal.vue";
 import InfoPanel from "@/components/InfoPanel.vue";
+import FormulaDisplay from "@/components/FormulaDisplay.vue";
+import CalculatorToolbar from "@/components/CalculatorToolbar.vue";
+import InputForm from "@/components/InputForm.vue";
 
 export default {
   components: {
@@ -11,13 +15,46 @@ export default {
     EditableTable,
     DisclaimerModal,
     InfoPanel,
+    FormulaDisplay,
+    CalculatorToolbar,
+    InputForm,
   },
   watch: {
     dataColumns: {
       deep: true,
       handler(newValue) {
         this.calculateHROE()
-        this.validateCommaSeparatedInputs()
+      }
+    },
+    calculatedEconomicReturns: {
+      immediate: true,
+      handler(newValue) {
+        this.economicReturns = newValue;
+      }
+    },
+    orgRevenues() {
+      // Trigger recalculation when revenues change
+      this.economicReturns = this.calculatedEconomicReturns;
+    },
+    fineAvoidanceValues() {
+      // Trigger recalculation when fine avoidance values change
+      this.economicReturns = this.calculatedEconomicReturns;
+    },
+    validationResults: {
+      immediate: true,
+      handler(newValue) {
+        // Update error message and info panel content
+        this.errorMessage = newValue.message;
+        this.infoPanelContent = newValue.infoPanelContent;
+        
+        // Update field styles
+        this.fieldValidationStyles = newValue.fieldStyles;
+      }
+    },
+    formReadyStatus: {
+      immediate: true,
+      handler(newValue) {
+        this.hroeReady = newValue;
       }
     }
   },
@@ -39,7 +76,9 @@ export default {
       errorMessage: '',
       infoPanelContent: 'default',
       showStartupMessage: true,
-      hroeReady: false
+      hroeReady: false,
+      currentLanguage: 'en',
+      fieldValidationStyles: {} // For tracking field validation styles
     };
   },
   computed: {
@@ -52,6 +91,173 @@ export default {
         this.reputationalReturns.split(','),
         this.capabilityReturns.split(','),
       ];
+    },
+    calculatedEconomicReturns() {
+      if (!this.orgRevenues || !this.fineAvoidanceValues) {
+        return "";
+      }
+      
+      // Split and parse values from revenue and fine avoidance fields
+      const revenues = this.orgRevenues.split(',').map(value => parseFloat(value.replace(/,/g, '').trim()));
+      const fineAvoidances = this.fineAvoidanceValues.split(',').map(value => parseFloat(value.trim()));
+
+      // Determine the maximum number of entries to process
+      const maxLength = Math.max(revenues.length, fineAvoidances.length);
+      const economicReturns = [];
+
+      // Loop through each index up to the maximum length
+      for (let i = 0; i < maxLength; i++) {
+        const revenue = revenues[i];
+        const fineAvoidance = fineAvoidances[i];
+
+        // Only calculate if both values are valid numbers; otherwise, push "0.00" or an empty string if missing
+        if (!isNaN(revenue) && !isNaN(fineAvoidance)) {
+          const calculatedReturn = revenue * (fineAvoidance / 100);
+          economicReturns.push(calculatedReturn.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }));
+        } else {
+          economicReturns.push("0.00"); // Default to "0.00" if there's no corresponding entry in one of the fields
+        }
+      }
+
+      // Return the calculated economic returns as a comma-separated string
+      return economicReturns.join(',');
+    },
+    validationResults() {
+      if (!this.years) return { valid: true, message: '', fieldStyles: {} };
+
+      const fieldsToCheck = [
+        { key: 'economicReturns', name: 'Economic Returns' },
+        { key: 'reputationalReturns', name: 'Intangible Value' },
+        { key: 'capabilityCosts', name: 'Investment Cost' },
+        { key: 'capabilityReturns', name: 'Capability Returns' }
+      ];
+
+      let message = '';
+      let hasInvalidInput = false;
+      let hasExtraEntries = false;
+      let hasMissingEntries = false;
+      const fieldStyles = {};
+
+      const missingEntriesCount = {};
+      const extraEntriesCount = {};
+      let extraEntriesMessage = '';
+      let missingEntriesMessage = '';
+      const language = this.currentLanguage;
+
+      fieldsToCheck.forEach(({ key, name }) => {
+        const fieldValue = this[key] || '';
+        const values = fieldValue.split(',').map(v => v.trim());
+
+        if (values.length < this.years) {
+          hasMissingEntries = true;
+          const missingEntries = this.years - values.length;
+          if (!missingEntriesCount[missingEntries]) {
+            missingEntriesCount[missingEntries] = [];
+          }
+          missingEntriesCount[missingEntries].push(name);
+
+          fieldStyles[key] = {
+            color: 'darkred',
+            backgroundColor: 'rgb(250, 250, 239)'
+          };
+          hasInvalidInput = true;
+        } else if (values.length > this.years) {
+          hasExtraEntries = true;
+          const extraEntries = values.length - this.years;
+          
+          // Check for multiple consecutive commas
+          const hasMultipleCommas = /,{2,}/.test(fieldValue);
+          
+          if (hasMultipleCommas) {
+            extraEntriesMessage += `<div style="display:inline-block; color:darkblue;">${name}</div> ${translationsData[language].extraCommas}. `;
+          } else if (fieldValue.trim().endsWith(',') || fieldValue.trim() === ',') {
+            extraEntriesMessage += `<div style="display:inline-block; color:darkblue;">${name}</div> ${translationsData[language].extraComma}. `;
+          } else {
+            if (!extraEntriesCount[extraEntries]) {
+              extraEntriesCount[extraEntries] = [];
+            }
+            extraEntriesCount[extraEntries].push(name);
+          }
+
+          fieldStyles[key] = {
+            color: 'darkblue',
+            backgroundColor: '#f5ffff'
+          };
+          hasInvalidInput = true;
+        } else {
+          fieldStyles[key] = {
+            color: '',
+            backgroundColor: ''
+          };
+        }
+      });
+
+      // Generate missing entries message
+      for (const count in missingEntriesCount) {
+        const fields = missingEntriesCount[count];
+        if (fields.length > 1) {
+          const lastField = fields.pop();
+          const fieldList = fields.length > 1
+            ? `${fields.map(f => `<div style="display:inline-block;color:darkred;">${f}</div>`).join(', ')}, ${translationsData[language].and} <div style="display:inline-block;color:darkred;">${lastField}</div>`
+            : `<div style="display:inline-block;color:darkred;">${fields[0]}</div> ${translationsData[language].and} <div style="display:inline-block;color:darkred;">${lastField}</div>`;
+          missingEntriesMessage += `<div style="display:inline-block;">${fieldList}</div> ${translationsData[language].missingPlural} ${count} ${count == 1 ? translationsData[language].commaSeparatedEntry : translationsData[language].commaSeparatedEntries}. `;
+        } else {
+          missingEntriesMessage += `<div style="display:inline-block;color:darkred;">${fields[0]}</div> ${translationsData[language].missing} ${count} ${count == 1 ? translationsData[language].commaSeparatedEntry : translationsData[language].commaSeparatedEntries}. `;
+        }
+      }
+
+      // Generate extra entries message
+      for (const count in extraEntriesCount) {
+        const fields = extraEntriesCount[count];
+        if (fields.length > 1) {
+          const lastField = fields.pop();
+          const fieldList = fields.length > 1
+            ? `${fields.map(f => `<div style="display:inline-block;color:darkblue;">${f}</div>`).join(', ')}, ${translationsData[language].and} <div style="display:inline-block;color:darkblue;">${lastField}</div>`
+            : `<div style="display:inline-block;color:darkblue;">${fields[0]}</div> ${translationsData[language].and} <div style="display:inline-block;color:darkblue;">${lastField}</div>`;
+          extraEntriesMessage += `<div style="display:inline-block;">${fieldList}</div> ${count} ${count == 1 ? translationsData[language].extraEntry : translationsData[language].extraEntries}. `;
+        } else {
+          extraEntriesMessage += `<div style="display:inline-block;color:darkblue;">${fields[0]}</div> ${count} ${count == 1 ? translationsData[language].extraEntry : translationsData[language].extraEntries}. `;
+        }
+      }
+
+      if (hasInvalidInput) {
+        message = `${translationsData[language].fieldListIntro} <strong>${this.years}</strong>, ${translationsData[language].warning} `;
+        if (hasMissingEntries) {
+          message += `${missingEntriesMessage}${translationsData[language].proceed} `;
+        }
+        if (hasExtraEntries) {
+          message += `${extraEntriesMessage}${translationsData[language].ignore}`;
+        }
+        
+        return { 
+          valid: false, 
+          message, 
+          fieldStyles,
+          infoPanelContent: 'warning'
+        };
+      } else {
+        return { 
+          valid: true, 
+          message: '', 
+          fieldStyles,
+          infoPanelContent: 'default'
+        };
+      }
+    },
+    formReadyStatus() {
+      const requiredFields = [
+        'years', 'initialInvestment', 'discount', 'capabilityCosts',
+        'orgRevenues', 'fineAvoidanceValues', 'economicReturns',
+        'reputationalReturns', 'capabilityReturns'
+      ];
+      
+      return requiredFields.every(field => {
+        const value = this[field];
+        return value !== null && value !== undefined && value !== '';
+      });
     },
   },
   methods: {
@@ -85,11 +291,7 @@ export default {
       this.showStartupMessage = false
     });
 
-    // Call validateCommaSeparatedInputs() on input change
-    document.getElementById('years').addEventListener('input', this.validateCommaSeparatedInputs);
-    this.fieldsToCheck.forEach(fieldId => {
-        document.getElementById(fieldId).addEventListener('input', this.validateCommaSeparatedInputs);
-    });
+    // Validation is now handled by Vue computed properties and watchers
 
     document.querySelectorAll('input[type="text"], input[type="number"]').forEach(input => {
         input.addEventListener('focus', (event) => {
@@ -179,48 +381,7 @@ export default {
         });
     });
 
-    document.addEventListener("DOMContentLoaded", () => {
-        const revenueField = document.getElementById('org_revenues');
-        const fineAvoidanceField = document.getElementById('fine_avoidance');
-        const economicReturnField = document.getElementById('calc_economic_returns');
-
-        function calculateEconomicReturns() {
-            // Split and parse values from revenue and fine avoidance fields
-            const revenues = revenueField.value.split(',').map(value => parseFloat(value.replace(/,/g, '').trim()));
-            const fineAvoidances = fineAvoidanceField.value.split(',').map(value => parseFloat(value.trim()));
-
-            // Determine the maximum number of entries to process
-            const maxLength = Math.max(revenues.length, fineAvoidances.length);
-            const economicReturns = [];
-
-            // Loop through each index up to the maximum length
-            for (let i = 0; i < maxLength; i++) {
-                const revenue = revenues[i];
-                const fineAvoidance = fineAvoidances[i];
-
-                // Only calculate if both values are valid numbers; otherwise, push "0.00" or an empty string if missing
-                if (!isNaN(revenue) && !isNaN(fineAvoidance)) {
-                    const calculatedReturn = revenue * (fineAvoidance / 100);
-                    economicReturns.push(calculatedReturn.toLocaleString('en-US', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                    }));
-                } else {
-                    economicReturns.push("0.00"); // Default to "0.00" if there's no corresponding entry in one of the fields
-                }
-            }
-
-            // Display the calculated economic returns as a comma-separated string
-            economicReturnField.value = economicReturns.join(',');
-        }
-
-        // Event listeners for syncing on input change
-        revenueField.addEventListener('input', calculateEconomicReturns);
-        fineAvoidanceField.addEventListener('input', calculateEconomicReturns);
-
-        // Initial calculation for any pre-populated values
-        calculateEconomicReturns();
-    });
+    // Economic returns calculation is now handled by Vue computed property and watchers
 
     window.addEventListener('resize', () => {
         let container = document.querySelector('.container');
@@ -240,31 +401,7 @@ export default {
         }
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const inputFields = document.querySelectorAll('.field-to-check'); // Adjust the selector if needed
-        const calculateButton = document.getElementById('hroebutton'); // Adjust the ID if it's different
-
-        function checkFormValues() {
-            let allFilled = true;
-            inputFields.forEach(function (input) {
-                if (input.value === '') {
-                    allFilled = false;
-                }
-            });
-
-            if (allFilled) {
-                this.hroeReady = true; // Set hroeReady to true when all fields are filled
-            } else {
-                this.hroeReady = false; // Set hroeReady to false if any field is empty
-            }
-        }
-
-        // Attach event listeners to all input fields
-        inputFields.forEach(function (input) {
-            input.addEventListener('input', checkFormValues);
-        });
-
-    });
+    // Form ready checking is now handled by Vue computed properties and watchers
 
     document.addEventListener("DOMContentLoaded", () => {
         setTimeout(updateEconomicReturnsField, 50);
@@ -502,69 +639,18 @@ export default {
 
               <div class="columns">
                   <div class="left-column">
-                      <div class="card-top-right">
-
-                          <div class="memory-menu-container">
-                              <a class="erase-form-text svgimage" @click="eraseForm();"><img src="/icons/erase.svg"
-                                      data-tooltip-key="eraseForm" data-tooltip="Erase Form"
-                                      data-tooltip-type="regular"></a>&nbsp;
-                              <a class="erase-form-text svgimage" @click="deleteLocalStorage();"><img
-                                      src="/icons/trash-can.svg" data-tooltip-key="deleteDefault"
-                                      data-tooltip="Delete Default Form"
-                                      data-tooltip-type="regular"></a>&nbsp;&nbsp;&nbsp;
-                              <a class="svgimagedisabled"><img src="/icons/settings--edit.svg"
-                                      data-tooltip-key="futureFeature"
-                                      data-tooltip="<strong>--- FUTURE FEATURE ---</strong><br/>Configure Input Sources"
-                                      data-tooltip-type="warning"></a>
-
-                              <div class="populate-container">
-
-                                  <a class="populate-icon svgimage" @click="populateWithSampleValues('first');"><img
-                                          src="/icons/page--first.svg" data-tooltip-key="firstExample"
-                                          data-tooltip="First Example (discussed in the paper)"
-                                          data-tooltip-type="regular"></a>&nbsp;&nbsp;&nbsp;
-                                  <a class="populate-icon svgimage" @click="populateWithSampleValues('left');"><img
-                                          src="/icons/triangle--left--outline.svg" data-tooltip-key="previousExample"
-                                          data-tooltip="Previous Example"
-                                          data-tooltip-type="regular"></a>&nbsp;&nbsp;&nbsp;
-
-                                  <div id="exampleMessage">&nbsp;</div>
-                                  <a class="populate-icon svgimage" @click="populateWithSampleValues('right');"><img
-                                          src="/icons/triangle--right--outline.svg" data-tooltip-key="nextExample"
-                                          data-tooltip="Next Example"
-                                          data-tooltip-type="regular"></a>&nbsp;&nbsp;&nbsp;
-                                  <a class="populate-icon svgimage" @click="populateWithSampleValues('last');"><img
-                                          src="/icons/page--last.svg" data-tooltip-key="lastExample"
-                                          data-tooltip="Last Example" data-tooltip-type="regular"></a>
-                              </div>
-
-                              <a class="save-memory-text svgimage" @click="saveToMemory();"><img src="/icons/save.svg"
-                                      data-tooltip-key="saveDefault" data-tooltip="Save Values as Default"
-                                      data-tooltip-type="regular"></a>
-                              <a class="save-memory-text svgimage" @click="showToolbarHelp();"><img
-                                      src="/icons/help.svg" data-tooltip-key="helpToolbar"
-                                      data-tooltip="Help With This Toolbar" data-tooltip-type="regular"></a>
-
-                          </div>
-
-                          <div
-                            class="startupMessageOverlay"
-                            id="startupMessageOverlay"
-                            v-if="showStartupMessage"
-                          >
-                              <div class="startupMessageExcl1 blinkingText">&#10071;</div>
-                              <div class="startupMessageText">
-                                  <div class="startupMessageLine1">To get started, fill out the form below or click
-                                      the</div>
-                                  <div class="startupMessageLine2">controls above to navigate through examples.</div>
-                              </div>
-                          </div>
-
-                      </div>
+                      <CalculatorToolbar 
+                        :showStartupMessage="showStartupMessage"
+                        @erase-form="eraseForm"
+                        @delete-local-storage="deleteLocalStorage"
+                        @populate-example="populateWithSampleValues"
+                        @save-to-memory="saveToMemory"
+                        @show-toolbar-help="showToolbarHelp"
+                      />
 
                       <div class="form-group" style="margin-top: 20px;">
                           <label id="yrs" for="years">Number of Years:</label>
-                          <input v-model='years' type="number" id="years" oninput="validateCommaSeparatedInputs();" min="1"
+                          <input v-model='years' type="number" id="years" min="1"
                               class="field-to-check" @focus="highlightFormula('years'); updateExplanation('years')"
                               @mouseover="highlightFormula('years'); updateExplanation('years')"
                               @mouseout="clearExplanation()" onkeydown="moveToNextInput(event)"
@@ -575,7 +661,7 @@ export default {
                           <label id="costcap" for="discount">Cost of Capital (Discount Rate):</label>
                           <input v-model="discount" type="number" step="0.01" id="discount" min="0" max="1" class="field-to-check"
                               @focus="highlightFormula('discount'); updateExplanation('discount')"
-                              oninput="highlightFormula('discount'); updateExplanation('discount');"
+                              @input="highlightFormula('discount'); updateExplanation('discount');"
                               @mouseover="highlightFormula('discount'); updateExplanation('discount')"
                               @mouseout="clearExplanation()" onkeydown="moveToNextInput(event);"
                               onchange="moveToNextInput(event)">
@@ -610,12 +696,13 @@ export default {
                                           year,
                                           comma-separated):</label>
                                       <input type="text" id="investment_cost"
-                                          @input="validateCommaSeparatedInputs();" class="field-to-check"
+                                          class="field-to-check"
                                           pattern="^-?[0-9,]*$"
                                           @focus="highlightFormula('investment_cost'); updateExplanation('investment_cost')"
                                           @mouseover="highlightFormula('investment_cost'); updateExplanation('investment_cost')"
                                           @mouseout="clearExplanation()" onkeydown="moveToNextInput(event)"
                                           v-model="capabilityCosts"
+                                          :style="fieldValidationStyles.capabilityCosts || {}"
                                       >
                                   </div>
 
@@ -629,7 +716,6 @@ export default {
                                           <label for="org_revenues">Organizational Revenue <br/>(in millions per year,
                                               comma-separated):</label>
                                           <input type="text" id="org_revenues"
-                                              @input="validateCommaSeparatedInputs();"
                                               pattern="^-?[0-9,]*$"
                                               @focus="highlightFormula('economic_returns'); updateExplanation('economic_returns');"
                                               @mouseover="highlightFormula('economic_returns'); updateExplanation('economic_returns')"
@@ -641,7 +727,6 @@ export default {
                                           <label for="fine_avoidance">Fine Avoidance Value (in % per year,
                                               comma-separated):</label>
                                           <input type="text" id="fine_avoidance"
-                                              @input="validateCommaSeparatedInputs();"
                                               pattern="^-?[0-9,]*$"
                                               @focus="highlightFormula('fine_avoidance'); updateExplanation('fine_avoidance')"
                                               @mouseover="highlightFormula('fine_avoidance'); updateExplanation('fine_avoidance')"
@@ -657,6 +742,7 @@ export default {
                                             class="field-to-check"
                                             readonly
                                             v-model="economicReturns"
+                                            :style="fieldValidationStyles.economicReturns || {}"
                                           >
                                       </div>
                                       
@@ -672,13 +758,14 @@ export default {
                                           <label for="intangible_value">Intangible Returns (in millions per year,
                                               comma-separated):</label>
                                           <input type="text" id="intangible_value"
-                                              @input="validateCommaSeparatedInputs();" class="field-to-check"
+                                              class="field-to-check"
                                               pattern="^-?[0-9,]*$"
                                               @focus="highlightFormula('intangible_value'); updateExplanation('intangible_value')"
                                               @mouseover="highlightFormula('intangible_value'); updateExplanation('intangible_value')"
                                               onchange="updateExplanation('intangible_value')"
                                               @mouseout="clearExplanation()" onkeydown="moveToNextInput(event)"
                                               v-model="reputationalReturns"
+                                              :style="fieldValidationStyles.reputationalReturns || {}"
                                           >
                                       </div>
                                   </fieldset>
@@ -693,12 +780,13 @@ export default {
                                           <label for="capability_returns">Capability Returns (in millions per year,
                                               comma-separated):</label>
                                           <input type="text" id="capability_returns"
-                                              @input="validateCommaSeparatedInputs();" class="field-to-check"
+                                              class="field-to-check"
                                               pattern="^-?[0-9,]*$"
                                               @focus="highlightFormula('capability_returns'); updateExplanation('capability_returns')"
                                               @mouseover="highlightFormula('capability_returns'); updateExplanation('capability_returns')"
                                               @mouseout="clearExplanation()" onkeydown="moveToNextInput(event)"
                                               v-model="capabilityReturns"
+                                              :style="fieldValidationStyles.capabilityReturns || {}"
                                             >
                                       </div>
                                   </fieldset>
@@ -721,87 +809,7 @@ export default {
                       </fieldset>
                   </div>
                   <div class="right-column">
-                      <div class="formula">
-                          <div>
-                              <h3 id="hroeformula">ROI in AI Ethics</h3>
-                              <div id="paperSection">
-                                  
-                              </div>
-                              <div class="fraction" id="formula">
-
-                                  <div class="numerator">
-                                      <span id="sum1">
-                                          <em>ROI<sub>t,N,m</sub> = <br /><br />
-                                              <div class="shift right" style="--shift-value: 12px;">( ∑</div>
-                                              <span id="Ny" class="tooltip-target"><sup class="shift right"
-                                                      style="--shift-value: 16px;">t+N</sup><sub class="shift left"
-                                                      style="--shift-value: 16px;">j=t</sub></span>
-                                              <span id="Alpha" class="tooltip-target">
-                                                  <div class="shift left enlargefont"
-                                                      style="--shift-value: 6px; --fontsize: 30px">α</div><sub
-                                                      class="shift left" style="--shift-value: 5px;">j-t</sub>
-                                              </span>
-                                              [<span id="Re" class="tooltip-target">R<sup class="shift right"
-                                                      style="--shift-value:1px;">e</sup><sub class="shift left"
-                                                      style="--shift-value: 8px;">j</sub>(I<sub>t</sub>&nbsp;)</span>
-                                              + <span id="Rr" class="tooltip-target">R<sup class="shift right"
-                                                      style="--shift-value: 2px;">r</sup><sub class="shift left"
-                                                      style="--shift-value: 6px;">j</sub>(I<sub>t</sub>&nbsp;)</span>
-                                              + ∑<sup class="shift right" style="--shift-value: 6px;">m</sup><sub
-                                                  class="shift left" style="--shift-value: 10px;">k=1</sub>
-                                              <span id="Rc" class="tooltip-target">R<sup class="shift right"
-                                                      style="--shift-value: 2px;">c</sup><sub class="shift left"
-                                                      style="--shift-value: 8px;">t,k</sub>(γ<sub>k</sub>
-                                                  <div class="shift right" style="--shift-value: 2px;">I</div><sup
-                                                      class="shift right" style="--shift-value: 4px;">c</sup><sub
-                                                      class="shift left" style="--shift-value:6px;">t</sub>)
-                                              </span>])
-                                              - (<span id="It1" class="tooltip-target">I<sub>t</sub></span>
-                                              + <span id="Ic_t1" class="tooltip-target">I<sup class="shift right"
-                                                      style="--shift-value: 2px;">c</sup><sub class="shift left"
-                                                      style="--shift-value: 8px;">t</sub>)
-                                                </span>
-                                          </em>
-                                      </span>
-                                  </div>
-                                  <hr id="dividerFull">
-                                  <div class="denominator">
-                                      <em><span id="It2" class="tooltip-target">I<sub>t</sub></span>
-                                          + <span id="Ic_t2" class="tooltip-target">I<sup class="shift right"
-                                                  style="--shift-value: 2px;">c</sup><sub class="shift left"
-                                                  style="--shift-value: 8px;">t</sub></span></em>
-                                  </div>
-                                  <div id="formulaExplanationContainer">
-                                      <div id="formula_explanation">
-                                          The full ROI in AI Ethics formula considers Economic Returns, Reputational
-                                          Returns, and
-                                          Capability Returns, as well as Capability Costs.
-                                          It calculates the ROI based on these factors, discounting future
-                                          returns using the discount factor.
-                                          The formula incorporates:
-                                          <ul>
-                                              <li>
-                                                  <div class="bluefont">Economic Returns (Re)</div>: Returns from
-                                                  economic benefits,
-                                                  including fine avoidance (e.g., fine received for non-compliance
-                                                  with regulation).
-                                              </li>
-                                              <li>
-                                                  <div class="bluefont">Reputational Returns (Rr)</div>: Returns from
-                                                  reputation.
-                                              </li>
-                                              <li>
-                                                  <div class="bluefont">Capability Returns (Rc)</div>: Returns from
-                                                  increased capabilities.
-                                              </li>
-                                          </ul>
-                                          
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-
-                      </div>
+                      <FormulaDisplay />
 
                       <div class="leftcontainer">
                           <!-- <div class="paperbutton" style="position:relative;top:-23px;" @click="calculateHROE()">Calculate HROE</div> -->

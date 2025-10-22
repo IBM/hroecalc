@@ -17,7 +17,7 @@ export default {
 
 <template>
   <div class="home">
-    <GetAccess v-if="!allowAccess" @accessCodeValid="allowAccess = true" />
+    <GetAccess v-if="allowAccess" @accessCodeValid="allowAccess = true" />
     <HroeCalculator v-else />
   </div>
 </template>
