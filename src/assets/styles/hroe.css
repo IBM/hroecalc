@@ -206,6 +206,13 @@ body {
     margin-bottom: 5px;
 }
 
+.label-secondary {
+    font-size: 14px;
+    color: #666;
+    font-weight: normal;
+    font-style: italic;
+}
+
 .form-group input {
     font-size: 18px;
     width: 100%;

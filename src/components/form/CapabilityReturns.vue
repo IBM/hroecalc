@@ -8,8 +8,11 @@
         <legend id="capabilities">Returns on Capabilities</legend>
 
         <div class="form-group">
-            <label for="capability_returns">Capability Returns (in millions per year,
-                comma-separated):</label>
+            <label for="capability_returns">
+              Capability Returns:
+              <br/>
+              <span class="label-secondary">in millions per year, comma-separated</span>
+            </label>
             <input 
                 type="text" 
                 id="capability_returns"

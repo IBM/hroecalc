@@ -2,8 +2,11 @@
   <fieldset class="field-group">
     <legend id="economic">Economic Returns</legend>
     <div class="form-group">
-      <label for="org_revenues">Organizational Revenue <br/>(in millions per year,
-          comma-separated):</label>
+      <label for="org_revenues">
+        Organizational Revenue:
+        <br/>
+        <span class="label-secondary">in millions per year, comma-separated</span>
+      </label>
       <input type="text" id="org_revenues"
           pattern="^-?[0-9,]*$"
           @focus="handleFocus('economic_returns')"
@@ -15,8 +18,11 @@
       >
     </div>
     <div class="form-group">
-      <label for="fine_avoidance">Fine Avoidance Value (in % per year,
-          comma-separated):</label>
+      <label for="fine_avoidance">
+        Fine Avoidance Value:
+        <br/>
+        <span class="label-secondary">% of total revenue per year, comma-separated</span>
+      </label>
       <input type="text" id="fine_avoidance"
           pattern="^-?[0-9,]*$"
           @focus="handleFocus('fine_avoidance')"
@@ -28,7 +34,11 @@
       >
     </div>
     <div class="form-group">
-      <label for="calc_economic_returns">Economic Return <br/>(<em>in millions calculated as Revenue * Fine Avoidance %</em>)</label>
+      <label for="calc_economic_returns">
+        Economic Return:
+        <br/>
+        <span class="label-secondary">in millions calculated as Revenue × Fine Avoidance %</span>
+      </label>
       <input 
         type="text"
         id="calc_economic_returns"

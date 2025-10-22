@@ -2,7 +2,11 @@
   <fieldset class="field-group">
       <legend id="investments">Investments</legend>
       <div class="form-group">
-          <label for="initial_investment">Initial Investment (in millions):</label>
+          <label for="initial_investment">
+            Initial Investment:
+            <br/>
+            <span class="label-secondary">in millions</span>
+          </label>
           <input 
               type="number" 
               step="0.1" 
@@ -19,9 +23,11 @@
           >
       </div>
       <div class="form-group">
-          <label for="investment_cost">Cost for Capabilities (in millions per
-              year,
-              comma-separated):</label>
+          <label for="investment_cost">
+            Cost for Capabilities:
+            <br/>
+            <span class="label-secondary">in millions per year, comma-separated</span>
+          </label>
           <input 
               type="text" 
               id="investment_cost"

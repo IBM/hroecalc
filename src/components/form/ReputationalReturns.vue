@@ -7,8 +7,11 @@
         <legend id="intangible">Reputational Returns</legend>
 
         <div class="form-group">
-            <label for="intangible_value">Intangible Returns (in millions per year,
-                comma-separated):</label>
+            <label for="intangible_value">
+              Intangible Returns:
+              <br/>
+              <span class="label-secondary">in millions per year, comma-separated</span>
+            </label>
             <input 
                 type="text" 
                 id="intangible_value"
