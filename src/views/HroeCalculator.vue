@@ -50,6 +50,66 @@ export default {
       immediate: true,
       handler(newValue) {
         this.hroeReady = newValue;
+        // Hide results if form becomes invalid
+        if (!newValue) {
+          this.showResults = false;
+        }
+      }
+    },
+
+    // Watchers for key input fields to trigger automatic ROI recalculation
+    initialInvestment: {
+      handler(newValue, oldValue) {
+        if (newValue !== oldValue && this.formReadyStatus) {
+          this.$nextTick(() => {
+            this.calculateHROE();
+          });
+        }
+      }
+    },
+    years: {
+      handler(newValue, oldValue) {
+        if (newValue !== oldValue && this.formReadyStatus) {
+          this.$nextTick(() => {
+            this.calculateHROE();
+          });
+        }
+      }
+    },
+    discount: {
+      handler(newValue, oldValue) {
+        if (newValue !== oldValue && this.formReadyStatus) {
+          this.$nextTick(() => {
+            this.calculateHROE();
+          });
+        }
+      }
+    },
+    capabilityCosts: {
+      handler(newValue, oldValue) {
+        if (newValue !== oldValue && this.formReadyStatus) {
+          this.$nextTick(() => {
+            this.calculateHROE();
+          });
+        }
+      }
+    },
+    orgRevenues: {
+      handler(newValue, oldValue) {
+        if (newValue !== oldValue && this.formReadyStatus) {
+          this.$nextTick(() => {
+            this.calculateHROE();
+          });
+        }
+      }
+    },
+    fineAvoidanceValues: {
+      handler(newValue, oldValue) {
+        if (newValue !== oldValue && this.formReadyStatus) {
+          this.$nextTick(() => {
+            this.calculateHROE();
+          });
+        }
       }
     }
   },
@@ -82,7 +142,8 @@ export default {
       showToolbarHelp: false, // Controls toolbar help visibility
       explanationPanelContent: '', // Content for explanation panel (will be initialized in mounted)
       highlightedElements: [], // Track highlighted formula elements
-      exampleMessage: '' // Message shown for current example
+      exampleMessage: '', // Message shown for current example
+      detailedExplanation: '' // Detailed calculation explanation (explanation_of_results)
     };
   },
   computed: {
@@ -220,16 +281,24 @@ export default {
       }
     },
     formReadyStatus() {
-      const requiredFields = [
-        'years', 'initialInvestment', 'discount', 'capabilityCosts',
-        'orgRevenues', 'fineAvoidanceValues', 'economicReturns',
-        'reputationalReturns', 'capabilityReturns'
+      // Essential fields that must have values before ROI calculation
+      const essentialFields = [
+        'years',              // Number of years
+        'discount',           // Cost of capital (discount rate)
+        'initialInvestment',  // Initial investment
+        'capabilityCosts',    // Cost for capabilities
+        'orgRevenues',        // Organizational revenues
+        'fineAvoidanceValues' // Fine avoidance
       ];
       
-      return requiredFields.every(field => {
+      const allFieldsReady = essentialFields.every(field => {
         const value = this[field];
-        return value !== null && value !== undefined && value !== '';
+        // Field must exist and not be empty (allow 0 as valid value)
+        return value !== null && value !== undefined && value !== '' && 
+               (typeof value === 'string' ? value.trim() !== '' : true);
       });
+      console.log('Form ready status:', allFieldsReady);
+      return allFieldsReady;
     },
     
     // Force component re-render when data changes (for example loading)
@@ -327,7 +396,6 @@ export default {
 
       // Economic returns will be calculated automatically by the EconomicReturns component
       this.showEditableTable = true;
-      this.hroeReady = true;
 
       // Force reactivity update
       this.$nextTick(() => {
@@ -376,9 +444,20 @@ export default {
     },
 
     calculateHROE() {
+      // Only proceed if form has minimum required data
+      if (!this.formReadyStatus) {
+        return;
+      }
+      
       // Call the hroe.js calculateHROE function with the Vue component as context
       if (typeof hroe.calculateHROE === 'function') {
         hroe.calculateHROE.call(this);
+        
+        // After calculation, generate the detailed explanation
+        this.detailedExplanation = this.generateDetailedExplanation(this.calculatedValues);
+        
+        // Show the results only if form is ready
+        this.showResults = true;
       }
     },
 
@@ -517,7 +596,8 @@ export default {
     toggleResultsPanel(toggleSwitch) {
       if (toggleSwitch === 'off') {
         this.showResults = false;
-        this.explanationPanelContent = '';
+        this.explanationPanelContent = this.defaultExplanation; // Reset to default explanation
+        this.detailedExplanation = ''; // Clear detailed calculation explanation
         this.calculatedROI = null;
         this.calculatedTotalReturn = null;
         this.calculatedValues = {};
@@ -531,7 +611,88 @@ export default {
       this.calculatedROI = roi;
       this.calculatedTotalReturn = totalReturn;
       this.calculatedValues = calculatedValues || {};
-      this.showResults = true;
+      // Only show results if form has minimum required data
+      this.showResults = this.formReadyStatus;
+    },
+
+    // Generate detailed calculation explanation using translation data
+    generateDetailedExplanation(calculatedValues) {
+      const currentLang = this.currentLanguage;
+      const explanationTemplate = translationsData[currentLang].explanation.explanation_of_results;
+      
+      if (!explanationTemplate || !calculatedValues) {
+        return '';
+      }
+
+      return explanationTemplate
+        .replace('{I_t}', calculatedValues.I_t)
+        .replace('{N}', (calculatedValues.N === 1 ? 'a year' : calculatedValues.N + ' years'))
+        .replace('{fineAvoidanceValue}', calculatedValues.fineAvoidanceValues)
+        .replace('{discountedValue}', calculatedValues.discountedValue)
+        .replace('{alpha}', calculatedValues.alpha)
+        .replace('{netReturn}', calculatedValues.netReturn)
+        .replace('{intangibleValue}', calculatedValues.reputationalReturnValues)
+        .replace('{discountedIntangibleReturn}', calculatedValues.discountedIntangibleReturn)
+        .replace('{totalReturn}', calculatedValues.totalReturn)
+        .replace('{capabilityReturns}', calculatedValues.capabilityReturnValues)
+        .replace('{investmentCost}', calculatedValues.capabilityCostValues)
+        .replace('{finalROI}', calculatedValues.finalROI);
+    },
+
+    // Generate PDF report
+    generatePDF() {
+      if (typeof hroe.generatePDF === 'function') {
+        hroe.generatePDF();
+      }
+    },
+
+    // Toggle between calculator and paper view (flip animation)
+    togglePanel() {
+      const flipper = document.getElementById('flipper');
+      if (flipper) {
+        flipper.classList.toggle('flipped');
+      }
+    },
+
+    // Show help popup
+    showHelp() {
+      const helpPopup = document.getElementById('helpPopup');
+      if (helpPopup) {
+        helpPopup.style.display = 'block';
+      }
+    },
+
+    // Close help popup
+    closeHelp() {
+      const helpPopup = document.getElementById('helpPopup');
+      if (helpPopup) {
+        helpPopup.style.display = 'none';
+      }
+    },
+
+    // Close toolbar help popup
+    closeToolbarHelp() {
+      const toolbarHelp = document.getElementById('helpFormToolbar');
+      if (toolbarHelp) {
+        toolbarHelp.style.display = 'none';
+      }
+    },
+
+    // Toggle editable table view
+    toggleEditableTable() {
+      this.showEditableTable = !this.showEditableTable;
+      // Additional logic from hroe.js if needed
+      if (typeof hroe.toggleEditableTable === 'function') {
+        hroe.toggleEditableTable();
+      }
+    },
+
+    // Display returns chart
+    displayReturnsChart() {
+      // Call the original function from hroe.js if it exists
+      if (typeof hroe.displayReturnsChart === 'function') {
+        hroe.displayReturnsChart();
+      }
     },
   },  
   mounted () {
@@ -985,25 +1146,28 @@ export default {
                           <div 
                             :class="['hroebutton', !hroeReady && 'disabled']" 
                             id="hroebutton" 
-                            @click="calculateHROE()"
+                            @click="hroeReady && calculateHROE()"
                           >Calculate ROI</div>
                           <span id="hroeResultDisplay" class="hroe-result"></span>
-                          <div id="resultsHeader" style="margin-bottom:25px;display: none;"></div>
-                          <div class="enlargefont" id="hroeDisplay"
-                              style="--fontsize: 24px; margin-bottom:45px; display: none;">
-                              ROI: <span id="roi_value"></span>
+                          <div id="resultsHeader" v-show="showResults" style="margin-bottom:25px;">
+                            <h3>Calculation Results</h3>
+                          </div>
+                          <div class="enlargefont" id="hroeDisplay" v-show="showResults"
+                              style="--fontsize: 24px; margin-bottom:45px;">
+                              ROI: <span id="roi_value">{{ calculatedROI }}</span>
                           </div>
                       </div>
                       <div class="card-top-right">
                       </div>
                       <div class="results">
                           <div class="bottom-panel">
-                              <div id="roiChartContainer" class="hidden">
+                              <div id="roiChartContainer" :class="{ hidden: !showResults }">
                                   <div id="chartExplanation" class="explanation"></div>
-                                  <div id="initial_explanation"></div>
+                                  <div id="initial_explanation" v-html="detailedExplanation"></div>
                               </div>
                               <div style="text-align: center; margin-top: 20px;">
-                                  <button id="generatePDFButton" style="display:none;"
+                                  <button id="generatePDFButton" 
+                                      v-show="showResults && currentLanguage !== 'zh' && currentLanguage !== 'ja'"
                                       @click="generatePDF()">Generate PDF</button>
                               </div>
                           </div>
