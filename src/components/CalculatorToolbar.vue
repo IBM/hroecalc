@@ -25,7 +25,7 @@
             data-tooltip="Previous Example"
             data-tooltip-type="regular"></a>&nbsp;&nbsp;&nbsp;
 
-        <div id="exampleMessage">&nbsp;</div>
+        <div id="exampleMessage">{{ exampleMessage }}</div>
         <a class="populate-icon svgimage" @click="$emit('populate-example', 'right')"><img
             src="/icons/triangle--right--outline.svg" data-tooltip-key="nextExample"
             data-tooltip="Next Example"
@@ -67,6 +67,10 @@ export default {
     showStartupMessage: {
       type: Boolean,
       default: false
+    },
+    exampleMessage: {
+      type: String,
+      default: ''
     }
   },
   emits: [

@@ -80,9 +80,9 @@ export default {
       calculatedValues: {}, // Stores all calculated values for display
       showHelpPopup: false, // Controls help popup visibility
       showToolbarHelp: false, // Controls toolbar help visibility
-      explanationPanelContent: '', // Content for explanation panel
+      explanationPanelContent: '', // Content for explanation panel (will be initialized in mounted)
       highlightedElements: [], // Track highlighted formula elements
-      exampleMessage: 'Example from Paper' // Message shown for current example
+      exampleMessage: '' // Message shown for current example
     };
   },
   computed: {
@@ -236,6 +236,11 @@ export default {
     componentKey() {
       return `${this.years}-${this.initialInvestment}-${this.currentExampleIndex}`;
     },
+
+    // Default explanation text based on current language
+    defaultExplanation() {
+      return translationsData[this.currentLanguage].hoverText;
+    },
   },
   methods: {
     updateColumn({ rowIndex, colIndex, value }) {
@@ -330,6 +335,7 @@ export default {
         console.log('Initial Investment:', this.initialInvestment);
         console.log('Years:', this.years);
         console.log('Discount:', this.discount);
+        console.log('Example Message:', this.exampleMessage);
         console.log('Component Key:', this.componentKey);
       });
       
@@ -378,7 +384,7 @@ export default {
 
     // Vue equivalent for updateExplanation function
     updateExplanation(inputId) {
-      const currentLang = this.language;
+      const currentLang = this.currentLanguage;
       const translation = translationsData[currentLang].explanation;
 
       let explanation;
@@ -417,7 +423,8 @@ export default {
 
     // Vue equivalent for clearExplanation function
     clearExplanation() {
-      this.explanationPanelContent = '';
+      const currentLang = this.currentLanguage;
+      this.explanationPanelContent = translationsData[currentLang].hoverText;
     },
 
     // Vue equivalent for generateYearlyExplanation function
@@ -528,6 +535,9 @@ export default {
     },
   },  
   mounted () {
+    // Initialize explanation panel with default text
+    this.explanationPanelContent = this.defaultExplanation;
+
     // Load the links when the page loads
     document.addEventListener('DOMContentLoaded', this.loadLinks);
 
@@ -664,7 +674,7 @@ export default {
                       <img src="/icons/iconhelp.png" data-tooltip-key="helpInformation" data-tooltip="Help Information"
                           data-tooltip-type="regular" alt="Help Icon" style="width: 33px; height:33px;">
                   </div>
-                  <div class="formula-leftpanel" id="explanation-panel"></div>
+                  <div class="formula-leftpanel" id="explanation-panel" v-html="explanationPanelContent"></div>
               </div>
 
               <!-- Help Popup (Initially Hidden) -->
@@ -867,6 +877,7 @@ export default {
                   <div class="left-column">
                       <CalculatorToolbar 
                         :showStartupMessage="showStartupMessage"
+                        :exampleMessage="exampleMessage"
                         @erase-form="eraseForm"
                         @delete-local-storage="deleteLocalStorage"
                         @populate-example="populateWithSampleValues"
