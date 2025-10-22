@@ -7,7 +7,11 @@ import DisclaimerModal from "@/components/DisclaimerModal.vue";
 import InfoPanel from "@/components/InfoPanel.vue";
 import FormulaDisplay from "@/components/FormulaDisplay.vue";
 import CalculatorToolbar from "@/components/CalculatorToolbar.vue";
-import InputForm from "@/components/InputForm.vue";
+import EconomicReturns from "@/components/form/EconomicReturns.vue";
+import ReputationalReturns from "@/components/form/ReputationalReturns.vue";
+import CapabilityReturns from "@/components/form/CapabilityReturns.vue";
+import Investments from "@/components/form/Investments.vue";
+import BasicInputs from "@/components/form/BasicInputs.vue";
 
 export default {
   components: {
@@ -17,7 +21,11 @@ export default {
     InfoPanel,
     FormulaDisplay,
     CalculatorToolbar,
-    InputForm,
+    EconomicReturns,
+    ReputationalReturns,
+    CapabilityReturns,
+    Investments,
+    BasicInputs,
   },
   watch: {
     dataColumns: {
@@ -26,20 +34,7 @@ export default {
         this.calculateHROE()
       }
     },
-    calculatedEconomicReturns: {
-      immediate: true,
-      handler(newValue) {
-        this.economicReturns = newValue;
-      }
-    },
-    orgRevenues() {
-      // Trigger recalculation when revenues change
-      this.economicReturns = this.calculatedEconomicReturns;
-    },
-    fineAvoidanceValues() {
-      // Trigger recalculation when fine avoidance values change
-      this.economicReturns = this.calculatedEconomicReturns;
-    },
+
     validationResults: {
       immediate: true,
       handler(newValue) {
@@ -60,7 +55,6 @@ export default {
   },
   data() {
     return {
-      ...hroe,
       years: null,
       initialInvestment: "",
       discount: "",
@@ -78,7 +72,17 @@ export default {
       showStartupMessage: true,
       hroeReady: false,
       currentLanguage: 'en',
-      fieldValidationStyles: {} // For tracking field validation styles
+      fieldValidationStyles: {}, // For tracking field validation styles
+      currentExampleIndex: 0, // Local management of current example index
+      showResults: false, // Controls result panel visibility
+      calculatedROI: null, // Stores calculated ROI
+      calculatedTotalReturn: null, // Stores calculated total return
+      calculatedValues: {}, // Stores all calculated values for display
+      showHelpPopup: false, // Controls help popup visibility
+      showToolbarHelp: false, // Controls toolbar help visibility
+      explanationPanelContent: '', // Content for explanation panel
+      highlightedElements: [], // Track highlighted formula elements
+      exampleMessage: 'Example from Paper' // Message shown for current example
     };
   },
   computed: {
@@ -87,44 +91,12 @@ export default {
         this.capabilityCosts.split(','),
         this.orgRevenues.split(','),
         this.fineAvoidanceValues.split(','),
-        this.economicReturns?.split(','),
+        (this.economicReturns || '').split(','),
         this.reputationalReturns.split(','),
         this.capabilityReturns.split(','),
       ];
     },
-    calculatedEconomicReturns() {
-      if (!this.orgRevenues || !this.fineAvoidanceValues) {
-        return "";
-      }
-      
-      // Split and parse values from revenue and fine avoidance fields
-      const revenues = this.orgRevenues.split(',').map(value => parseFloat(value.replace(/,/g, '').trim()));
-      const fineAvoidances = this.fineAvoidanceValues.split(',').map(value => parseFloat(value.trim()));
 
-      // Determine the maximum number of entries to process
-      const maxLength = Math.max(revenues.length, fineAvoidances.length);
-      const economicReturns = [];
-
-      // Loop through each index up to the maximum length
-      for (let i = 0; i < maxLength; i++) {
-        const revenue = revenues[i];
-        const fineAvoidance = fineAvoidances[i];
-
-        // Only calculate if both values are valid numbers; otherwise, push "0.00" or an empty string if missing
-        if (!isNaN(revenue) && !isNaN(fineAvoidance)) {
-          const calculatedReturn = revenue * (fineAvoidance / 100);
-          economicReturns.push(calculatedReturn.toLocaleString('en-US', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          }));
-        } else {
-          economicReturns.push("0.00"); // Default to "0.00" if there's no corresponding entry in one of the fields
-        }
-      }
-
-      // Return the calculated economic returns as a comma-separated string
-      return economicReturns.join(',');
-    },
     validationResults() {
       if (!this.years) return { valid: true, message: '', fieldStyles: {} };
 
@@ -259,6 +231,11 @@ export default {
         return value !== null && value !== undefined && value !== '';
       });
     },
+    
+    // Force component re-render when data changes (for example loading)
+    componentKey() {
+      return `${this.years}-${this.initialInvestment}-${this.currentExampleIndex}`;
+    },
   },
   methods: {
     updateColumn({ rowIndex, colIndex, value }) {
@@ -281,6 +258,273 @@ export default {
         values[rowIndex] = value;
         this[columns[colIndex]] = values.join(',');
       }, 1500)
+    },
+    handleFocusField(field) {
+      // Call the original highlightFormula function from hroe.js
+      if (typeof this.highlightFormula === 'function') {
+        this.highlightFormula(field);
+      }
+    },
+    handleUpdateExplanation(field) {
+      // Call the original updateExplanation function from hroe.js
+      if (typeof this.updateExplanation === 'function') {
+        this.updateExplanation(field);
+      }
+    },
+    handleClearExplanation() {
+      // Call the original clearExplanation function from hroe.js
+      if (typeof this.clearExplanation === 'function') {
+        this.clearExplanation();
+      }
+    },
+    populateWithSampleValues(direction) {
+      // Import the examples and implement the logic here instead of calling hroe.js
+      // to avoid binding issues with the Vue component context
+      const hroeExamples = hroe.hroeExamples;
+      let currentIndex = this.currentExampleIndex;
+      
+      // Adjust index based on the direction
+      if (direction === 'right') {
+        if (currentIndex >= (hroeExamples.length - 1)) currentIndex = -1;
+        currentIndex = (currentIndex + 1) % hroeExamples.length;
+      } else if (direction === 'left') {
+        if (currentIndex <= 0) currentIndex = hroeExamples.length;
+        currentIndex = (currentIndex - 1 + hroeExamples.length) % hroeExamples.length;
+      } else if (direction === 'first') {
+        currentIndex = 0;
+      } else if (direction === 'last') {
+        currentIndex = hroeExamples.length - 1;
+      }
+      
+      // Update the local current index
+      this.currentExampleIndex = currentIndex;
+      
+      // Update the example text using Vue data
+      if (currentIndex <= 0) {
+        this.exampleMessage = `Example from Paper`;
+      } else {
+        this.exampleMessage = `Example ${currentIndex + 1} of ${hroeExamples.length}`;
+      }
+
+      // Get the current set of values
+      const values = hroeExamples[currentIndex];
+
+      // Populate the Vue component data directly
+      console.log('Populating values:', values);
+      this.initialInvestment = values.initial_investment;
+      this.years = parseInt(values.years);
+      this.discount = parseFloat(values.discount);
+      this.orgRevenues = values.org_revenues;
+      this.fineAvoidanceValues = values.fine_avoidance;
+      this.capabilityReturns = values.capability_returns;
+      this.capabilityCosts = values.investment_cost;
+      this.reputationalReturns = values.intangible_value;
+
+      // Economic returns will be calculated automatically by the EconomicReturns component
+      this.showEditableTable = true;
+      this.hroeReady = true;
+
+      // Force reactivity update
+      this.$nextTick(() => {
+        console.log('After nextTick - values should be updated');
+        console.log('Initial Investment:', this.initialInvestment);
+        console.log('Years:', this.years);
+        console.log('Discount:', this.discount);
+        console.log('Component Key:', this.componentKey);
+      });
+      
+      // Call calculate function if it exists
+      if (typeof this.calculateHROE === 'function') {
+        this.calculateHROE();
+      }
+      
+      // Call results panel function if it exists
+      if (typeof hroe.resultsPanel === 'function') {
+        hroe.resultsPanel('on');
+      }
+    },
+    moveToNextInput(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        if (event.target.id === 'capability_returns') {
+          // Move focus back to the Initial Investment field
+          const initialInvestmentField = document.getElementById('initial_investment');
+          if (initialInvestmentField) initialInvestmentField.focus();
+        } else {
+          // Move to the next input field
+          let inputs = document.querySelectorAll('input[type="text"], input[type="number"]');
+          let currentIndex = Array.from(inputs).indexOf(event.target);
+          let nextIndex = currentIndex + 1;
+
+          if (nextIndex < inputs.length) {
+            inputs[nextIndex].focus();
+          }
+        }
+      }
+    },
+    handleToggleBlur(fieldsetId) {
+      // Call the original toggleBlur function from hroe.js if it exists
+      if (typeof this.toggleBlur === 'function') {
+        this.toggleBlur(fieldsetId);
+      }
+    },
+
+    calculateHROE() {
+      // Call the hroe.js calculateHROE function with the Vue component as context
+      if (typeof hroe.calculateHROE === 'function') {
+        hroe.calculateHROE.call(this);
+      }
+    },
+
+    // Vue equivalent for updateExplanation function
+    updateExplanation(inputId) {
+      const currentLang = this.language;
+      const translation = translationsData[currentLang].explanation;
+
+      let explanation;
+      switch (inputId) {
+        case 'initial_investment':
+          explanation = translation.initial_investment.replace('{value}', this.formatValueForDisplay(this.initialInvestment));
+          break;
+        case 'years':
+          explanation = translation.years.replace('{value}', this.years);
+          break;
+        case 'discount':
+          const discountValue = this.discount;
+          explanation = translation.discount.replace('{value}', discountValue).replace('{percentage}', ((1 - discountValue) * 100).toFixed(2));
+          break;
+        case 'org_revenues':
+          explanation = this.generateYearlyExplanationVue('org_revenues', translation.economic_returns);
+          break;
+        case 'fine_avoidance':
+          explanation = translation.fine_avoidance.replace('{value}', this.fineAvoidanceValues);
+          break;
+        case 'intangible_value':
+          explanation = translation.intangible_value.replace('{value}', this.formatValueForDisplay(this.reputationalReturns));
+          break;
+        case 'investment_cost':
+          explanation = translation.investment_cost.replace('{value}', this.formatValueForDisplay(this.capabilityCosts));
+          break;
+        case 'capability_returns':
+          explanation = this.generateYearlyExplanationVue('capability_returns', translation.capability_returns);
+          break;
+        default:
+          explanation = translationsData[currentLang].hoverText;
+      }
+
+      this.explanationPanelContent = explanation;
+    },
+
+    // Vue equivalent for clearExplanation function
+    clearExplanation() {
+      this.explanationPanelContent = '';
+    },
+
+    // Vue equivalent for generateYearlyExplanation function
+    generateYearlyExplanationVue(inputId, baseText) {
+      let values = [];
+      switch (inputId) {
+        case 'org_revenues':
+          values = this.orgRevenues.split(',');
+          break;
+        case 'capability_returns':
+          values = this.capabilityReturns.split(',');
+          break;
+        default:
+          return baseText;
+      }
+      
+      const yearExplanations = values.map((value, index) => {
+        return `Year ${index + 1} = <div class="varvalue">${parseFloat(value)} million</div>`;
+      }).join(' ');
+      
+      return baseText.replace('{details}', yearExplanations);
+    },
+
+    // Vue equivalent for formatValue function
+    formatValueForDisplay(value) {
+      const numValue = parseFloat(value);
+      if (isNaN(numValue)) {
+        return '?';
+      }
+      const formattedValue = (numValue * 1000000).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+      return `<div class="varvalue">${formattedValue}</div>`;
+    },
+
+    // Vue equivalent for modal functions
+    showModal(modalType) {
+      switch (modalType) {
+        case 'help':
+          this.showHelpPopup = true;
+          break;
+        case 'toolbar':
+          this.showToolbarHelp = true;
+          break;
+      }
+    },
+
+    hideModal(modalType) {
+      switch (modalType) {
+        case 'help':
+          this.showHelpPopup = false;
+          break;
+        case 'toolbar':
+          this.showToolbarHelp = false;
+          break;
+        default:
+          // Hide all modals
+          this.showHelpPopup = false;
+          this.showToolbarHelp = false;
+      }
+    },
+
+    // Vue equivalent for highlightFormula function
+    highlightFormula(inputId) {
+      // Define elements to highlight for each input type
+      const elements = {
+        years: ['Ny'],
+        capabilities: [],
+        discount: ['Alpha'],
+        economic_returns: ['Re'],
+        fine_avoidance: ['Rr'],
+        capability_returns: ['Rc'],
+        initial_investment: ['It1', 'It2'],
+        investment_cost: ['Ic_t1', 'Ic_t2']
+      };
+
+      // Reset all highlighted elements
+      this.highlightedElements = [];
+
+      // Set new highlighted elements if they exist for this input
+      if (elements[inputId]) {
+        this.highlightedElements = elements[inputId];
+      }
+    },
+
+    // Clear all formula highlighting
+    clearFormulaHighlight() {
+      this.highlightedElements = [];
+    },
+
+    // Vue equivalent for resultsPanel function
+    toggleResultsPanel(toggleSwitch) {
+      if (toggleSwitch === 'off') {
+        this.showResults = false;
+        this.explanationPanelContent = '';
+        this.calculatedROI = null;
+        this.calculatedTotalReturn = null;
+        this.calculatedValues = {};
+      } else {
+        this.showResults = true;
+      }
+    },
+
+    // Vue equivalent for table and results display functions
+    updateResultsDisplay(roi, totalReturn, calculatedValues) {
+      this.calculatedROI = roi;
+      this.calculatedTotalReturn = totalReturn;
+      this.calculatedValues = calculatedValues || {};
+      this.showResults = true;
     },
   },  
   mounted () {
@@ -341,10 +585,8 @@ export default {
         });
     });
 
-    this.inputFields.forEach(function (input) {
-        input.addEventListener('input', this.clearMessageOnInput);  // 'input' event covers typing, pasting, etc.
-        // input.addEventListener('click', clearMessageOnInput);  // 'click' event covers mouse clicks
-    });
+    // Note: Input field event handling now done via Vue component event bindings
+    // Legacy DOM-based event listeners removed in favor of Vue approach
 
     // Attach event listeners to keep both views in sync in real-time
     document.addEventListener("DOMContentLoaded", () => {
@@ -364,22 +606,7 @@ export default {
 
     });
 
-    // Attach event listeners to the original fields to update the table when they change
-    document.querySelectorAll('#defaultview input').forEach(input => {
-        input.addEventListener('input', () => {
-            if (isTableView) {
-                const years = parseInt(document.getElementById('years').value);
-                const fields = [
-                    { id: 'economic_returns', label: 'Economic Returns' },
-                    { id: 'fine_avoidance', label: 'Fine Avoidance' },
-                    { id: 'intangible_value', label: 'Intangible Value' },
-                    { id: 'investment_cost', label: 'Investment Cost' },
-                    { id: 'capability_returns', label: 'Capability Returns' }
-                ];
-                this.updateTableFromFields(fields, years);
-            }
-        });
-    });
+    // Table updating is now handled by Vue reactivity through dataColumns computed property
 
     // Economic returns calculation is now handled by Vue computed property and watchers
 
@@ -404,9 +631,8 @@ export default {
     // Form ready checking is now handled by Vue computed properties and watchers
 
     document.addEventListener("DOMContentLoaded", () => {
-        setTimeout(updateEconomicReturnsField, 50);
         resultsPanel('off')
-        // updateEconomicReturnsField();
+        // Economic returns are now handled by the EconomicReturns Vue component
     });
 
   }
@@ -648,24 +874,17 @@ export default {
                         @show-toolbar-help="showToolbarHelp"
                       />
 
-                      <div class="form-group" style="margin-top: 20px;">
-                          <label id="yrs" for="years">Number of Years:</label>
-                          <input v-model='years' type="number" id="years" min="1"
-                              class="field-to-check" @focus="highlightFormula('years'); updateExplanation('years')"
-                              @mouseover="highlightFormula('years'); updateExplanation('years')"
-                              @mouseout="clearExplanation()" onkeydown="moveToNextInput(event)"
-                              onchange="moveToNextInput(event)"
-                          >
-                      </div>
-                      <div class="form-group">
-                          <label id="costcap" for="discount">Cost of Capital (Discount Rate):</label>
-                          <input v-model="discount" type="number" step="0.01" id="discount" min="0" max="1" class="field-to-check"
-                              @focus="highlightFormula('discount'); updateExplanation('discount')"
-                              @input="highlightFormula('discount'); updateExplanation('discount');"
-                              @mouseover="highlightFormula('discount'); updateExplanation('discount')"
-                              @mouseout="clearExplanation()" onkeydown="moveToNextInput(event);"
-                              onchange="moveToNextInput(event)">
-                      </div>
+                      <BasicInputs
+                        :key="componentKey"
+                        :years="years"
+                        :discount="discount"
+                        @update:years="years = $event"
+                        @update:discount="discount = $event"
+                        @focus-field="handleFocusField"
+                        @update-explanation="handleUpdateExplanation"
+                        @clear-explanation="handleClearExplanation"
+                        @move-to-next-input="moveToNextInput"
+                      />
                       <fieldset id="editableTableFieldSet" class="outer-group">
                           <legend>
 
@@ -678,118 +897,57 @@ export default {
                           <!-- Economic Returns Section -->
                           <div id="defaultview">
 
-                              <fieldset class="field-group">
-                                  <legend id="investments">Investments</legend>
-                                  <div class="form-group">
-                                      <label for="initial_investment">Initial Investment (in millions):</label>
-                                      <input type="number" step="0.1" id="initial_investment" min="0"
-                                          class="field-to-check"
-                                          @focus="highlightFormula('initial_investment'); updateExplanation('initial_investment');"
-                                          oninput="highlightFormula('initial_investment'); updateExplanation('initial_investment');"
-                                          @mouseover="highlightFormula('initial_investment'); updateExplanation('initial_investment')"
-                                          @mouseout="clearExplanation()" onkeydown="moveToNextInput(event)"
-                                          onchange="moveToNextInput(event)"
-                                          v-model="initialInvestment">
-                                  </div>
-                                  <div class="form-group">
-                                      <label for="investment_cost">Cost for Capabilities (in millions per
-                                          year,
-                                          comma-separated):</label>
-                                      <input type="text" id="investment_cost"
-                                          class="field-to-check"
-                                          pattern="^-?[0-9,]*$"
-                                          @focus="highlightFormula('investment_cost'); updateExplanation('investment_cost')"
-                                          @mouseover="highlightFormula('investment_cost'); updateExplanation('investment_cost')"
-                                          @mouseout="clearExplanation()" onkeydown="moveToNextInput(event)"
-                                          v-model="capabilityCosts"
-                                          :style="fieldValidationStyles.capabilityCosts || {}"
-                                      >
-                                  </div>
-
-                              </fieldset>
+                              <Investments
+                                :key="componentKey"
+                                :initialInvestment="initialInvestment"
+                                :capabilityCosts="capabilityCosts"
+                                :fieldValidationStyles="fieldValidationStyles"
+                                @update:initialInvestment="initialInvestment = $event"
+                                @update:capabilityCosts="capabilityCosts = $event"
+                                @focus-field="handleFocusField"
+                                @update-explanation="handleUpdateExplanation"
+                                @clear-explanation="handleClearExplanation"
+                                @move-to-next-input="moveToNextInput"
+                              />
 
                               <fieldset class="field-group">
                                   <legend id="returns">Returns</legend>
-                                  <fieldset class="field-group">
-                                      <legend id="economic">Economic Returns</legend>
-                                      <div class="form-group">
-                                          <label for="org_revenues">Organizational Revenue <br/>(in millions per year,
-                                              comma-separated):</label>
-                                          <input type="text" id="org_revenues"
-                                              pattern="^-?[0-9,]*$"
-                                              @focus="highlightFormula('economic_returns'); updateExplanation('economic_returns');"
-                                              @mouseover="highlightFormula('economic_returns'); updateExplanation('economic_returns')"
-                                              @mouseout="clearExplanation()" onkeydown="moveToNextInput(event)"
-                                              v-model="orgRevenues"
-                                          >
-                                      </div>
-                                      <div class="form-group">
-                                          <label for="fine_avoidance">Fine Avoidance Value (in % per year,
-                                              comma-separated):</label>
-                                          <input type="text" id="fine_avoidance"
-                                              pattern="^-?[0-9,]*$"
-                                              @focus="highlightFormula('fine_avoidance'); updateExplanation('fine_avoidance')"
-                                              @mouseover="highlightFormula('fine_avoidance'); updateExplanation('fine_avoidance')"
-                                              @mouseout="clearExplanation()" onkeydown="moveToNextInput(event)"
-                                              v-model="fineAvoidanceValues"
-                                          >
-                                      </div>
-                                      <div class="form-group">
-                                          <label for="calc_economic_returns">Economic Return <br/>(<em>in millions calculated as Revenue * Fine Avoidance %</em>)</label>
-                                          <input 
-                                            type="text"
-                                            id="calc_economic_returns"
-                                            class="field-to-check"
-                                            readonly
-                                            v-model="economicReturns"
-                                            :style="fieldValidationStyles.economicReturns || {}"
-                                          >
-                                      </div>
-                                      
-
-                                  </fieldset>
-                                  <a id="toggleReputationalIcon"
-                                      @click="toggleBlur('reputationalReturnsFieldset')"><img
-                                          class="toggleFormulaIcon svgimage" src="/icons/power.svg"></a>
-                                  <fieldset id="reputationalReturnsFieldset" class="field-group">
-                                      <legend id="intangible">Reputational Returns</legend>
-
-                                      <div class="form-group">
-                                          <label for="intangible_value">Intangible Returns (in millions per year,
-                                              comma-separated):</label>
-                                          <input type="text" id="intangible_value"
-                                              class="field-to-check"
-                                              pattern="^-?[0-9,]*$"
-                                              @focus="highlightFormula('intangible_value'); updateExplanation('intangible_value')"
-                                              @mouseover="highlightFormula('intangible_value'); updateExplanation('intangible_value')"
-                                              onchange="updateExplanation('intangible_value')"
-                                              @mouseout="clearExplanation()" onkeydown="moveToNextInput(event)"
-                                              v-model="reputationalReturns"
-                                              :style="fieldValidationStyles.reputationalReturns || {}"
-                                          >
-                                      </div>
-                                  </fieldset>
-                                  <a id="toggleCapabilitiesIcon"
-                                      @click="toggleBlur('capabilitiesReturnsFieldset')"><img
-                                          class="toggleFormulaIcon svgimage" src="/icons/power.svg"></a>
-
-                                  <fieldset id="capabilitiesReturnsFieldset" class="field-group">
-                                      <legend id="capabilities">Returns on Capabilities</legend>
-
-                                      <div class="form-group">
-                                          <label for="capability_returns">Capability Returns (in millions per year,
-                                              comma-separated):</label>
-                                          <input type="text" id="capability_returns"
-                                              class="field-to-check"
-                                              pattern="^-?[0-9,]*$"
-                                              @focus="highlightFormula('capability_returns'); updateExplanation('capability_returns')"
-                                              @mouseover="highlightFormula('capability_returns'); updateExplanation('capability_returns')"
-                                              @mouseout="clearExplanation()" onkeydown="moveToNextInput(event)"
-                                              v-model="capabilityReturns"
-                                              :style="fieldValidationStyles.capabilityReturns || {}"
-                                            >
-                                      </div>
-                                  </fieldset>
+                                  <EconomicReturns
+                                    :key="componentKey"
+                                    :orgRevenues="orgRevenues"
+                                    :fineAvoidanceValues="fineAvoidanceValues"
+                                    :economicReturns="economicReturns"
+                                    :fieldValidationStyles="fieldValidationStyles"
+                                    @update:orgRevenues="orgRevenues = $event"
+                                    @update:fineAvoidanceValues="fineAvoidanceValues = $event"
+                                    @update:economicReturns="economicReturns = $event"
+                                    @focus-field="handleFocusField"
+                                    @update-explanation="handleUpdateExplanation"
+                                    @clear-explanation="handleClearExplanation"
+                                    @move-to-next-input="moveToNextInput"
+                                  />
+                                  <ReputationalReturns
+                                    :key="componentKey"
+                                    :reputationalReturns="reputationalReturns"
+                                    :fieldValidationStyles="fieldValidationStyles"
+                                    @update:reputationalReturns="reputationalReturns = $event"
+                                    @focus-field="handleFocusField"
+                                    @update-explanation="handleUpdateExplanation"
+                                    @clear-explanation="handleClearExplanation"
+                                    @move-to-next-input="moveToNextInput"
+                                    @toggle-blur="handleToggleBlur"
+                                  />
+                                  <CapabilityReturns
+                                    :key="componentKey"
+                                    :capabilityReturns="capabilityReturns"
+                                    :fieldValidationStyles="fieldValidationStyles"
+                                    @update:capabilityReturns="capabilityReturns = $event"
+                                    @focus-field="handleFocusField"
+                                    @update-explanation="handleUpdateExplanation"
+                                    @clear-explanation="handleClearExplanation"
+                                    @move-to-next-input="moveToNextInput"
+                                    @toggle-blur="handleToggleBlur"
+                                  />
                               </fieldset>
                           </div>
                           <div id="editableTableContainer" style="display: none;">
