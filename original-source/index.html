@@ -39,7 +39,7 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no">
-    <title id="page-title">ROI in AI Ethics Framework Calculator v0.8.5</title>
+    <title id="page-title">ROI in AI Ethics Framework Calculator V0.8.6</title>
     <!-- Link to the main stylesheet for the calculator's appearance -->
     <link rel="stylesheet" href="styles/hroe.css">
     <!-- Link to jsPDF library for PDF generation functionality -->
@@ -61,7 +61,7 @@
                             <option value="en">English</option>
                             <option value="es">Spanish</option>
                             <option value="it">Italian</option>
-                            <option value="fr">French</option>
+                            <!-- <option value="fr">French</option> -->
                             <option value="de">German</option>
                             <option value="zh">Chinese</option>
                             <option value="ja">Japanese</option>
@@ -70,7 +70,7 @@
                 </div>
                 <!-- Header section of the calculator -->
                 <div class="header">
-                    <h1 id="page-title">ROI in AI Ethics Framework Calculator v0.8.5</h1>
+                    <h1 id="page-title">ROI in AI Ethics Framework Calculator V0.8.6</h1>
                     <div class="paperbutton" id="read-paper" onclick="togglePanel()">Read the Paper</div>
                 </div>
                 <!-- Information panel displayed by default, providing context on holistic assessment -->
@@ -443,8 +443,8 @@
                                 <a href="#" id="editableTableViewToggle" onclick="toggleEditableTable()"><img
                                         class="svgimage" height="22px" weight="22px" src="icons/table--split.svg" /></a>
                                 <!-- Button to display returns chart -->
-                                <a href="#" id="xxxxx" onclick="displayReturnsChart()"><img class="svgimage"
-                                        height="22px" weight="22px" src="icons/chart--combo.svg" /></a>
+                                <!-- <a href="#" id="xxxxx" onclick="displayReturnsChart()"><img class="svgimage"
+                                        height="22px" weight="22px" src="icons/chart--combo.svg" /></a> -->
 
                             </legend>
                             <!-- Default input view for Investments and Returns -->
@@ -710,7 +710,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <!-- Local JavaScript files for calculator logic, translations, and examples -->
-    <script src="scripts/hroe.js"></script>
+    <script src="scripts/hroe.js"></script>    <script src="scripts/hroe-translations-en.js"></script>
+    <script src="scripts/hroe-translations-es.js"></script>
+    <script src="scripts/hroe-translations-it.js"></script>
+    <script src="scripts/hroe-translations-fr.js"></script>
+    <script src="scripts/hroe-translations-de.js"></script>
+    <script src="scripts/hroe-translations-zh.js"></script>
+    <script src="scripts/hroe-translations-ja.js"></script>
+
     <script src="scripts/hroe-translations.js"></script>
     <script src="scripts/hroe-examples.js"></script>
 </body>

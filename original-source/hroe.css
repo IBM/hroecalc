@@ -1,0 +1,1301 @@
+/*
+ * HROECalc – Return on Investment for Ethics in AI Calculator
+ * Release: v0.85 (2025-01-01)
+ * Release Notes: docs/releases/v0.85.md
+ * SPDX-License-Identifier: MIT
+ * Original Author: Jose De Jesus (jdejesus@us.ibm.com)
+ * Additional contributors listed in CONTRIBUTORS.md
+ *
+ * The HROE Framework Calculator (“Calculator”) is an implementation of 
+ * research conducted jointly by IBM and the University of Notre Dame through
+ * the Notre Dame–IBM Technology Ethics Lab. The corresponding research paper 
+ * is available at: https://arxiv.org/pdf/2309.13057
+ *
+ * Copyright IBM Corp. 2024–2025. All Rights Reserved.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy 
+ * of this software and associated documentation files (the “Software”), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+ * copies of the Software, and to permit persons to whom the Software is furnished
+ * to do so, subject to the following conditions:
+ *
+ * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+ * THE SOFTWARE.
+ *
+ * The above notice, including all attribution, copyright, and permission statements,
+ * shall be included in all copies or substantial portions of the Software.
+ */
+
+/* ============================================
+   Root Variables
+   ============================================ */
+:root {
+    --shift-spaces: 2;
+}
+
+/* ============================================
+   Basic HTML Elements
+   ============================================ */
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    min-height: 1024px;
+    min-width: 1280px;
+    padding: 0;
+}
+
+button {
+    background-color: #2980b9;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: #1c5988;
+}
+
+iframe {
+    height: 80vh;
+    width: 100%;
+}
+
+input[readonly] {
+    background-color: #f9f9f9;
+    color: #555;
+    cursor: not-allowed;
+}
+
+/* ============================================
+   Layout and Container Styles
+   ============================================ */
+.back {
+    backface-visibility: hidden;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    left: 0;
+    padding: 26px;
+    padding-left: 22px;
+    padding-right: 22px;
+    position: absolute;
+    top: 0;
+    transform: rotateY(180deg);
+    width: 100%;
+}
+
+.bottom-panel {
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-left: 20px;
+    margin-right: 2px;
+    padding: 10px;
+    position: relative;
+    top: -57px;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.bottom-panel:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+#calc_economic_returns {
+    background: #f4f4f4;
+}
+
+.card {
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin: 20px;
+    margin-right: 2px;
+    padding: 20px;
+    padding-top: 40px;
+    position: relative;
+    top: -60px;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.card-top-right {
+    color: #333;
+    cursor: pointer;
+    font-size: 0.85em;
+    left: 86%;
+    padding-bottom: 20px;
+    position: relative;
+    top: 20px;
+    z-index: 200;
+}
+
+.card-top-right:hover {
+    color: #007bff;
+}
+
+.centercontainer {
+    align-items: center;
+    display: flex;
+    height: 100px;
+    justify-content: center;
+}
+
+.chart-container {
+    padding-top: 12px;
+    width: 100%;
+}
+
+.columns {
+    align-items: flex-start;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 1024px;
+    margin: 20px auto;
+    max-height: 1024px;
+    max-width: 1280px;
+    perspective: 1000px;
+    width: 1280px;
+}
+
+
+.flipper {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.7s;
+    width: 100%;
+}
+
+.front {
+    backface-visibility: hidden;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    left: 0;
+    padding: 26px;
+    padding-left: 22px;
+    padding-right: 22px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.header {
+    align-items: center;
+    background-color: #3498db;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    display: flex;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+.header h1 {
+    flex: 1;
+    font-weight: 300;
+    margin: 0;
+    text-align: center;
+}
+
+.left-column {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    font-size: 22px;
+    margin-right: 10px;
+    margin-top: 12px;
+    padding: 20px;
+    padding-top: 20px;
+    width: 48%;
+}
+
+.leftcontainer {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    height: 50px;
+    justify-content: left;
+    padding-top: 20px;
+}
+
+.right-column {
+    margin-top: 12px;
+    width: 50%;
+}
+
+/* ============================================
+   Button Specific Styles
+   ============================================ */
+.card-button {
+    color: #007bff;
+    cursor: pointer;
+    float: right;
+    padding: 05px 10px;
+    top: 0px;
+}
+
+.card-button:hover {
+    background-color: green;
+}
+
+#generatePDFButton {
+    font-size: 1em;
+    margin-left: 38%;
+    text-align: center;
+}
+
+.hroebutton {
+    background-color: #2980b9;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    left: 12px;
+    padding: 10px 20px;
+    position: relative;
+    top: -48px;
+    text-decoration: none;
+}
+
+.hroebutton.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.hroebutton:hover {
+    background-color: #1c5988;
+}
+
+.hroebutton:not(.disabled):hover {
+    background-color: #1c5988;
+}
+
+.paperbutton {
+    background-color: #2980b9;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+.paperbutton:hover {
+    background-color: #1c5988;
+}
+
+/* ============================================
+   Form Group Styles
+   ============================================ */
+fieldset.field-group {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+fieldset.field-group:hover {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+fieldset.field-group legend {
+    color: #333;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+#editableTableFieldSet > legend {
+    direction: rtl;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    text-align: right;
+    width: 100%;
+}
+
+.form-group {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.form-group input[type="number"],
+.form-group input[type="text"] {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
+    padding: 8px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%;
+}
+
+.form-group input[type="number"]:focus,
+.form-group input[type="text"]:focus {
+    border-color: #0066cc;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12), 0 0 5px rgba(0, 102, 204, 0.5);
+    outline: none;
+}
+
+.form-group label {
+    display: block;
+    font-size: 18px;
+    font-weight: 200;
+    margin-bottom: 5px;
+}
+
+#investments,
+#returns,
+#yrs,
+#costcap {
+    color:#2980B9;
+}
+
+.outer-group {
+    border: 1px solid #fff;
+    padding:10px;
+}
+
+/* ============================================
+   Flipper Specific Styles
+   ============================================ */
+.flipped {
+    transform: rotateY(-180deg);
+}
+
+/* ============================================
+   Formula and Explanation Panel
+   ============================================ */
+#dividerEconomic {
+    border:none;
+    border-top:1px solid black;
+    display:flex;
+    margin:0px;
+    margin-left:142px;
+    position:relative;
+    text-align:center;
+    width:320px;
+}
+
+#dividerFull {
+    border:none;
+    border-top:1px solid black;
+    display:flex;
+    margin:0px;
+    margin-left:26px;
+    position:relative;
+    text-align:center;
+    width:566px;
+}
+
+#dividerReputational {
+    border:none;
+    border-top:1px solid black;
+    display:flex;
+    margin:0px;
+    margin-left:92px;
+    position:relative;
+    text-align:center;
+    width:420px;
+}
+
+.enlargefont {
+    font-size: var(--fontsize);
+    font-weight: 100;
+}
+
+.explanation {
+    background-color: white;
+    font-size: 16px;
+    margin: 12px;
+    margin-top: 10px;
+    width: 98%;
+}
+
+.formula {
+    color: #4f4f4f;
+    /* margin-top: -22px; */
+    background-color: #f4f6f7;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    font-size: 1.5em;
+    height:380px;
+    margin-bottom:50px;
+    margin-left:12px;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 3px;
+    padding-bottom: 42px;
+    position: relative;
+    align-items: stretch;
+    text-align: center;
+    width: 97%;
+}
+
+.formula-container {
+    align-items: stretch;
+    background-color: #f4f6f7;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    height: 65px;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+    text-align:center;
+    width: 100%;
+}
+
+.formula-leftpanel {
+    font-style: italic;
+    overflow: auto;
+    padding: 10px;
+    padding-right: 50px;
+    padding-top: 20px;
+    text-align: left;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.fraction {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    width:100%;
+}
+
+#formula_explanation {
+    font-size:16px;
+    text-align: left;
+}
+
+#formulaExplanationContainer {
+    background-color:#f4f6f7;
+    padding:12px;
+    padding-bottom:0px;
+    padding-top:16px;
+    text-align:center;
+}
+
+.numerator {
+    /* border-bottom: 1px solid #000; */
+    font-family: 'Times New Roman', Times, serif;
+    font-kerning: none;
+    font-size: 22px;
+    padding-bottom: 5px;
+}
+
+.denominator {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 22px;
+    padding-top: 5px;
+}
+
+#hroeformula {
+    color:#3284BC;
+    font-weight:200;
+    position:relative;
+    text-align: center;
+    top:-18px;
+}
+
+/* ============================================
+   Help and Modals
+   ============================================ */
+.close {
+    color: #aaa;
+    cursor: pointer;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.close:focus,
+.close:hover {
+    color: #000;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#closeDisclaimer {
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    font-size: 16px;
+    position: relative;
+    right: -7px;
+    top: -12px;
+}
+
+#closeHelp {
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+}
+
+#disclaimerModal {
+    display: none;
+    z-index: 1000;
+}
+
+#helpButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+#helpButton img {
+    height: 24px;
+    width: 24px;
+}
+
+#helpFormToolbar {
+    background-color: #fefeff;
+    border: 5px solid #99b6d9;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    display: none;
+    left: 50%;
+    max-height: 980px;
+    overflow: hidden;
+    padding: 10px;
+    position: fixed;
+    top: 500px;
+    transform: translate(-50%, -50%);
+    z-index: 300;
+}
+
+#helpPopup {
+    background-color: #fefeff;
+    border: 3px solid #3498db;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    display: none;
+    left: 50%;
+    max-height: 980px;
+    overflow: hidden;
+    padding: 10px;
+    position: fixed;
+    width: 77%;
+    top: 500px;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+#helpPopupTitle {
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0px;
+    padding-left: 20px;
+}
+
+.info-panel {
+    background-color: rgb(250, 250, 239);
+    border: 1px solid #ddd;
+    border-bottom: 1px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    color: #333;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    margin-bottom: 12px;
+    margin-top: 10px;
+    max-height: 70px;
+    min-height: 70px;
+    overflow: scroll;
+    padding: 10px;
+    vertical-align: bottom;
+}
+
+.modal {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #fff;
+    border: 3px solid black;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin: 15% auto;
+    padding: 20px;
+    width: 60%;
+}
+
+.note-box {
+    background-color: #faf3b0;
+    border: 2px solid #e6c200;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-size: 1em;
+    line-height: 1.3em;
+    margin: 20px auto;
+    padding: 20px;
+    position: relative;
+    transform: rotate(-3deg);
+    width: 70%;
+}
+
+.note-box::before {
+    background-color: #fef4ac;
+    border-bottom: 2px solid #e6c200;
+    content: '';
+    height: 10px;
+    left: 20px;
+    position: absolute;
+    top: -10px;
+    transform: rotate(-12deg);
+    width: 50px;
+}
+
+.warning {
+    background-color: #FDF9D7;
+    border-bottom: 3px solid #ffe57c;
+    border-top: 1px solid #ddd;
+    color: #333;
+    height: 100%;
+}
+
+/* ============================================
+   Text and Font Styles
+   ============================================ */
+.bluefont {
+    color:#3586BD;
+    display:inline;
+    font-weight:200;
+}
+
+.darkblue {
+    color: darkblue;
+    display: inline-block;
+}
+
+.default-text {
+    color: black;
+    display: inline;
+    font-size: 14px;
+    left: -7px;
+    position: relative;
+    top: -5px;
+}
+
+#exampleForm:hover {
+    color: black;
+}
+
+#exampleMessage {
+    color: black;
+    display: inline-block;
+    font-size: 16px;
+    left: -7px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    top: -1px;
+    white-space: nowrap;
+    width: 152px;
+}
+
+.mainfont {
+    font-size: 18px;
+}
+
+.message-panel {
+    background-color: #f5ffff;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.3);
+    color: #333;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    margin-bottom: 2px;
+    margin-top: 10px;
+    min-height: 42px;
+    padding: 10px;
+}
+
+.negative-value {
+    color: red;
+}
+
+#paperSection {
+    font-size:15px;
+    position:relative;
+    text-align: center;
+    top:-40px;
+}
+
+.positive-value {
+    color: green;
+}
+
+.signature-box {
+    background-color: white;
+    border-top: 1px solid #ccc;
+    bottom: 0;
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+    font-size: 0.77em;
+    font-style: normal;
+    left: 0px;
+    margin-top: 30px;
+    padding: 7px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 100;
+}
+
+.signature-box a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.signature-box a:hover {
+    text-decoration: underline;
+}
+
+.startupMessageExcl1 {
+    animation: blinkingText .7s infinite;
+    color: #7a0000;
+    display: inline;
+    flex-shrink: 0;
+    font-size: 40px;
+    left: 3px;
+    margin-right: 10px;
+    position: relative;
+}
+
+@keyframes blinkingText {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.startupMessageLine1 {
+    color: #333;
+    display: none;
+    font-size: 18px;
+    font-style: italic;
+    left: -20px;
+    position: relative;
+    top: 4px;
+}
+
+.startupMessageLine2 {
+    color: #333;
+    display: none;
+    font-size: 18px;
+    font-style: italic;
+    left: -20px;
+    padding: none;
+    position: relative;
+    top: 2px;
+}
+
+.startupMessageText {
+    display: inline-block;
+    margin-left: 3px;
+}
+
+.varvalue {
+    color: #3498db;
+    display: inline-block;
+    font-weight: 200;
+}
+
+.varvaluestrong {
+    color: #3498db;
+    display: inline-block;
+    font-weight: bold;
+}
+
+/* ============================================
+   Table Styles (General and Editable)
+   ============================================ */
+#dataTable {
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+#dataTable td,
+#dataTable th {
+    border: 1px solid #dddddd;
+    padding: 8px;
+}
+
+#dataTable td {
+    text-align: right;
+}
+
+#dataTable th {
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+#editableDataTable {
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+#editableDataTable td,
+#editableDataTable th {
+    border: 1px solid #d4d4d4;
+    padding: 8px;
+}
+
+#editableDataTable td {
+    text-align: right;
+}
+
+#editableDataTable th {
+    background-color: #fff;
+    text-align: center;
+}
+
+#editableTableContainer {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 407px;
+    position: relative;
+    width: 100%;
+}
+
+#editableTableContainer table {
+    border: 1px solid rgba(15, 124, 65, 0.5);
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
+
+#editableTableContainer tbody {
+    overflow-y: auto;
+    top: -40px;
+}
+
+#editableTableContainer tbody td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#editableTableContainer th,
+#editableTableContainer td {
+    border-bottom: 1px solid #d4d4d4;
+    overflow: hidden;
+    padding: 8px;
+    text-align: left;
+    text-overflow: ellipsis;
+}
+
+#editableTableContainer thead th {
+    background-color: #EDF2FA;
+    border-bottom: 1px solid #d4d4d4;
+    color:black;
+    font-weight: 500;
+    padding: 2px;
+    position: sticky;
+    text-align: center;
+    top: 0px;
+    white-space: normal;
+    z-index: 1;
+}
+
+.icon {
+    display: block;
+    height: 24px;
+    width: 24px;
+}
+
+.icon-column {
+    display: table-cell;
+    vertical-align: sub;
+    width: 40px;
+}
+
+.row {
+    display: table-row;
+}
+
+.table {
+    display: table;
+    width: 100%;
+}
+
+.table,
+.row,
+.icon-column,
+.details-column {
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+}
+
+#tableContainer {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 200px;
+    position: relative;
+    width: 100%;
+}
+
+#tableContainer table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#tableContainer tbody {
+    overflow-y: auto;
+    top: -40px;
+}
+
+#tableContainer tbody td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#tableContainer th,
+#tableContainer td {
+    border-bottom: 1px solid #ddd;
+    overflow: hidden;
+    padding: 8px;
+    text-align: left;
+    text-overflow: ellipsis;
+}
+
+#tableContainer thead th {
+    background-color: #2e96db;
+    border-bottom: 1px solid #ccc;
+    color:white;
+    font-weight: 500;
+    padding: 2px;
+    position: sticky;
+    text-align: center;
+    top: 0px;
+    white-space: normal;
+    z-index: 1;
+}
+
+.year-column {
+    width: 70px;
+}
+
+.year-column2 {
+    width: 60px;
+}
+
+/* ============================================
+   Toolbar and Memory Menu Styles
+   ============================================ */
+.blinkingText {
+    animation: blinkingText .7s infinite;
+    display: inline;
+}
+
+.erase-form-text {
+    color: black;
+    display: inline;
+    font-size: 14px;
+    left: 1px;
+    padding: 8px;
+    padding-top: 10px;
+    position: relative;
+}
+
+.erase-form-text:hover {
+    color: #007bff;
+    cursor: pointer;
+}
+
+.future {
+    display: inline;
+    font-size: 14px;
+    left: 140px;
+    position: relative;
+    top: 1px;
+}
+
+#hroeDisplay {
+    font-size:33px;
+    position:relative;
+    top:-26px;
+}
+
+#initial_hroe_value {
+    color:#3586BD;
+    font-size:33px;
+    position:relative;
+}
+
+.left {
+    left: calc(var(--shift-value) * -1);
+}
+
+.memory-menu-container {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    cursor: default;
+    left: -507px;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    position: relative;
+    top: -35px;
+    width: 100%;
+    z-index: 10;
+}
+
+.memory-menu-container img {
+    height: 22px;
+    width: 22px;
+}
+
+.nolocalstorage {
+    padding: 20px;
+    text-align: center;
+}
+
+.populate-container {
+    display: inline;
+    left: 3%;
+    padding: 6px;
+    padding-top: 5px;
+    position: relative;
+}
+
+.populate-icon {
+    color: black;
+    display: inline;
+    font-size: 16px;
+    left: 2px;
+    position: relative;
+    text-decoration: none;
+}
+
+.right {
+    left: var(--shift-value);
+}
+
+.results {
+    margin-left:-8px;
+    margin-top: 10px;
+}
+
+.results h2 {
+    color: #3498db;
+}
+
+.results p {
+    margin: 0;
+}
+
+.results-left {
+    width: 32%;
+}
+
+.results-right {
+    width: 68%;
+}
+
+.results-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.save-defaults {
+    color: #333;
+    cursor: pointer;
+    font-size: 0.85em;
+    left: 90%;
+    padding-bottom: 10px;
+    position: relative;
+    top: 58px;
+    z-index: 90;
+}
+
+.save-memory-text {
+    color: black;
+    display: inline;
+    font-size: 14px;
+    left: 48px;
+    padding: 8px;
+    padding-right: 9px;
+    padding-top: 10px;
+    position: relative;
+}
+
+.save-memory-text:hover {
+    color: #2980b9;
+}
+
+.shift {
+    display: inline-block;
+    position: relative;
+    --shift-value: 0px;
+}
+
+.startupMessageContainer {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding: none;
+}
+
+.startupMessageOverlay {
+    background-color: rgba(250, 250, 239, 1);
+    border-bottom: 2px solid #FEE57C;
+    border-radius: 7px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    display: none;
+    left: -440px;
+    padding: 0px;
+    position: absolute;
+    top: 10px;
+    z-index: 300;
+}
+
+.startupMessageText {
+    display: inline-block;
+    margin-left: 3px;
+}
+
+.svgimage {
+    filter: none;
+    height: 22px;
+    width: 22px;
+}
+
+.svgimage:hover {
+    filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(900%) hue-rotate(175deg) brightness(80%) contrast(90%);
+    cursor: pointer;
+}
+
+.svgimagedisabled {
+    filter: brightness(99%) saturate(0%) contrast(0%) grayscale(100%);
+}
+
+.svgimagedisabled:hover {
+    cursor: default;
+}
+
+#timestampDisplay {
+    color: #2980b9;
+    display: inline;
+    font-size: 10px;
+    left: -340px;
+    margin: 0px;
+    padding: 0px;
+    position: absolute;
+    top: -20px;
+}
+
+.toggleFormulaIcon {
+    cursor: pointer;
+    height: 22px;
+    left: -48px;
+    position: relative;
+    top: 48px;
+    width: 22px;
+}
+
+.toggle-img {
+    left: 56px;
+    position: relative;
+    top: -9px;
+}
+
+.toggle-img img {
+    height: 22px;
+    width: 22px;
+}
+
+.tooltip-custom {
+    background-color: rgb(253, 253, 253);
+    border: 1px solid #2980B9;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 14px;
+    max-width: 200px;
+    opacity: 0;
+    padding: 5px 10px;
+    pointer-events: none;
+    position: absolute;
+    transition: opacity 0.1s ease-in-out;
+    word-wrap: break-word;
+    z-index: 300;
+}
+
+.tooltip-visible {
+    opacity: 1;
+}
+
+.tooltip-warning {
+    background-color: #FDF9D7;
+    border: 2px dotted black;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    color: black;
+}
+
+.hidden {
+    display: none;
+}
