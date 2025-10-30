@@ -1142,6 +1142,7 @@ function updateEconomicReturns() {
     const revenueField = document.getElementById('org_revenues');
     const fineAvoidanceField = document.getElementById('fine_avoidance');
     const economicReturnField = document.getElementById('calc_economic_returns');
+    economicReturnField.id="calc_economic_returns";
 
     // Parse comma-separated revenues and fine avoidance percentages.
     const revenues = revenueField.value.split(',').map(value => parseFloat(value.replace(/,/g, '').trim()));
@@ -1167,6 +1168,7 @@ function updateEconomicReturns() {
     }
 
     economicReturnField.value = economicReturns.join(','); // Display calculated returns as comma-separated string.
+    economicReturnField.id = "calc_economic_returns";
 }
 
 // Variable to track the current index of the displayed example (from hroeExamples array).
@@ -1412,26 +1414,28 @@ isTableView = false;
 function toggleEditableTable() {
     const defaultView = document.getElementById('defaultview');
     const editableTableContainer = document.getElementById('editableTableContainer');
-    const returnsChartContainer = document.getElementById('returnsChartContainer');
+    // const returnsChartContainer = document.getElementById('returnsChartContainer');
     const toggleLink = document.getElementById('editableTableViewToggle'); // The button that triggers this.
     const years = parseInt(document.getElementById('years').value);
 
-    returnsChartContainer.style.display = 'none'; // Ensure chart is hidden.
+    // returnsChartContainer.style.display = 'none'; // Ensure chart is hidden.
 
     if (!isTableView) {
         generateEditableTable(years); // Generate table if switching to table view.
         defaultView.style.display = 'none';
-        returnsChartContainer.style.display = 'none';
+        // returnsChartContainer.style.display = 'none';
         editableTableContainer.style.display = 'block'; // Show table.
         toggleLink.innerHTML = '<img class="svgimage" src="icons/show-data--cards.svg" alt="Switch to Default View">'; // Update button icon/text.
+        isTableView = !isTableView; // Toggle the view state.
     } else {
         updateFormFromTable(); // Sync table data back to form before switching.
         editableTableContainer.style.display = 'none';
-        returnsChartContainer.style.display = 'none';
+        // returnsChartContainer.style.display = 'none';
         defaultView.style.display = 'block'; // Show default form.
         toggleLink.innerHTML = '<img class="svgimage" src="icons/table--split.svg" alt="Switch to Table View">'; // Update button icon/text.
+        isTableView = !isTableView; // Toggle the view state.
     }
-    isTableView = !isTableView; // Toggle the view state.
+    
 }
 
 /**
@@ -1481,6 +1485,7 @@ function generateEditableTable(years) {
     const orgRevenues = document.getElementById('org_revenues').value.split(',');
     const fineAvoidanceValues = document.getElementById('fine_avoidance').value.split(',');
     const economicReturns = document.getElementById('calc_economic_returns').value.split(',');
+    economicReturns.id="calc_economic_returns";
     const reputationalReturns = document.getElementById('intangible_value').value.split(',');
     const capabilityReturns = document.getElementById('capability_returns').value.split(',');
 
@@ -1550,7 +1555,7 @@ function generateEditableTable(years) {
     // Adjust container scrolling based on row count for better UX.
     editableTableContainer.style.maxHeight = years > 15 ? '400px' : 'unset';
     editableTableContainer.style.overflowY = years > 15 ? 'auto' : 'unset';
-    editableTableContainer.style.display = 'block'; // Ensure the table is visible.
+    if (isTableView) editableTableContainer.style.display = 'block'; // Ensure the table is visible.
 
     updateTableFromForm(); // Initial synchronization to ensure table reflects form.
 }
@@ -1622,6 +1627,7 @@ function updateFormFromTable() {
     const orgRevenuesField = document.getElementById('org_revenues');
     const fineAvoidanceField = document.getElementById('fine_avoidance');
     const economicReturnsField = document.getElementById('calc_economic_returns');
+    economicReturnsField.id="calc_economic_returns";
     const reputationalReturnsField = document.getElementById('intangible_value');
     const capabilityReturnsField = document.getElementById('capability_returns');
 
@@ -1655,6 +1661,7 @@ function updateFormFromTable() {
         orgRevenuesField.value = columnValues[1].join(',');
         fineAvoidanceField.value = columnValues[2].join(',');
         economicReturnsField.value = columnValues[3].join(',');
+        economicReturnsField.id = "calc_economic_returns";
         reputationalReturnsField.value = columnValues[4].join(',');
         capabilityReturnsField.value = columnValues[5].join(',');
     } else {
@@ -1808,6 +1815,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         economicReturnField.value = economicReturns.join(',');
+        economicReturnField.id="calc_economic_returns";
     }
 
     // Event listeners to trigger `calculateEconomicReturns` when source fields change.
@@ -2198,7 +2206,8 @@ document.addEventListener("DOMContentLoaded", function() {
  */
 function updateEconomicReturnsField() {
     const calcEconomicReturnsField = document.getElementById('calc_economic_returns');
-    
+    calcEconomicReturnsField.id="calc_economic_returns";
+
     // Get numeric values, defaulting to 0 if invalid.
     const orgRevenues = parseFloat(document.getElementById('org_revenues').value) || 0;
     const fineAvoidance = parseFloat(document.getElementById('fine_avoidance').value) || 0;
@@ -2206,6 +2215,7 @@ function updateEconomicReturnsField() {
 
     // Update the field with the calculated value, formatted.
     calcEconomicReturnsField.value = economicReturn.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    
 }
 
 /**
@@ -2235,3 +2245,97 @@ function updateUIState() {
 window.onload = () => {
     updateUIState();
 };
+
+// === Injected: live language switching (single source of truth) ===
+(function(){
+  function q(id){ return document.getElementById(id); }
+  function setText(el, v){ if(el && typeof v==='string') el.textContent = v; }
+  function setHTML(el, v){ if(el && typeof v==='string') el.innerHTML = v; }
+
+  function applyTranslations(lang){
+    try{
+      if(!window.translationsData || !translationsData[lang]) return;
+      var t = translationsData[lang] || {};
+
+      // Headings / bars
+      setText(q('page-title'), t.title || q('page-title')?.textContent);
+      setText(q('hroeformula'), t.hroeformula || q('hroeformula')?.textContent);
+      setText(q('resultsHeader'), t.resultsHeader || t.results || q('resultsHeader')?.textContent);
+      setText(q('read-paper'), t.readPaper || q('read-paper')?.textContent);
+      setText(q('explanationPanelDefault'), t.explanationPanelDefault || q('explanationPanelDefault')?.textContent);
+      
+      
+
+      // Fieldset legends
+      setText(q('investments'), t.investments || q('investments')?.textContent);
+      setText(q('returns'), t.returns || q('returns')?.textContent);
+      setText(q('economic'), t.economic || q('economic')?.textContent);
+      setText(q('intangible'), t.intangible || q('intangible')?.textContent);
+      setText(q('capabilities'), t.capabilities || q('capabilities')?.textContent);
+
+      // Title: set both document.title and the H1 header text
+      if (t.title) { try { document.title = t.title; } catch(e){} }
+      var headerH1 = document.querySelector('.header h1');
+      if (headerH1 && t.title) headerH1.textContent = t.title;
+
+
+      // Panels / help
+      setHTML(q('explanationPanelDefault'), t.explanationPanelDefault || t.hoverText || q('explanationPanelDefault')?.innerHTML);
+      setHTML(q('explanation-panel'), t.hoverText || q('explanation-panel')?.innerHTML);
+      setText(q('helpPopupTitle'), t.helpInformation || q('helpPopupTitle')?.textContent);
+      setHTML(q('helpPopupContent'), t.helpContent || q('helpPopupContent')?.innerHTML);
+      setText(q('helpPopupSignature'), t.helpSignature || q('helpPopupSignature')?.textContent);
+
+      // Buttons
+      var calcBtn = q('hroebutton'); if(calcBtn) setText(calcBtn, t.calculateROI || t.calculate || calcBtn.textContent);
+      var pdfBtn = q('generatePDFButton'); if(pdfBtn) setText(pdfBtn, t.generatePDF || pdfBtn.textContent);
+      var closeHelp = q('closeHelp'); if(closeHelp && t.closeHelp) closeHelp.setAttribute('title', t.closeHelp);
+      var closeDisclaimer = q('closeDisclaimer'); if(closeDisclaimer && t.closeDisclaimer) closeDisclaimer.setAttribute('title', t.closeDisclaimer);
+
+      // Form labels by [for] mapping
+      var map = {
+        years: 'yearsLabel',
+        discount: 'discountLabel',
+        initial_investment: 'initialInvestmentLabel',
+        investment_cost: 'investmentCostLabel',
+        org_revenues: 'economicReturnsLabel',
+        fine_avoidance: 'fineAvoidanceLabel',
+        intangible_value: 'intangibleValueLabel',
+        capability_returns: 'capabilityReturnsLabel'
+      };
+      Object.keys(map).forEach(function(forId){
+        var lab = document.querySelector('label[for="'+forId+'"]');
+        var key = map[forId];
+        if(lab && t[key]) lab.textContent = t[key];
+      });
+
+      // Generic data-i18n support
+      document.querySelectorAll('[data-i18n]').forEach(function(node){
+        var k = node.getAttribute('data-i18n');
+        var v = t[k] || (t.explanation && t.explanation[k]) || '';
+        if(!v) return;
+        if(node.tagName === 'INPUT' || node.tagName === 'TEXTAREA'){
+          if(node.hasAttribute('placeholder')) node.setAttribute('placeholder', v);
+          else node.value = v;
+        } else {
+          node.innerHTML = v;
+        }
+      });
+
+      if (typeof validateCommaSeparatedInputs === 'function') validateCommaSeparatedInputs();
+    }catch(e){
+      console.warn('applyTranslations error', e);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var sel = q('language');
+    if(!sel){ console.warn('Language select not found'); return; }
+
+    var run = function(){ applyTranslations(sel.value); };
+    sel.addEventListener('change', run);
+    run();
+  });
+})();
+// === End Injected ===
+
