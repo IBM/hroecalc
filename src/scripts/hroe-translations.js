@@ -151,7 +151,7 @@ export default {
                     Your company plans to initially invest <span class="varvalue">\${I_t} million</span> in AI ethics and governance to potentially
                     avoid <span class="varvalue">\${fineAvoidanceValue} million</span> in fines over <span class="varvalue">{N}</span>, which has a present value of <span class="varvalue">\${discountedValue} million</span> when discounted at a <span class="varvalue">{alpha}%</span> cost of capital.  
                     This results in a net return of <span class="varvalue">\${netReturn} million</span> after the initial investment.
-                    Additionally, the platform's intangible benefits, such as positive media coverage, are valued at <span class="varvalue">\${intangibleValue} million</span>, with a discounted value of
+                    Additionally, the intangible benefits of your company's AI ethics and governance platform, such as positive media coverage, are valued at <span class="varvalue">\${intangibleValue} million</span>, with a discounted value of
                     <span class="varvalue">\${discountedIntangibleReturn} million</span>.
                     The total return, including these intangibles, is <span class="varvalue">\${totalReturn} million</span>, resulting in an ROI of <span class="varvalue">{finalROI}</span>.
                 </div>
@@ -309,17 +309,14 @@ export default {
             explanation_of_results: `
                 <h2>Explicación de los Resultados</h2>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    Su empresa planea inicialmente invertir <span class="varvalue">\${I_t} millones</span> en una plataforma de gestión de riesgos de IA para
-                    evitar una multa de <span class="varvalue">\${fineAvoidanceValue} millones</span>, que tiene un valor presente de <span class="varvalue">\${discountedValue} millones</span> cuando se descuenta a una tasa de capital del <span class="varvalue">{alpha}%</span>.  
+                    Su empresa planea inicialmente invertir <span class="varvalue">\${I_t} millones</span> en ética y gobernanza de IA para potencialmente
+                    evitar <span class="varvalue">\${fineAvoidanceValue} millones</span> en multas durante <span class="varvalue">{N}</span>, que tiene un valor presente de <span class="varvalue">\${discountedValue} millones</span> cuando se descuenta a un costo de capital del <span class="varvalue">{alpha}%</span>.  
                     Esto resulta en un retorno neto de <span class="varvalue">\${netReturn} millones</span> después de la inversión inicial.
-                    Además, los beneficios intangibles de la plataforma, como la cobertura mediática positiva, están valorados en <span class="varvalue">\${intangibleValue} millones</span>, con un valor descontado de
+                    Además, los beneficios intangibles de la plataforma de ética y gobernanza de IA de su empresa, como la cobertura mediática positiva, están valorados en <span class="varvalue">\${intangibleValue} millones</span>, con un valor descontado de
                     <span class="varvalue">\${discountedIntangibleReturn} millones</span>.
-                    El retorno total, incluidos estos intangibles, es de <span class="varvalue">\${totalReturn} millones</span>.
+                    El retorno total, incluidos estos intangibles, es de <span class="varvalue">\${totalReturn} millones</span>, resultando en un ROI de <span class="varvalue">{finalROI}</span>.
                 </div>
                 <br/>
-                <div class="enlargefont" style="--fontsize:18px;">
-                    La plataforma de gestión de riesgos puede ahorrar alrededor de <span class="varvalue">\${capabilityReturns} millones</span>, pero estas capacidades adicionales costarían un adicional de <span class="varvalue">\${investmentCost} millones</span>.
-                </div>
                 <br/>
             `
         }
@@ -473,17 +470,14 @@ export default {
             explanation_of_results: `
                 <h2>Spiegazione dei Risultati</h2>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    La tua azienda prevede di investire inizialmente <span class="varvalue">\${I_t} milioni</span> in una piattaforma di gestione dei rischi IA per
-                    evitare una multa di <span class="varvalue">\${fineAvoidanceValue} milioni</span>, che ha un valore attuale di <span class="varvalue">\${discountedValue} milioni</span> quando scontato a un costo del capitale del <span class="varvalue">{alpha}%</span>.  
+                    La tua azienda prevede di investire inizialmente <span class="varvalue">\${I_t} milioni</span> in etica e governance dell'IA per potenzialmente
+                    evitare <span class="varvalue">\${fineAvoidanceValue} milioni</span> in multe durante <span class="varvalue">{N}</span>, che ha un valore attuale di <span class="varvalue">\${discountedValue} milioni</span> quando scontato a un costo del capitale del <span class="varvalue">{alpha}%</span>.  
                     Questo si traduce in un rendimento netto di <span class="varvalue">\${netReturn} milioni</span> dopo l'investimento iniziale.
-                    Inoltre, i benefici intangibili della piattaforma, come la copertura mediatica positiva, sono valutati <span class="varvalue">\${intangibleValue} milioni</span>, con un valore scontato di
+                    Inoltre, i benefici intangibili della piattaforma di etica e governance dell'IA della tua azienda, come la copertura mediatica positiva, sono valutati <span class="varvalue">\${intangibleValue} milioni</span>, con un valore scontato di
                     <span class="varvalue">\${discountedIntangibleReturn} milioni</span>.
-                    Il rendimento totale, inclusi questi intangibili, è <span class="varvalue">\${totalReturn} milioni</span>.
+                    Il rendimento totale, inclusi questi intangibili, è <span class="varvalue">\${totalReturn} milioni</span>, risultando in un ROI di <span class="varvalue">{finalROI}</span>.
                 </div>
                 <br/>
-                <div class="enlargefont" style="--fontsize:18px;">
-                    La piattaforma di gestione dei rischi può far risparmiare circa <span class="varvalue">\${capabilityReturns} milioni</span>, ma queste capacità aggiuntive costerebbero un ulteriore <span class="varvalue">\${investmentCost} milioni</span>.
-                </div>
                 <br/>
             `
         }
@@ -637,17 +631,14 @@ export default {
             explanation_of_results: `
                 <h2>Explication des Résultats</h2>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    Votre entreprise prévoit d'investir initialement <span class="varvalue">\${I_t} millions</span> dans une plateforme de gestion des risques IA pour
-                    éviter une amende de <span class="varvalue">\${fineAvoidanceValue} millions</span>, qui a une valeur actuelle de <span class="varvalue">\${discountedValue} millions</span> lorsqu'elle est actualisée à un coût du capital de <span class="varvalue">{alpha}%</span>.  
+                    Votre entreprise prévoit d'investir initialement <span class="varvalue">\${I_t} millions</span> dans l'éthique et la gouvernance de l'IA pour potentiellement
+                    éviter <span class="varvalue">\${fineAvoidanceValue} millions</span> d'amendes sur <span class="varvalue">{N}</span>, qui a une valeur actuelle de <span class="varvalue">\${discountedValue} millions</span> lorsqu'elle est actualisée à un coût du capital de <span class="varvalue">{alpha}%</span>.  
                     Cela se traduit par un rendement net de <span class="varvalue">\${netReturn} millions</span> après l'investissement initial.
-                    De plus, les avantages intangibles de la plateforme, tels qu'une couverture médiatique positive, sont évalués <span class="varvalue">\${intangibleValue} millions</span>, avec une valeur actualisée de
+                    De plus, les avantages intangibles de la plateforme d'éthique et de gouvernance de l'IA de votre entreprise, tels qu'une couverture médiatique positive, sont évalués à <span class="varvalue">\${intangibleValue} millions</span>, avec une valeur actualisée de
                     <span class="varvalue">\${discountedIntangibleReturn} millions</span>.
-                    Le rendement total, y compris ces intangibles, est de <span class="varvalue">\${totalReturn} millions</span>.
+                    Le rendement total, y compris ces intangibles, est de <span class="varvalue">\${totalReturn} millions</span>, résultant en un ROI de <span class="varvalue">{finalROI}</span>.
                 </div>
                 <br/>
-                <div class="enlargefont" style="--fontsize:18px;">
-                    La plateforme de gestion des risques peut économiser environ <span class="varvalue">\${capabilityReturns} millions</span>, mais ces capacités supplémentaires coûteraient un supplément de <span class="varvalue">\${investmentCost} millions</span>.
-                </div>
                 <br/>
             `
         }
@@ -801,17 +792,14 @@ export default {
             explanation_of_results: `
                 <h2>Erklärung der Ergebnisse</h2>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    Ihr Unternehmen plant, anfänglich <span class="varvalue">\${I_t} Millionen</span> in eine KI-Risikomanagementplattform zu investieren, um
-                    eine Strafe von <span class="varvalue">\${fineAvoidanceValue} Millionen</span> zu vermeiden, die einen Barwert von <span class="varvalue">\${discountedValue} Millionen</span> hat, wenn sie zu einem Kapitalkostensatz von <span class="varvalue">{alpha}%</span> abgezinst wird.  
-                    Dies führt nach der Anfangsinvestition zu einem Nettorendite von <span class="varvalue">\${netReturn} Millionen</span>.
-                    Darüber hinaus werden die immateriellen Vorteile der Plattform, wie z. B. eine positive Medienberichterstattung, auf <span class="varvalue">\${intangibleValue} Millionen</span> geschätzt, mit einem abgezins ten Wert von
+                    Ihr Unternehmen plant, anfänglich <span class="varvalue">\${I_t} Millionen</span> in KI-Ethik und -Governance zu investieren, um potenziell
+                    <span class="varvalue">\${fineAvoidanceValue} Millionen</span> an Strafen über <span class="varvalue">{N}</span> zu vermeiden, die einen Barwert von <span class="varvalue">\${discountedValue} Millionen</span> haben, wenn sie zu einem Kapitalkostensatz von <span class="varvalue">{alpha}%</span> abgezinst werden.  
+                    Dies führt nach der Anfangsinvestition zu einer Nettorendite von <span class="varvalue">\${netReturn} Millionen</span>.
+                    Darüber hinaus werden die immateriellen Vorteile der KI-Ethik- und Governance-Plattform Ihres Unternehmens, wie z. B. eine positive Medienberichterstattung, auf <span class="varvalue">\${intangibleValue} Millionen</span> geschätzt, mit einem abgezinsten Wert von
                     <span class="varvalue">\${discountedIntangibleReturn} Millionen</span>.
-                    Die Gesamtrendite, einschließlich dieser immateriellen Vermögenswerte, beträgt <span class="varvalue">\${totalReturn} Millionen</span>.
+                    Die Gesamtrendite, einschließlich dieser immateriellen Vermögenswerte, beträgt <span class="varvalue">\${totalReturn} Millionen</span>, was zu einem ROI von <span class="varvalue">{finalROI}</span> führt.
                 </div>
                 <br/>
-                <div class="enlargefont" style="--fontsize:18px;">
-                    Die Risikomanagementplattform kann etwa <span class="varvalue">\${capabilityReturns} Millionen</span> sparen, aber diese zusätzlichen Fähigkeiten würden zusätzliche Kosten von <span class="varvalue">\${investmentCost} Millionen</span> verursachen.
-                </div>
                 <br/>
             `
         }
@@ -965,17 +953,14 @@ export default {
             explanation_of_results: `
                 <h2>结果解释</h2>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    您的公司计划最初投资 <span class="varvalue">\${I_t} 百万</span> 在一个 AI 风险管理平台上，以
-                    避免 <span class="varvalue">\${fineAvoidanceValue} 百万</span> 的罚款，现值为 <span class="varvalue">\${discountedValue} 百万</span>，以 <span class="varvalue">{alpha}%</span> 的资本成本折现。  
+                    您的公司计划最初投资 <span class="varvalue">\${I_t} 百万</span> 在 AI 伦理和治理上，以潜在地
+                    避免在 <span class="varvalue">{N}</span> 期间的 <span class="varvalue">\${fineAvoidanceValue} 百万</span> 罚款，现值为 <span class="varvalue">\${discountedValue} 百万</span>，以 <span class="varvalue">{alpha}%</span> 的资本成本折现。  
                     这导致初始投资后的净回报为 <span class="varvalue">\${netReturn} 百万</span>。
-                    此外，该平台的无形利益，如积极的媒体报道，估计为 <span class="varvalue">\${intangibleValue} 百万</span>，折现值为
+                    此外，您公司的 AI 伦理和治理平台的无形利益，如积极的媒体报道，估计为 <span class="varvalue">\${intangibleValue} 百万</span>，折现值为
                     <span class="varvalue">\${discountedIntangibleReturn} 百万</span>。
-                    总回报，包括这些无形资产，为 <span class="varvalue">\${totalReturn} 百万</span>。
+                    总回报，包括这些无形资产，为 <span class="varvalue">\${totalReturn} 百万</span>，导致 ROI 为 <span class="varvalue">{finalROI}</span>。
                 </div>
                 <br/>
-                <div class="enlargefont" style="--fontsize:18px;">
-                    风险管理平台可以节省约 <span class="varvalue">\${capabilityReturns} 百万</span>，但这些额外的能力将额外花费 <span class="varvalue">\${investmentCost} 百万</span>。
-                </div>
                 <br/>
             `
         }
@@ -1129,17 +1114,14 @@ export default {
             explanation_of_results: `
                 <h2>結果の説明</h2>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    貴社は、AI リスク管理プラットフォームに最初に <span class="varvalue">\${I_t} 百万</span> を投資し、
-                    <span class="varvalue">\${fineAvoidanceValue} 百万</span> の罰金を回避する予定であり、これは <span class="varvalue">{alpha}%</span> の資本コストで割引かれた場合、現在価値は <span class="varvalue">\${discountedValue} 百万</span> です。  
+                    貴社は、AI倫理とガバナンスに最初に <span class="varvalue">\${I_t} 百万</span> を投資し、潜在的に
+                    <span class="varvalue">{N}</span>にわたって <span class="varvalue">\${fineAvoidanceValue} 百万</span> の罰金を回避する予定であり、これは <span class="varvalue">{alpha}%</span> の資本コストで割引かれた場合、現在価値は <span class="varvalue">\${discountedValue} 百万</span> です。  
                     これは、初期投資後の純利益が <span class="varvalue">\${netReturn} 百万</span> であることを意味します。
-                    さらに、このプラットフォームの無形の利点 (たとえば、積極的なメディア報道) は <span class="varvalue">\${intangibleValue} 百万</span> と見積もられており、割引された価値は
+                    さらに、貴社のAI倫理とガバナンスプラットフォームの無形の利点（たとえば、積極的なメディア報道）は <span class="varvalue">\${intangibleValue} 百万</span> と見積もられており、割引された価値は
                     <span class="varvalue">\${discountedIntangibleReturn} 百万</span> です。
-                    これらの無形資産を含む総リターンは <span class="varvalue">\${totalReturn} 百万</span> です。
+                    これらの無形資産を含む総リターンは <span class="varvalue">\${totalReturn} 百万</span> で、ROIは <span class="varvalue">{finalROI}</span> となります。
                 </div>
                 <br/>
-                <div class="enlargefont" style="--fontsize:18px;">
-                    リスク管理プラットフォームは約 <span class="varvalue">\${capabilityReturns} 百万</span> を節約できますが、これらの追加機能にはさらに <span class="varvalue">\${investmentCost} 百万</span> の費用がかかります。
-                </div>
                 <br/>
             `
         }
