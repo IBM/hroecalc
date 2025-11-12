@@ -50,10 +50,6 @@ export default {
       immediate: true,
       handler(newValue) {
         this.hroeReady = newValue;
-        // Hide results if form becomes invalid
-        if (!newValue) {
-          this.showResults = false;
-        }
       }
     },
 
@@ -444,11 +440,6 @@ export default {
     },
 
     calculateHROE() {
-      // Only proceed if form has minimum required data
-      if (!this.formReadyStatus) {
-        return;
-      }
-      
       // Call the hroe.js calculateHROE function with the Vue component as context
       if (typeof hroe.calculateHROE === 'function') {
         hroe.calculateHROE.call(this);
@@ -456,7 +447,7 @@ export default {
         // After calculation, generate the detailed explanation
         this.detailedExplanation = this.generateDetailedExplanation(this.calculatedValues);
         
-        // Show the results only if form is ready
+        // Show the results
         this.showResults = true;
       }
     },
@@ -611,8 +602,7 @@ export default {
       this.calculatedROI = roi;
       this.calculatedTotalReturn = totalReturn;
       this.calculatedValues = calculatedValues || {};
-      // Only show results if form has minimum required data
-      this.showResults = this.formReadyStatus;
+      this.showResults = true;
     },
 
     // Generate detailed calculation explanation using translation data
@@ -1146,7 +1136,7 @@ export default {
                           <div 
                             :class="['hroebutton', !hroeReady && 'disabled']" 
                             id="hroebutton" 
-                            @click="hroeReady && calculateHROE()"
+                            @click="calculateHROE()"
                           >Calculate ROI</div>
                           <span id="hroeResultDisplay" class="hroe-result"></span>
                           <div id="resultsHeader" v-show="showResults" style="margin-bottom:25px;">

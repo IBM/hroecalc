@@ -148,12 +148,12 @@ export default {
             explanation_of_results: `
                 <h2>Explanation of Results</h2>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    Your company plans to initially invest <span class="varvalue">{I_t} million</span> in AI ethics and governance to potentially
-                    avoid <span class="varvalue">{fineAvoidanceValue} million</span> in fines over <span class="varvalue">{N}</span>, which has a present value of <span class="varvalue">{discountedValue} million</span> when discounted at a <span class="varvalue">{alpha}%</span> cost of capital.  
-                    This results in a net return of <span class="varvalue">{netReturn} million</span> after the initial investment.
-                    Additionally, the platform's intangible benefits, such as positive media coverage, are valued at <span class="varvalue">{intangibleValue} million</span>, with a discounted value of
-                    <span class="varvalue">{discountedIntangibleReturn} million</span>.
-                    The total return, including these intangibles, is <span class="varvalue">{totalReturn} million</span>, resulting in an ROI of <span class="varvalue">{finalROI}</span>.
+                    Your company plans to initially invest <span class="varvalue">\${I_t} million</span> in AI ethics and governance to potentially
+                    avoid <span class="varvalue">\${fineAvoidanceValue} million</span> in fines over <span class="varvalue">{N}</span>, which has a present value of <span class="varvalue">\${discountedValue} million</span> when discounted at a <span class="varvalue">{alpha}%</span> cost of capital.  
+                    This results in a net return of <span class="varvalue">\${netReturn} million</span> after the initial investment.
+                    Additionally, the platform's intangible benefits, such as positive media coverage, are valued at <span class="varvalue">\${intangibleValue} million</span>, with a discounted value of
+                    <span class="varvalue">\${discountedIntangibleReturn} million</span>.
+                    The total return, including these intangibles, is <span class="varvalue">\${totalReturn} million</span>, resulting in an ROI of <span class="varvalue">{finalROI}</span>.
                 </div>
                 <br/>
                 <br/>
@@ -309,16 +309,16 @@ export default {
             explanation_of_results: `
                 <h2>Explicación de los Resultados</h2>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    Su empresa planea inicialmente invertir <span class="varvalue">{I_t} millones</span> en una plataforma de gestión de riesgos de IA para
-                    evitar una multa de <span class="varvalue">{fineAvoidanceValue} millones</span>, que tiene un valor presente de <span class="varvalue">{discountedValue} millones</span> cuando se descuenta a una tasa de capital del <span class="varvalue">{alpha}%</span>.  
-                    Esto resulta en un retorno neto de <span class="varvalue">{netReturn} millones</span> después de la inversión inicial.
-                    Además, los beneficios intangibles de la plataforma, como la cobertura mediática positiva, están valorados en <span class="varvalue">{intangibleValue} millones</span>, con un valor descontado de
-                    <span class="varvalue">{discountedIntangibleReturn} millones</span>.
-                    El retorno total, incluidos estos intangibles, es de <span class="varvalue">{totalReturn} millones</span>.
+                    Su empresa planea inicialmente invertir <span class="varvalue">\${I_t} millones</span> en una plataforma de gestión de riesgos de IA para
+                    evitar una multa de <span class="varvalue">\${fineAvoidanceValue} millones</span>, que tiene un valor presente de <span class="varvalue">\${discountedValue} millones</span> cuando se descuenta a una tasa de capital del <span class="varvalue">{alpha}%</span>.  
+                    Esto resulta en un retorno neto de <span class="varvalue">\${netReturn} millones</span> después de la inversión inicial.
+                    Además, los beneficios intangibles de la plataforma, como la cobertura mediática positiva, están valorados en <span class="varvalue">\${intangibleValue} millones</span>, con un valor descontado de
+                    <span class="varvalue">\${discountedIntangibleReturn} millones</span>.
+                    El retorno total, incluidos estos intangibles, es de <span class="varvalue">\${totalReturn} millones</span>.
                 </div>
                 <br/>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    La plataforma de gestión de riesgos puede ahorrar alrededor de <span class="varvalue">{capabilityReturns} millones</span>, pero estas capacidades adicionales costarían un adicional de <span class="varvalue">{investmentCost} millones</span>.
+                    La plataforma de gestión de riesgos puede ahorrar alrededor de <span class="varvalue">\${capabilityReturns} millones</span>, pero estas capacidades adicionales costarían un adicional de <span class="varvalue">\${investmentCost} millones</span>.
                 </div>
                 <br/>
             `
@@ -473,16 +473,16 @@ export default {
             explanation_of_results: `
                 <h2>Spiegazione dei Risultati</h2>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    La tua azienda prevede di investire inizialmente <span class="varvalue">{I_t} milioni</span> in una piattaforma di gestione dei rischi IA per
-                    evitare una multa di <span class="varvalue">{fineAvoidanceValue} milioni</span>, che ha un valore attuale di <span class="varvalue">{discountedValue} milioni</span> quando scontato a un costo del capitale del <span class="varvalue">{alpha}%</span>.  
-                    Questo si traduce in un rendimento netto di <span class="varvalue">{netReturn} milioni</span> dopo l'investimento iniziale.
-                    Inoltre, i benefici intangibili della piattaforma, come la copertura mediatica positiva, sono valutati <span class="varvalue">{intangibleValue} milioni</span>, con un valore scontato di
-                    <span class="varvalue">{discountedIntangibleReturn} milioni</span>.
-                    Il rendimento totale, inclusi questi intangibili, è <span class="varvalue">{totalReturn} milioni</span>.
+                    La tua azienda prevede di investire inizialmente <span class="varvalue">\${I_t} milioni</span> in una piattaforma di gestione dei rischi IA per
+                    evitare una multa di <span class="varvalue">\${fineAvoidanceValue} milioni</span>, che ha un valore attuale di <span class="varvalue">\${discountedValue} milioni</span> quando scontato a un costo del capitale del <span class="varvalue">{alpha}%</span>.  
+                    Questo si traduce in un rendimento netto di <span class="varvalue">\${netReturn} milioni</span> dopo l'investimento iniziale.
+                    Inoltre, i benefici intangibili della piattaforma, come la copertura mediatica positiva, sono valutati <span class="varvalue">\${intangibleValue} milioni</span>, con un valore scontato di
+                    <span class="varvalue">\${discountedIntangibleReturn} milioni</span>.
+                    Il rendimento totale, inclusi questi intangibili, è <span class="varvalue">\${totalReturn} milioni</span>.
                 </div>
                 <br/>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    La piattaforma di gestione dei rischi può far risparmiare circa <span class="varvalue">{capabilityReturns} milioni</span>, ma queste capacità aggiuntive costerebbero un ulteriore <span class="varvalue">{investmentCost} milioni</span>.
+                    La piattaforma di gestione dei rischi può far risparmiare circa <span class="varvalue">\${capabilityReturns} milioni</span>, ma queste capacità aggiuntive costerebbero un ulteriore <span class="varvalue">\${investmentCost} milioni</span>.
                 </div>
                 <br/>
             `
@@ -629,7 +629,7 @@ export default {
             years: "<strong>Années:</strong> Cela représente chaque année à partir de maintenant (<em>t</em>) jusqu'à un certain nombre d'années (<div class='varvalue'>{value}</div>) dans le futur (<em>t+N</em>).",
             discount: "<strong>Taux d'Actualisation (α):</strong> C'est un nombre entre 0 et 1 qui nous indique à quel point nous valorisons moins l'argent à l'avenir par rapport à l'argent maintenant. Par exemple, si le taux d'actualisation est <div class='varvalue'>{value}</div>, cela signifie que nous valorisons l'argent l'année prochaine à <div class='varvalue'>{percentage}%</div> de ce que nous le valorisons cette année.",
             economic_returns: "<strong>Rendements Économiques:</strong> C'est l'argent que vous vous attendez à récupérer de votre investissement chaque année <em>j</em>. Par exemple: {details}",
-            fine_avoidance: "<strong>Évitement des Amendes:</strong> C'est le montant (par exemple, <span class='varvalue'>{value} millions</span>) que votre entreprise souhaite éviter en amendes.",
+            fine_avoidance: "<strong>Évitement des Amendes:</strong> C'est le montant (par exemple, <span class='varvalue'>\${value} millions</span>) que votre entreprise souhaite éviter en amendes.",
             intangible_value: "<strong>Valeur de l'Aspet Intangible:</strong> C'est le bénéfice intangible supplémentaire, tel que la couverture médiatique positive, que vous attendez de votre entreprise (par exemple, <span class='varvalue'>{value}</span>).",
             capability_returns: "<strong>Rendements des Capacités:</strong> C'est le bénéfice que vous tirez des nouvelles compétences ou capacités que vous développez grâce à votre investissement. Chaque capacité 𝑘 a son propre rendement, et 𝛾<sub>𝑘</sub> est la fraction de l'investissement total alloué à cette capacité.",
             initial_investment: "<strong>Investissement Initial:</strong> C'est le montant de l'investissement initial de votre entreprise: {value}.",
@@ -637,16 +637,16 @@ export default {
             explanation_of_results: `
                 <h2>Explication des Résultats</h2>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    Votre entreprise prévoit d'investir initialement <span class="varvalue">{I_t} millions</span> dans une plateforme de gestion des risques IA pour
-                    éviter une amende de <span class="varvalue">{fineAvoidanceValue} millions</span>, qui a une valeur actuelle de <span class="varvalue">{discountedValue} millions</span> lorsqu'elle est actualisée à un coût du capital de <span class="varvalue">{alpha}%</span>.  
-                    Cela se traduit par un rendement net de <span class="varvalue">{netReturn} millions</span> après l'investissement initial.
-                    De plus, les avantages intangibles de la plateforme, tels qu'une couverture médiatique positive, sont évalués <span class="varvalue">{intangibleValue} millions</span>, avec une valeur actualisée de
-                    <span class="varvalue">{discountedIntangibleReturn} millions</span>.
-                    Le rendement total, y compris ces intangibles, est de <span class="varvalue">{totalReturn} millions</span>.
+                    Votre entreprise prévoit d'investir initialement <span class="varvalue">\${I_t} millions</span> dans une plateforme de gestion des risques IA pour
+                    éviter une amende de <span class="varvalue">\${fineAvoidanceValue} millions</span>, qui a une valeur actuelle de <span class="varvalue">\${discountedValue} millions</span> lorsqu'elle est actualisée à un coût du capital de <span class="varvalue">{alpha}%</span>.  
+                    Cela se traduit par un rendement net de <span class="varvalue">\${netReturn} millions</span> après l'investissement initial.
+                    De plus, les avantages intangibles de la plateforme, tels qu'une couverture médiatique positive, sont évalués <span class="varvalue">\${intangibleValue} millions</span>, avec une valeur actualisée de
+                    <span class="varvalue">\${discountedIntangibleReturn} millions</span>.
+                    Le rendement total, y compris ces intangibles, est de <span class="varvalue">\${totalReturn} millions</span>.
                 </div>
                 <br/>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    La plateforme de gestion des risques peut économiser environ <span class="varvalue">{capabilityReturns} millions</span>, mais ces capacités supplémentaires coûteraient un supplément de <span class="varvalue">{investmentCost} millions</span>.
+                    La plateforme de gestion des risques peut économiser environ <span class="varvalue">\${capabilityReturns} millions</span>, mais ces capacités supplémentaires coûteraient un supplément de <span class="varvalue">\${investmentCost} millions</span>.
                 </div>
                 <br/>
             `
@@ -793,7 +793,7 @@ export default {
             years: "<strong>Jahre:</strong> Dies stellt jedes Jahr ab jetzt (<em>t</em>) bis zu einer bestimmten Anzahl von Jahren (<div class='varvalue'>{value}</div>) in der Zukunft (<em>t+N</em>) dar.",
             discount: "<strong>Abzinsungssatz (α):</strong> Dies ist eine Zahl zwischen 0 und 1, die uns angibt, wie viel weniger wir Geld in der Zukunft im Vergleich zu Geld jetzt bewerten. Wenn der Abzinsungssatz beispielsweise <div class='varvalue'>{value}</div> beträgt, bedeutet dies, dass wir Geld im nächsten Jahr zu <div class='varvalue'>{percentage}%</div> dessen bewerten, was wir es in diesem Jahr bewerten.",
             economic_returns: "<strong>Wirtschaftliche Renditen:</strong> Dies ist das Geld, das Sie von Ihrer Investition in jedem Jahr <em>j</em> zurückerwarten. Zum Beispiel: {details}",
-            fine_avoidance: "<strong>Vermeidungswert der Strafen:</strong> Dies ist der Betrag (z. B. <span class='varvalue'>{value} Millionen</span>), den Ihr Unternehmen vermeiden möchte, an Strafen zu zahlen.",
+            fine_avoidance: "<strong>Vermeidungswert der Strafen:</strong> Dies ist der Betrag (z. B. <span class='varvalue'>\${value} Millionen</span>), den Ihr Unternehmen vermeiden möchte, an Strafen zu zahlen.",
             intangible_value: "<strong>Wert des immateriellen Aspekts:</strong> Dies ist der zusätzliche immaterielle Nutzen, wie z. B. eine positive Medienberichterstattung, den Sie von Ihrem Unternehmen erwarten (z. B. <span class='varvalue'>{value}</span>).",
             capability_returns: "<strong>Fähigkeitsrenditen:</strong> Dies ist der Vorteil, den Sie aus den neuen Fähigkeiten oder Kompetenzen ziehen, die Sie durch Ihre Investition entwickeln. Jede Fähigkeit 𝑘 hat ihre eigene Rendite, und 𝛾<sub>𝑘</sub> ist der Anteil der gesamten Investition, der dieser Fähigkeit zugewiesen wird.",
             initial_investment: "<strong>Anfangsinvestition:</strong> Dies ist der Betrag der Anfangsinvestition Ihres Unternehmens: {value}.",
@@ -801,16 +801,16 @@ export default {
             explanation_of_results: `
                 <h2>Erklärung der Ergebnisse</h2>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    Ihr Unternehmen plant, anfänglich <span class="varvalue">{I_t} Millionen</span> in eine KI-Risikomanagementplattform zu investieren, um
-                    eine Strafe von <span class="varvalue">{fineAvoidanceValue} Millionen</span> zu vermeiden, die einen Barwert von <span class="varvalue">{discountedValue} Millionen</span> hat, wenn sie zu einem Kapitalkostensatz von <span class="varvalue">{alpha}%</span> abgezinst wird.  
-                    Dies führt nach der Anfangsinvestition zu einem Nettorendite von <span class="varvalue">{netReturn} Millionen</span>.
-                    Darüber hinaus werden die immateriellen Vorteile der Plattform, wie z. B. eine positive Medienberichterstattung, auf <span class="varvalue">{intangibleValue} Millionen</span> geschätzt, mit einem abgezins ten Wert von
-                    <span class="varvalue">{discountedIntangibleReturn} Millionen</span>.
-                    Die Gesamtrendite, einschließlich dieser immateriellen Vermögenswerte, beträgt <span class="varvalue">{totalReturn} Millionen</span>.
+                    Ihr Unternehmen plant, anfänglich <span class="varvalue">\${I_t} Millionen</span> in eine KI-Risikomanagementplattform zu investieren, um
+                    eine Strafe von <span class="varvalue">\${fineAvoidanceValue} Millionen</span> zu vermeiden, die einen Barwert von <span class="varvalue">\${discountedValue} Millionen</span> hat, wenn sie zu einem Kapitalkostensatz von <span class="varvalue">{alpha}%</span> abgezinst wird.  
+                    Dies führt nach der Anfangsinvestition zu einem Nettorendite von <span class="varvalue">\${netReturn} Millionen</span>.
+                    Darüber hinaus werden die immateriellen Vorteile der Plattform, wie z. B. eine positive Medienberichterstattung, auf <span class="varvalue">\${intangibleValue} Millionen</span> geschätzt, mit einem abgezins ten Wert von
+                    <span class="varvalue">\${discountedIntangibleReturn} Millionen</span>.
+                    Die Gesamtrendite, einschließlich dieser immateriellen Vermögenswerte, beträgt <span class="varvalue">\${totalReturn} Millionen</span>.
                 </div>
                 <br/>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    Die Risikomanagementplattform kann etwa <span class="varvalue">{capabilityReturns} Millionen</span> sparen, aber diese zusätzlichen Fähigkeiten würden zusätzliche Kosten von <span class="varvalue">{investmentCost} Millionen</span> verursachen.
+                    Die Risikomanagementplattform kann etwa <span class="varvalue">\${capabilityReturns} Millionen</span> sparen, aber diese zusätzlichen Fähigkeiten würden zusätzliche Kosten von <span class="varvalue">\${investmentCost} Millionen</span> verursachen.
                 </div>
                 <br/>
             `
@@ -957,7 +957,7 @@ export default {
             years: "<strong>年:</strong> 这表示从现在 (<em>t</em>) 开始到未来某个年数 (<div class='varvalue'>{value}</div>) (<em>t+N</em>) 的每一年。",
             discount: "<strong>折现率 (α):</strong> 这是一个介于 0 和 1 之间的数字，告诉我们与现在的钱相比，我们对未来的钱有多不看重。例如，如果折现率是 <div class='varvalue'>{value}</div>，这意味着我们将明年对钱的看重程度为今年的 <div class='varvalue'>{percentage}%</div>。",
             economic_returns: "<strong>经济回报:</strong> 这是您期望从每年 <em>j</em> 的投资中收回的钱。例如: {details}",
-            fine_avoidance: "<strong>避免罚款:</strong> 这是您的公司希望避免的罚款金额 (例如，<span class='varvalue'>{value} 百万</span>)。",
+            fine_avoidance: "<strong>避免罚款:</strong> 这是您的公司希望避免的罚款金额 (例如，<span class='varvalue'>\${value} 百万</span>)。",
             intangible_value: "<strong>无形资产价值:</strong> 这是预期您的公司会获得的额外无形利益 (例如，<span class='varvalue'>{value}</span>)。",
             capability_returns: "<strong>能力回报:</strong> 这是您通过投资开发的技能或能力带来的收益。每个能力 𝑘 都有自己的回报，𝛾<sub>𝑘</sub> 是分配给该能力的总投资的一部分。",
             initial_investment: "<strong>初始投资:</strong> 这是您公司初始投资的金额: {value}。",
@@ -965,16 +965,16 @@ export default {
             explanation_of_results: `
                 <h2>结果解释</h2>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    您的公司计划最初投资 <span class="varvalue">{I_t} 百万</span> 在一个 AI 风险管理平台上，以
-                    避免 <span class="varvalue">{fineAvoidanceValue} 百万</span> 的罚款，现值为 <span class="varvalue">{discountedValue} 百万</span>，以 <span class="varvalue">{alpha}%</span> 的资本成本折现。  
-                    这导致初始投资后的净回报为 <span class="varvalue">{netReturn} 百万</span>。
-                    此外，该平台的无形利益，如积极的媒体报道，估计为 <span class="varvalue">{intangibleValue} 百万</span>，折现值为
-                    <span class="varvalue">{discountedIntangibleReturn} 百万</span>。
-                    总回报，包括这些无形资产，为 <span class="varvalue">{totalReturn} 百万</span>。
+                    您的公司计划最初投资 <span class="varvalue">\${I_t} 百万</span> 在一个 AI 风险管理平台上，以
+                    避免 <span class="varvalue">\${fineAvoidanceValue} 百万</span> 的罚款，现值为 <span class="varvalue">\${discountedValue} 百万</span>，以 <span class="varvalue">{alpha}%</span> 的资本成本折现。  
+                    这导致初始投资后的净回报为 <span class="varvalue">\${netReturn} 百万</span>。
+                    此外，该平台的无形利益，如积极的媒体报道，估计为 <span class="varvalue">\${intangibleValue} 百万</span>，折现值为
+                    <span class="varvalue">\${discountedIntangibleReturn} 百万</span>。
+                    总回报，包括这些无形资产，为 <span class="varvalue">\${totalReturn} 百万</span>。
                 </div>
                 <br/>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    风险管理平台可以节省约 <span class="varvalue">{capabilityReturns} 百万</span>，但这些额外的能力将额外花费 <span class="varvalue">{investmentCost} 百万</span>。
+                    风险管理平台可以节省约 <span class="varvalue">\${capabilityReturns} 百万</span>，但这些额外的能力将额外花费 <span class="varvalue">\${investmentCost} 百万</span>。
                 </div>
                 <br/>
             `
@@ -1121,7 +1121,7 @@ export default {
             years: "<strong>年数:</strong> これは、現在 (<em>t</em>) から将来のある年数 (<div class='varvalue'>{value}</div>) (<em>t+N</em>) までの各年を表します。",
             discount: "<strong>割引率 (α):</strong> これは、今のお金に比べて将来のお金をどれだけ低く評価するかを示す 0 と 1 の間の数値です。 たとえば、割引率が <div class='varvalue'>{value}</div> の場合、これは来年のお金を今年の <div class='varvalue'>{percentage}%</div> で評価することを意味します。",
             economic_returns: "<strong>経済的利益:</strong> これは、各年 <em>j</em> の投資から回収することを期待するお金です。 例えば: {details}",
-            fine_avoidance: "<strong>罰金回避:</strong> これは、貴社が罰金を回避したい金額 (例: <span class='varvalue'>{value} 百万</span>) です。",
+            fine_avoidance: "<strong>罰金回避:</strong> これは、貴社が罰金を回避したい金額 (例: <span class='varvalue'>\${value} 百万</span>) です。",
             intangible_value: "<strong>無形の側面の価値:</strong> これは、貴社が受け取ると予想される追加の無形の利益 (たとえば、<span class='varvalue'>{value}</span>) です。",
             capability_returns: "<strong>能力のリターン:</strong> これは、投資によって開発した新しいスキルや能力から得られる利益です。 各能力 𝑘 には独自のリターンがあり、𝛾<sub>𝑘</sub> は、その能力に割り当てられる総投資の割合です。",
             initial_investment: "<strong>初期投資:</strong> これは、貴社の初期投資額です: {value}。",
@@ -1129,16 +1129,16 @@ export default {
             explanation_of_results: `
                 <h2>結果の説明</h2>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    貴社は、AI リスク管理プラットフォームに最初に <span class="varvalue">{I_t} 百万</span> を投資し、
-                    <span class="varvalue">{fineAvoidanceValue} 百万</span> の罰金を回避する予定であり、これは <span class="varvalue">{alpha}%</span> の資本コストで割引かれた場合、現在価値は <span class="varvalue">{discountedValue} 百万</span> です。  
-                    これは、初期投資後の純利益が <span class="varvalue">{netReturn} 百万</span> であることを意味します。
-                    さらに、このプラットフォームの無形の利点 (たとえば、積極的なメディア報道) は <span class="varvalue">{intangibleValue} 百万</span> と見積もられており、割引された価値は
-                    <span class="varvalue">{discountedIntangibleReturn} 百万</span> です。
-                    これらの無形資産を含む総リターンは <span class="varvalue">{totalReturn} 百万</span> です。
+                    貴社は、AI リスク管理プラットフォームに最初に <span class="varvalue">\${I_t} 百万</span> を投資し、
+                    <span class="varvalue">\${fineAvoidanceValue} 百万</span> の罰金を回避する予定であり、これは <span class="varvalue">{alpha}%</span> の資本コストで割引かれた場合、現在価値は <span class="varvalue">\${discountedValue} 百万</span> です。  
+                    これは、初期投資後の純利益が <span class="varvalue">\${netReturn} 百万</span> であることを意味します。
+                    さらに、このプラットフォームの無形の利点 (たとえば、積極的なメディア報道) は <span class="varvalue">\${intangibleValue} 百万</span> と見積もられており、割引された価値は
+                    <span class="varvalue">\${discountedIntangibleReturn} 百万</span> です。
+                    これらの無形資産を含む総リターンは <span class="varvalue">\${totalReturn} 百万</span> です。
                 </div>
                 <br/>
                 <div class="enlargefont" style="--fontsize:18px;">
-                    リスク管理プラットフォームは約 <span class="varvalue">{capabilityReturns} 百万</span> を節約できますが、これらの追加機能にはさらに <span class="varvalue">{investmentCost} 百万</span> の費用がかかります。
+                    リスク管理プラットフォームは約 <span class="varvalue">\${capabilityReturns} 百万</span> を節約できますが、これらの追加機能にはさらに <span class="varvalue">\${investmentCost} 百万</span> の費用がかかります。
                 </div>
                 <br/>
             `
