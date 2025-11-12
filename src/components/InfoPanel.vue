@@ -34,7 +34,7 @@ export default {
       }
     },
     showModal() {
-      this.$emit('showModal');
+      this.$emit('showHelpPopup');
     }
   },
 }
