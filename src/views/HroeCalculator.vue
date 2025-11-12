@@ -7,6 +7,7 @@ import DisclaimerModal from "@/components/DisclaimerModal.vue";
 import InfoPanel from "@/components/InfoPanel.vue";
 import FormulaDisplay from "@/components/FormulaDisplay.vue";
 import CalculatorToolbar from "@/components/CalculatorToolbar.vue";
+import FloatingExplanationPanel from "@/components/FloatingExplanationPanel.vue";
 import EconomicReturns from "@/components/form/EconomicReturns.vue";
 import ReputationalReturns from "@/components/form/ReputationalReturns.vue";
 import CapabilityReturns from "@/components/form/CapabilityReturns.vue";
@@ -21,6 +22,7 @@ export default {
     InfoPanel,
     FormulaDisplay,
     CalculatorToolbar,
+    FloatingExplanationPanel,
     EconomicReturns,
     ReputationalReturns,
     CapabilityReturns,
@@ -139,7 +141,12 @@ export default {
       explanationPanelContent: '', // Content for explanation panel (will be initialized in mounted)
       highlightedElements: [], // Track highlighted formula elements
       exampleMessage: '', // Message shown for current example
-      detailedExplanation: '' // Detailed calculation explanation (explanation_of_results)
+      detailedExplanation: '', // Detailed calculation explanation (explanation_of_results)
+      // Mouse tracking for floating panel
+      mouseX: 0,
+      mouseY: 0,
+      showFloatingPanel: false,
+      panelShowTimeout: null
     };
   },
   computed: {
@@ -308,6 +315,23 @@ export default {
     },
   },
   methods: {
+    // Mouse tracking methods for floating panel
+    handleMouseMove(event) {
+      // Use pageX/pageY for absolute positioning relative to document
+      // This accounts for scroll position and avoids issues with CSS transforms
+      this.mouseX = event.pageX;
+      this.mouseY = event.pageY;
+    },
+    
+    handleMouseLeave() {
+      // Clear any pending show timeout
+      if (this.panelShowTimeout) {
+        clearTimeout(this.panelShowTimeout);
+        this.panelShowTimeout = null;
+      }
+      this.showFloatingPanel = false;
+    },
+
     updateColumn({ rowIndex, colIndex, value }) {
       // Clear the previous timeout if it exists
       if (this.updateColumnTimeout) {
@@ -489,12 +513,31 @@ export default {
       }
 
       this.explanationPanelContent = explanation;
+      
+      // Clear any existing timeout
+      if (this.panelShowTimeout) {
+        clearTimeout(this.panelShowTimeout);
+      }
+      
+      // Show panel with a small delay to avoid flickering
+      this.panelShowTimeout = setTimeout(() => {
+        this.showFloatingPanel = true;
+        this.panelShowTimeout = null;
+      }, 200);
     },
 
     // Vue equivalent for clearExplanation function
     clearExplanation() {
       const currentLang = this.currentLanguage;
       this.explanationPanelContent = translationsData[currentLang].hoverText;
+      
+      // Clear any pending show timeout
+      if (this.panelShowTimeout) {
+        clearTimeout(this.panelShowTimeout);
+        this.panelShowTimeout = null;
+      }
+      
+      this.showFloatingPanel = false;
     },
 
     // Vue equivalent for generateYearlyExplanation function
@@ -696,6 +739,10 @@ export default {
       this.showStartupMessage = false
     });
 
+    // Add mouse tracking for floating panel
+    document.addEventListener('mousemove', this.handleMouseMove);
+    document.addEventListener('mouseleave', this.handleMouseLeave);
+
     // Validation is now handled by Vue computed properties and watchers
 
     document.querySelectorAll('input[type="text"], input[type="number"]').forEach(input => {
@@ -792,15 +839,28 @@ export default {
     // Form ready checking is now handled by Vue computed properties and watchers
 
     document.addEventListener("DOMContentLoaded", () => {
-        resultsPanel('off')
+        this.toggleResultsPanel('off')
         // Economic returns are now handled by the EconomicReturns Vue component
     });
 
+  },
+  
+  beforeUnmount() {
+    // Clean up mouse event listeners
+    document.removeEventListener('mousemove', this.handleMouseMove);
+    document.removeEventListener('mouseleave', this.handleMouseLeave);
   }
 };
 </script>
 
 <template>
+
+  <div class="formula-container">
+      <div @click="showHelp()" style="cursor: pointer;">
+          <img src="/icons/iconhelp.png" data-tooltip-key="helpInformation" data-tooltip="Help Information"
+              data-tooltip-type="regular" alt="Help Icon" style="width: 50px; height:50px;">
+      </div>
+  </div>
   <div class="container">
       <div class="flipper" id="flipper">
           <div class="front">
@@ -819,14 +879,6 @@ export default {
                 v-if="showDisclaimerModal"
                 @close="showDisclaimerModal = false"
               />
-
-              <div class="formula-container" style="position: relative;">
-                  <div @click="showHelp()" style="position: absolute; top: 7px; right: 10px; cursor: pointer;">
-                      <img src="/icons/iconhelp.png" data-tooltip-key="helpInformation" data-tooltip="Help Information"
-                          data-tooltip-type="regular" alt="Help Icon" style="width: 33px; height:33px;">
-                  </div>
-                  <div class="formula-leftpanel" id="explanation-panel" v-html="explanationPanelContent"></div>
-              </div>
 
               <!-- Help Popup (Initially Hidden) -->
               <div id="helpPopup">
@@ -1174,6 +1226,14 @@ export default {
               <iframe src="https://arxiv.org/pdf/2309.13057#zoom=125" title="HROE Paper"></iframe>
           </div>
       </div>
+      
+      <!-- Floating Explanation Panel -->
+      <FloatingExplanationPanel
+        :visible="showFloatingPanel"
+        :content="explanationPanelContent"
+        :mouseX="mouseX"
+        :mouseY="mouseY"
+      />
   </div>
 </template>
 
