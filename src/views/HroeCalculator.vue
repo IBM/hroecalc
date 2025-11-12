@@ -462,6 +462,29 @@ export default {
       }
     },
 
+    // Form management methods
+    eraseForm() {
+      if (typeof hroe.eraseForm === 'function') {
+        hroe.eraseForm();
+      }
+    },
+
+    deleteLocalStorage() {
+      if (typeof hroe.deleteLocalStorage === 'function') {
+        hroe.deleteLocalStorage();
+      }
+    },
+
+    saveToMemory() {
+      if (typeof hroe.saveToMemory === 'function') {
+        hroe.saveToMemory();
+      }
+    },
+
+    openToolbarHelp() {
+      this.showToolbarHelp = true;
+    },
+
     calculateHROE() {
       // Call the hroe.js calculateHROE function with the Vue component as context
       if (typeof hroe.calculateHROE === 'function') {
@@ -893,7 +916,7 @@ export default {
                         @delete-local-storage="deleteLocalStorage"
                         @populate-example="populateWithSampleValues"
                         @save-to-memory="saveToMemory"
-                        @show-toolbar-help="showToolbarHelp"
+                        @show-toolbar-help="openToolbarHelp"
                       />
 
                       <BasicInputs
