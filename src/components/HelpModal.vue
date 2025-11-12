@@ -101,13 +101,15 @@ export default {
             analyzed. Neither IBM nor the University of Notre Dame make any warranty that such results
             will be achieved.</p>
 
-          <h4 style="color: #333; margin-top: 20px; margin-bottom: 15px;">Additional Reference Materials:</h4>
+          <h3 style="color: #333; margin-top: 20px; margin-bottom: 15px;">Additional Reference Materials:</h3>
           <ul style="list-style-type: none; padding-left: 0;">
             <li 
               v-for="(link, index) in hroeLinks"
               :key="index"
               style="margin-bottom: 10px;"
             >
+              <strong v-if="link.source">{{ link.source }}:</strong>
+              <br>
               <a 
                 :href="link.link" 
                 target="_blank" 
