@@ -940,7 +940,7 @@ export default {
         <p>根据这种整体方法，本程序使用论文中提供的公式来计算多年来AI伦理投资的ROI。该程序提示用户输入与每年的经济回报、声誉回报和能力回报相关的输入，以及折扣因素和初始投资成本。</p>
         <p>通过整合这些变量，该程序通过将未来回报折现至现值并汇总经济、声誉和能力投资的总回报来计算HROE。这种多年期方法使组织能够更好地评估其AI伦理投资的长期收益，并更清楚地了解这些投资如何影响其整体绩效和战略灵活性。</p>
     `,
-        helpPopupSignature: "<strong>最后更新</strong>：2024年8月30日",
+        helpPopupSignature: "<strong>最后更新</strong>：2025年11月",
         explanation: {
             years: "<strong>年:</strong> 这表示从现在 (<em>t</em>) 开始到未来某个年数 (<div class='varvalue'>{value}</div>) (<em>t+N</em>) 的每一年。",
             discount: "<strong>折现率 (α):</strong> 这是一个介于 0 和 1 之间的数字，告诉我们与现在的钱相比，我们对未来的钱有多不看重。例如，如果折现率是 <div class='varvalue'>{value}</div>，这意味着我们将明年对钱的看重程度为今年的 <div class='varvalue'>{percentage}%</div>。",
@@ -1101,7 +1101,7 @@ export default {
         <p>この包括的なアプローチに沿って、このプログラムは、論文で提供された式を使用して、AI倫理投資のROIを複数年にわたって計算します。このプログラムは、経済的収益、評判の収益、および各年の能力収益に関連する入力、ならびに割引要因と初期投資コストに関してユーザーにプロンプトを表示します。</p>
         <p>これらの変数を組み込むことにより、このプログラムは、将来の収益を現在価値に割り引き、経済的、評判的、能力的な投資からの総収益を合計することによってHROEを計算します。この多年期アプローチは、組織がAI倫理投資の長期的な利益をよりよく評価し、これらの投資が全体的なパフォーマンスと戦略的柔軟性にどのように影響するかをより明確に示すことができるようにします。</p>
     `,
-        helpPopupSignature: "<strong>最終更新日</strong>：2024年8月30日",
+        helpPopupSignature: "<strong>最終更新日</strong>：2025年11月",
         explanation: {
             years: "<strong>年数:</strong> これは、現在 (<em>t</em>) から将来のある年数 (<div class='varvalue'>{value}</div>) (<em>t+N</em>) までの各年を表します。",
             discount: "<strong>割引率 (α):</strong> これは、今のお金に比べて将来のお金をどれだけ低く評価するかを示す 0 と 1 の間の数値です。 たとえば、割引率が <div class='varvalue'>{value}</div> の場合、これは来年のお金を今年の <div class='varvalue'>{percentage}%</div> で評価することを意味します。",

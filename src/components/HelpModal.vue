@@ -1,5 +1,6 @@
 <script>
 import hroeLinks from "@/scripts/hroe-links.js";
+import translationsData from "@/scripts/hroe-translations.js";
 
 export default {
   name: "HelpModal",
@@ -7,12 +8,27 @@ export default {
     visible: {
       type: Boolean,
       default: false
+    },
+    currentLanguage: {
+      type: String,
+      default: 'en'
     }
   },
   data() {
     return {
       hroeLinks
     };
+  },
+  computed: {
+    helpPopupTitle() {
+      return translationsData[this.currentLanguage].helpPopupTitle;
+    },
+    helpPopupContent() {
+      return translationsData[this.currentLanguage].helpPopupContent;
+    },
+    helpPopupSignature() {
+      return translationsData[this.currentLanguage].helpPopupSignature;
+    }
   },
   methods: {
     closeHelp() {
@@ -30,51 +46,13 @@ export default {
       <button id="closeHelp" @click="closeHelp()">
           <img src='/icons/close--large.svg'>
       </button>
-      <h2 id="helpPopupTitle">Holistic Return on AI Ethics Framework Calculator</h2>
+      <h2 id="helpPopupTitle" v-html="helpPopupTitle"></h2>
       <div id="helpPopupContent"
           style="max-height: 600px; overflow-y: scroll; font-size:18px; padding: 20px; padding-top:0px;background-color:#fefeff;">
           
           <!-- About the Calculator Section -->
           <h3 style="color: #333; margin-top: 0;">About This Calculator</h3>
-          <p>Organizations are motivated to implement ethical AI practices for various reasons. For
-              example, because they believe it is the right thing to do or to avoid costs such as lawsuits
-              and fines. You can use this calculator to estimate your potential returns on AI ethics
-              investments, and refer to the paper titled, "The Return on Investment in AI Ethics: A
-              Holistic Framework" (<a href="#"
-                  @click="togglePanel();">https://arxiv.org/pdf/2309.13057</a>) for a deeper
-              understanding of the benefits. The paper proposes a comprehensive approach to understanding
-              the returns on investments in AI ethics.</p>
-          <p>The Holistic Return on AI Ethics framework considers not only direct economic returns but
-              also intangible benefits related to reputation and real options connected to organizational
-              capabilities. This framework is designed to help organizations justify their investments in
-              AI ethics by demonstrating how these investments can lead to cost savings, revenue
-              generation, improved stakeholder perceptions, and enhanced future opportunities.</p>
-          <p class="note-box"><strong>Note</strong>: The return on investments in AI ethics and governance
-              initiatives should be assessed holistically. While this calculator provides a helpful tool
-              for assessing quantifiable returns, a holistic assessment should also include returns and
-              impacts that are qualitative in nature. It is important to consider a broad set of
-              stakeholders and the impact on society at large during the holistic assessment process.</p>
-          
-          <p>AI technologies, while beneficial, pose significant ethical challenges such as bias,
-              fairness, and privacy concerns. Addressing these issues requires substantial investments,
-              which organizations often find difficult to justify without clear evidence of return on
-              investment.</p>
-          <p>The ROI in AI Ethics framework addresses this gap by integrating economic impacts, such as
-              direct
-              financial returns and cost avoidance, with intangible impacts, like improved reputation and
-              stakeholder trust. Additionally, it includes real options that offer future flexibility and
-              adaptability. This approach provides a comprehensive view of how AI ethics investments can
-              contribute to an organization's overall success and sustainability, making it easier to
-              justify and sustain these critical initiatives.</p>
-          <p>In line with this holistic approach, this program uses the formulas provided in the paper to
-              calculate the ROI of AI ethics investments over multiple years. This program prompts users
-              for inputs related to economic returns, reputational returns, and capability returns for
-              each year, as well as the discount factor and initial investment costs.</p>
-          <p>By incorporating these variables, the program computes the ROI by discounting future returns
-              to their present value and summing up the total returns from economic, reputational, and
-              capability investments. This multi-year approach allows organizations to better evaluate the
-              long-term benefits of their AI ethics investments, providing a clearer picture of how these
-              investments impact their overall performance and strategic flexibility.</p>
+          <div v-html="helpPopupContent"></div>
           
           <hr style="margin: 30px 0; border: 1px solid #ddd;">
           
@@ -123,8 +101,7 @@ export default {
             </li>
           </ul>
       </div>
-      <div id="helpPopupSignature" class="signature-box">
-          <strong>Last updated</strong>: November, 2025
+      <div id="helpPopupSignature" class="signature-box" v-html="helpPopupSignature">
       </div>
   </div>
 </template>

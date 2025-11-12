@@ -696,6 +696,11 @@ export default {
       this.showHelpPopup = false;
     },
 
+    // Handle language change from Translation component
+    handleLanguageChange(newLanguage) {
+      this.currentLanguage = newLanguage;
+    },
+
     // Close toolbar help popup
     closeToolbarHelp() {
       const toolbarHelp = document.getElementById('helpFormToolbar');
@@ -859,7 +864,10 @@ export default {
   <div class="container">
       <div class="flipper" id="flipper">
           <div class="front">
-              <Translation />
+              <Translation 
+                :currentLanguage="currentLanguage"
+                @language-changed="handleLanguageChange"
+              />
               <div class="header">
                   <h1 id="page-title">ROI in AI Ethics Framework Calculator v0.8.5</h1>
                   <div class="paperbutton" id="read-paper" @click="togglePanel()">Read the Paper</div>
@@ -867,6 +875,7 @@ export default {
               <InfoPanel
                 :infoPanelContent='infoPanelContent'
                 :errorMessage='errorMessage'
+                :currentLanguage='currentLanguage'
                 @showHelpPopup="showHelp"
               />
 
@@ -1179,6 +1188,7 @@ export default {
   <!-- Help Modal Component -->
   <HelpModal
     :visible="showHelpPopup"
+    :currentLanguage="currentLanguage"
     @close="closeHelp"
     @toggle-panel="togglePanel"
   />
