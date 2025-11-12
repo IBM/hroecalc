@@ -33,9 +33,6 @@ export default {
   methods: {
     closeHelp() {
       this.$emit('close');
-    },
-    togglePanel() {
-      this.$emit('toggle-panel');
     }
   }
 }
@@ -64,8 +61,7 @@ export default {
           <p>
             This HROE Framework Calculator ("Calculator") is an implementation of the research
             undertaken jointly by IBM and the University of Notre Dame through the Notre Dame-IBM
-            Technology Ethics Lab. Read the research paper (<a href="#"
-                @click="togglePanel();">https://arxiv.org/pdf/2309.13057)</a>.</p>
+            Technology Ethics Lab. Read the research paper (<a href="https://arxiv.org/pdf/2309.13057" target="_blank" rel="noopener noreferrer">https://arxiv.org/pdf/2309.13057</a>).</p>
           <p>
             The use of the Calculator is based on return-on-investment (ROI) concepts and formulas that
             reflect factors in AI ethics principles, regulatory requirements, and industry standards at

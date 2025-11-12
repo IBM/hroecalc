@@ -701,14 +701,6 @@ export default {
       }
     },
 
-    // Toggle between calculator and paper view (flip animation)
-    togglePanel() {
-      const flipper = document.getElementById('flipper');
-      if (flipper) {
-        flipper.classList.toggle('flipped');
-      }
-    },
-
     // Show help popup
     showHelp() {
       this.showHelpPopup = true;
@@ -885,16 +877,14 @@ export default {
       </div>
   </div>
   <div class="container">
-      <div class="flipper" id="flipper">
-          <div class="front">
-              <Translation 
-                :currentLanguage="currentLanguage"
-                @language-changed="handleLanguageChange"
-              />
-              <div class="header">
-                  <h1 id="page-title">ROI in AI Ethics Framework Calculator v0.8.5</h1>
-                  <div class="paperbutton" id="read-paper" @click="togglePanel()">Read the Paper</div>
-              </div>
+      <Translation 
+        :currentLanguage="currentLanguage"
+        @language-changed="handleLanguageChange"
+      />
+      <div class="header">
+          <h1 id="page-title">ROI in AI Ethics Framework Calculator v0.8.5</h1>
+          <a href="https://arxiv.org/pdf/2309.13057" target="_blank" rel="noopener noreferrer" class="paperbutton" id="read-paper">Read the Paper</a>
+      </div>
               <InfoPanel
                 :infoPanelContent='infoPanelContent'
                 :errorMessage='errorMessage'
@@ -1048,16 +1038,7 @@ export default {
                   </div>
               </div>
               <div id="tooltip" class="tooltip"></div>
-          </div>
-          <div class="back">
-              <div class="header">
-                  <h1>The Return on Investment in AI Ethics: A Holistic Framework</h1>
-                  <div class="paperbutton" id="return-calculator" @click="togglePanel()">Return to Calculator</div>
-              </div>
-              <iframe src="https://arxiv.org/pdf/2309.13057#zoom=125" title="HROE Paper"></iframe>
-          </div>
-      </div>
-
+      
       <div id="helpFormToolbar">
           <button @click="closeToolbarHelp()"
               style="position:absolute; top: 2px; right: 2px; background: none; border: none; font-size: 16px; cursor: pointer;color:black;">
@@ -1198,22 +1179,21 @@ export default {
               <strong>Last updated</strong>: November, 2025
           </div>
       </div>
-      
-      <!-- Floating Explanation Panel -->
-      <FloatingExplanationPanel
-        :visible="showFloatingPanel"
-        :content="explanationPanelContent"
-        :mouseX="mouseX"
-        :mouseY="mouseY"
-      />
   </div>
+  
+  <!-- Floating Explanation Panel -->
+  <FloatingExplanationPanel
+    :visible="showFloatingPanel"
+    :content="explanationPanelContent"
+    :mouseX="mouseX"
+    :mouseY="mouseY"
+  />
   
   <!-- Help Modal Component -->
   <HelpModal
     :visible="showHelpPopup"
     :currentLanguage="currentLanguage"
     @close="closeHelp"
-    @toggle-panel="togglePanel"
   />
 </template>
 
