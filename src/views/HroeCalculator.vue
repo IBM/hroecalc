@@ -880,199 +880,7 @@ export default {
                 @close="showDisclaimerModal = false"
               />
 
-              <!-- Help Popup (Initially Hidden) -->
-              <div id="helpPopup">
-                  <button id="closeHelp" @click="closeHelp()">
-                      <img src='/icons/close--large.svg'>
-                  </button>
-                  <h2 id="helpPopupTitle">Holistic Return on AI Ethics Framework Calculator</h2>
-                  <div id="helpPopupContent"
-                      style="max-height: 600px; overflow-y: scroll; font-size:18px; padding: 20px; padding-top:0px;background-color:#fefeff;">
-                      <p>Organizations are motivated to implement ethical AI practices for various reasons. For
-                          example, because they believe it is the right thing to do or to avoid costs such as lawsuits
-                          and fines. You can use this calculator to estimate your potential returns on AI ethics
-                          investments, and refer to the paper titled, "The Return on Investment in AI Ethics: A
-                          Holistic Framework" (<a href="#"
-                              @click="togglePanel();">https://arxiv.org/pdf/2309.13057</a>) for a deeper
-                          understanding of the benefits. The paper proposes a comprehensive approach to understanding
-                          the returns on investments in AI ethics.</p>
-                      <p>The Holistic Return on AI Ethics framework considers not only direct economic returns but
-                          also intangible benefits related to reputation and real options connected to organizational
-                          capabilities. This framework is designed to help organizations justify their investments in
-                          AI ethics by demonstrating how these investments can lead to cost savings, revenue
-                          generation, improved stakeholder perceptions, and enhanced future opportunities.</p>
-                      <p class="note-box"><strong>Note</strong>: The return on investments in AI ethics and governance
-                          initiatives should be assessed holistically. While this calculator provides a helpful tool
-                          for assessing quantifiable returns, a holistic assessment should also include returns and
-                          impacts that are qualitative in nature. It is important to consider a broad set of
-                          stakeholders and the impact on society at large during the holistic assessment process.</p>
-                      <br />
-                      <p>AI technologies, while beneficial, pose significant ethical challenges such as bias,
-                          fairness, and privacy concerns. Addressing these issues requires substantial investments,
-                          which organizations often find difficult to justify without clear evidence of return on
-                          investment.</p>
-                      <p>The ROI in AI Ethics framework addresses this gap by integrating economic impacts, such as
-                          direct
-                          financial returns and cost avoidance, with intangible impacts, like improved reputation and
-                          stakeholder trust. Additionally, it includes real options that offer future flexibility and
-                          adaptability. This approach provides a comprehensive view of how AI ethics investments can
-                          contribute to an organization's overall success and sustainability, making it easier to
-                          justify and sustain these critical initiatives.</p>
-                      <p>In line with this holistic approach, this program uses the formulas provided in the paper to
-                          calculate the ROI of AI ethics investments over multiple years. This program prompts users
-                          for inputs related to economic returns, reputational returns, and capability returns for
-                          each year, as well as the discount factor and initial investment costs.</p>
-                      <p>By incorporating these variables, the program computes the ROI by discounting future returns
-                          to their present value and summing up the total returns from economic, reputational, and
-                          capability investments. This multi-year approach allows organizations to better evaluate the
-                          long-term benefits of their AI ethics investments, providing a clearer picture of how these
-                          investments impact their overall performance and strategic flexibility.</p>
-                  </div>
-                  <div id="helpPopupSignature" class="signature-box">
-                      <strong>Last updated</strong>: August 30, 2024
-                  </div>
-              </div>
 
-              <div id="helpFormToolbar">
-                  <button @click="closeToolbarHelp()"
-                      style="position:absolute; top: 2px; right: 2px; background: none; border: none; font-size: 16px; cursor: pointer;color:black;">
-                      <img src='/icons/close--large.svg'>
-                  </button>
-                  <h2
-                      style="padding-left:20px; background-color:white; border-bottom:1px solid #ccc; padding-bottom:0px;">
-                      Toolbar Help</h2>
-                  <div
-                      style="max-height: 300px; overflow-y: scroll; font-size:18px; padding: 20px; padding-top:0px;background-color:#fefeff;">
-                      <p>The toolbar above the input form has several buttons that help you work with the calculator's
-                          input values:</p>
-
-                      <div class="table">
-                          <div class="row">
-                              <div class="icon-column">
-                                  <img class="icon" src="/icons/help.svg" alt="Help">
-                              </div>
-                              <div class="details-column">
-                                  <p><strong>Help With This Toolbar</strong>: Brings up this help screen.
-                                  </p>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="icon-column">
-                                  <img class="icon" src="/icons/save.svg" alt="Erase">
-                              </div>
-                              <div class="details-column">
-                                  <p><strong>Save Values as Default</strong>: Pressing this
-                                      button saves the current values in the input fields as the default form, which
-                                      gets loaded automatically whenever the calculator is reloaded or the browser
-                                      is restarted. </p>
-                                  <p>This function
-                                      stores the values of the form in the browser's local storage, which allows data
-                                      to be retained even after the browser is closed and reopened. You
-                                      can update the default form at any time by pressing the button again. Upon
-                                      saving, the toolbar will display the message "Saved Default Form."</p>
-                                  <p>If a default
-                                      form has been previously saved, the toolbar will display the message "Loaded
-                                      Default Form"
-                                      when the calculator is reloaded. </p>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="icon-column">
-                                  <img class="icon" src="/icons/erase.svg" alt="Erase">
-                              </div>
-                              <div class="details-column">
-                                  <p><strong>Erase Form</strong>: Pressing this button erases the input form and
-                                      displays the message "--- BLANK FORM ---" in the toolbar. Note that
-                                      that, if you erase the input form and then save the blank form as the default
-                                      form,
-                                      the calculator will always come up blank when the page loads, until you save a
-                                      different
-                                      form as default. Erasing the form does not clear the default form.
-                                  </p>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="icon-column">
-                                  <img class="icon" src="/icons/trash-can.svg" alt="Trash">
-                              </div>
-                              <div class="details-column">
-                                  <p><strong>Delete Default Form</strong>: This deletes the browser's local storage
-                                      and therefore the default form.
-                                      If you press this button and reload the web page or reopen the browser, you will
-                                      see the following message, which
-                                      also appears the very first time you use the calculator:
-                                  <div class="nolocalstorage"><img src="/icons/nolocalstorage.jpg"></div>
-
-                                  The message disappears as soon as you start using the form or the toolbar. If you
-                                  later save your form as the default, you will no longer see this message. This is
-                                  true
-                                  even if you save a blank form as the default. Deleting the default form does not
-                                  erase the form.
-                                  </p>
-                              </div>
-                          </div>
-
-
-                          <div class="row">
-                              <div class="icon-column">
-                                  &nbsp;
-                              </div>
-                              <div class="details-column">
-                                  <p><strong>Examples and Navigation Controls</strong>:
-                                      The ROI in AI Ethics calculator comes pre-loaded with 10 examples to help you
-                                      better
-                                      understand
-                                      how the HROE formula works. The Examples Navigation controls are these:</p>
-                                  <p><img src="/icons/navcontrols.jpg"></p>
-                                  <p>
-                                      Navigating to an example fills the input form with predefined values and
-                                      automatically calculates the ROI. The navigation wraps around, so, if you are
-                                      on the last example and click
-                                      "Next Example," it will take you back to the first example, which is the one
-                                      explained in the paper. Similarly,
-                                      if you are on the first example and click "Previous Example," it will take you
-                                      to the last example. </p>
-                                  <p>These examples are stored in the
-                                      <strong>hroe-examples.js</strong> file, located in the <em>scripts</em>
-                                      directory. Here is what it looks like:
-                                  </p>
-                                  <p>
-                                      <img src="/icons/hroe-examples.jpg" width="70%" height="70%">
-                                  </p>
-                                  <p>You can edit this file to add new examples, as well as delete or
-                                      modify existing ones. Remember to reload the page for your changes to take
-                                      effect.</p>
-                                  <p>
-                                      If you plan to modify the <strong>hroe-examples.js</strong> file, we strongly
-                                      recommend making a backup first and keeping the example from the paper as the
-                                      first entry.
-
-
-                                  </p>
-
-                              </div>
-                          </div>
-                      </div>
-
-                      <div class="row">
-                          <div class="icon-column">
-                              <img src="/icons/settings--edit.svg" alt="Settings" class="icon svgimagedisabled">
-                          </div>
-                          <div class="details-column">
-                              <p><strong>FUTURE FEATURE</strong>: This disabled button is a placeholder for a
-                                  tentative future feature that would
-                                  allow you to configure and connect to external sources to populate the different
-                                  input fields.
-                              </p>
-
-                          </div>
-                      </div>
-
-                  </div>
-                  <div class="signature-box">
-                      <strong>Last updated</strong>: August 30, 2024
-                  </div>
-              </div>
 
 
 
@@ -1226,6 +1034,147 @@ export default {
               <iframe src="https://arxiv.org/pdf/2309.13057#zoom=125" title="HROE Paper"></iframe>
           </div>
       </div>
+
+      <div id="helpFormToolbar">
+          <button @click="closeToolbarHelp()"
+              style="position:absolute; top: 2px; right: 2px; background: none; border: none; font-size: 16px; cursor: pointer;color:black;">
+              <img src='/icons/close--large.svg'>
+          </button>
+          <h2
+              style="padding-left:20px; background-color:white; border-bottom:1px solid #ccc; padding-bottom:0px;">
+              Toolbar Help</h2>
+          <div
+              style="max-height: 300px; overflow-y: scroll; font-size:18px; padding: 20px; padding-top:0px;background-color:#fefeff;">
+              <p>The toolbar above the input form has several buttons that help you work with the calculator's
+                  input values:</p>
+
+              <div class="table">
+                  <div class="row">
+                      <div class="icon-column">
+                          <img class="icon" src="/icons/help.svg" alt="Help">
+                      </div>
+                      <div class="details-column">
+                          <p><strong>Help With This Toolbar</strong>: Brings up this help screen.
+                          </p>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="icon-column">
+                          <img class="icon" src="/icons/save.svg" alt="Erase">
+                      </div>
+                      <div class="details-column">
+                          <p><strong>Save Values as Default</strong>: Pressing this
+                              button saves the current values in the input fields as the default form, which
+                              gets loaded automatically whenever the calculator is reloaded or the browser
+                              is restarted. </p>
+                          <p>This function
+                              stores the values of the form in the browser's local storage, which allows data
+                              to be retained even after the browser is closed and reopened. You
+                              can update the default form at any time by pressing the button again. Upon
+                              saving, the toolbar will display the message "Saved Default Form."</p>
+                          <p>If a default
+                              form has been previously saved, the toolbar will display the message "Loaded
+                              Default Form"
+                              when the calculator is reloaded. </p>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="icon-column">
+                          <img class="icon" src="/icons/erase.svg" alt="Erase">
+                      </div>
+                      <div class="details-column">
+                          <p><strong>Erase Form</strong>: Pressing this button erases the input form and
+                              displays the message "--- BLANK FORM ---" in the toolbar. Note that
+                              that, if you erase the input form and then save the blank form as the default
+                              form,
+                              the calculator will always come up blank when the page loads, until you save a
+                              different
+                              form as default. Erasing the form does not clear the default form.
+                          </p>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="icon-column">
+                          <img class="icon" src="/icons/trash-can.svg" alt="Trash">
+                      </div>
+                      <div class="details-column">
+                          <p><strong>Delete Default Form</strong>: This deletes the browser's local storage
+                              and therefore the default form.
+                              If you press this button and reload the web page or reopen the browser, you will
+                              see the following message, which
+                              also appears the very first time you use the calculator:
+                          <div class="nolocalstorage"><img src="/icons/nolocalstorage.jpg"></div>
+
+                          The message disappears as soon as you start using the form or the toolbar. If you
+                          later save your form as the default, you will no longer see this message. This is
+                          true
+                          even if you save a blank form as the default. Deleting the default form does not
+                          erase the form.
+                          </p>
+                      </div>
+                  </div>
+
+
+                  <div class="row">
+                      <div class="icon-column">
+                          &nbsp;
+                      </div>
+                      <div class="details-column">
+                          <p><strong>Examples and Navigation Controls</strong>:
+                              The ROI in AI Ethics calculator comes pre-loaded with 10 examples to help you
+                              better
+                              understand
+                              how the HROE formula works. The Examples Navigation controls are these:</p>
+                          <p><img src="/icons/navcontrols.jpg"></p>
+                          <p>
+                              Navigating to an example fills the input form with predefined values and
+                              automatically calculates the ROI. The navigation wraps around, so, if you are
+                              on the last example and click
+                              "Next Example," it will take you back to the first example, which is the one
+                              explained in the paper. Similarly,
+                              if you are on the first example and click "Previous Example," it will take you
+                              to the last example. </p>
+                          <p>These examples are stored in the
+                              <strong>hroe-examples.js</strong> file, located in the <em>scripts</em>
+                              directory. Here is what it looks like:
+                          </p>
+                          <p>
+                              <img src="/icons/hroe-examples.jpg" width="70%" height="70%">
+                          </p>
+                          <p>You can edit this file to add new examples, as well as delete or
+                              modify existing ones. Remember to reload the page for your changes to take
+                              effect.</p>
+                          <p>
+                              If you plan to modify the <strong>hroe-examples.js</strong> file, we strongly
+                              recommend making a backup first and keeping the example from the paper as the
+                              first entry.
+
+
+                          </p>
+
+                      </div>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="icon-column">
+                      <img src="/icons/settings--edit.svg" alt="Settings" class="icon svgimagedisabled">
+                  </div>
+                  <div class="details-column">
+                      <p><strong>FUTURE FEATURE</strong>: This disabled button is a placeholder for a
+                          tentative future feature that would
+                          allow you to configure and connect to external sources to populate the different
+                          input fields.
+                      </p>
+
+                  </div>
+              </div>
+
+          </div>
+          <div class="signature-box">
+              <strong>Last updated</strong>: August 30, 2024
+          </div>
+      </div>
       
       <!-- Floating Explanation Panel -->
       <FloatingExplanationPanel
@@ -1234,6 +1183,58 @@ export default {
         :mouseX="mouseX"
         :mouseY="mouseY"
       />
+  </div>
+  <!-- Help Popup (Initially Hidden) - Outside container to avoid transform context -->
+  <div id="helpPopup">
+      <button id="closeHelp" @click="closeHelp()">
+          <img src='/icons/close--large.svg'>
+      </button>
+      <h2 id="helpPopupTitle">Holistic Return on AI Ethics Framework Calculator</h2>
+      <div id="helpPopupContent"
+          style="max-height: 600px; overflow-y: scroll; font-size:18px; padding: 20px; padding-top:0px;background-color:#fefeff;">
+          <p>Organizations are motivated to implement ethical AI practices for various reasons. For
+              example, because they believe it is the right thing to do or to avoid costs such as lawsuits
+              and fines. You can use this calculator to estimate your potential returns on AI ethics
+              investments, and refer to the paper titled, "The Return on Investment in AI Ethics: A
+              Holistic Framework" (<a href="#"
+                  @click="togglePanel();">https://arxiv.org/pdf/2309.13057</a>) for a deeper
+              understanding of the benefits. The paper proposes a comprehensive approach to understanding
+              the returns on investments in AI ethics.</p>
+          <p>The Holistic Return on AI Ethics framework considers not only direct economic returns but
+              also intangible benefits related to reputation and real options connected to organizational
+              capabilities. This framework is designed to help organizations justify their investments in
+              AI ethics by demonstrating how these investments can lead to cost savings, revenue
+              generation, improved stakeholder perceptions, and enhanced future opportunities.</p>
+          <p class="note-box"><strong>Note</strong>: The return on investments in AI ethics and governance
+              initiatives should be assessed holistically. While this calculator provides a helpful tool
+              for assessing quantifiable returns, a holistic assessment should also include returns and
+              impacts that are qualitative in nature. It is important to consider a broad set of
+              stakeholders and the impact on society at large during the holistic assessment process.</p>
+          <br />
+          <p>AI technologies, while beneficial, pose significant ethical challenges such as bias,
+              fairness, and privacy concerns. Addressing these issues requires substantial investments,
+              which organizations often find difficult to justify without clear evidence of return on
+              investment.</p>
+          <p>The ROI in AI Ethics framework addresses this gap by integrating economic impacts, such as
+              direct
+              financial returns and cost avoidance, with intangible impacts, like improved reputation and
+              stakeholder trust. Additionally, it includes real options that offer future flexibility and
+              adaptability. This approach provides a comprehensive view of how AI ethics investments can
+              contribute to an organization's overall success and sustainability, making it easier to
+              justify and sustain these critical initiatives.</p>
+          <p>In line with this holistic approach, this program uses the formulas provided in the paper to
+              calculate the ROI of AI ethics investments over multiple years. This program prompts users
+              for inputs related to economic returns, reputational returns, and capability returns for
+              each year, as well as the discount factor and initial investment costs.</p>
+          <p>By incorporating these variables, the program computes the ROI by discounting future returns
+              to their present value and summing up the total returns from economic, reputational, and
+              capability investments. This multi-year approach allows organizations to better evaluate the
+              long-term benefits of their AI ethics investments, providing a clearer picture of how these
+              investments impact their overall performance and strategic flexibility.</p>
+      </div>
+      <div id="helpPopupSignature" class="signature-box">
+          <strong>Last updated</strong>: August 30, 2024
+      </div>
   </div>
 </template>
 

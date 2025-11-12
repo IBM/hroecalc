@@ -802,7 +802,7 @@ input[readonly] {
 #helpPopup {
     display: none;
     position: fixed;
-    top: 500px;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 900px;
@@ -810,7 +810,7 @@ input[readonly] {
     background-color: #fefeff;
     border: 3px solid #3498db;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    max-height: 980px;
+    max-height: 80vh;
     overflow: hidden;
     z-index: 1000;
 }
@@ -825,7 +825,7 @@ input[readonly] {
 #helpFormToolbar {
     display: none;
     position: fixed;
-    top: 500px;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 900px;
@@ -834,7 +834,7 @@ input[readonly] {
     border: 5px solid #99b6d9;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     z-index: 300;
-    max-height: 980px;
+    max-height: 80vh;
     overflow: hidden;
 }
 
