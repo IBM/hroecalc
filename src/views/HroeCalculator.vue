@@ -1163,7 +1163,7 @@ export default {
 
           </div>
           <div class="signature-box">
-              <strong>Last updated</strong>: August 30, 2024
+              <strong>Last updated</strong>: November, 2025
           </div>
       </div>
       

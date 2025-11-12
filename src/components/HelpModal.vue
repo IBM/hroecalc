@@ -124,7 +124,7 @@ export default {
           </ul>
       </div>
       <div id="helpPopupSignature" class="signature-box">
-          <strong>Last updated</strong>: August 30, 2024
+          <strong>Last updated</strong>: November, 2025
       </div>
   </div>
 </template>

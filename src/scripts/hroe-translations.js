@@ -135,7 +135,7 @@ export default {
         <p>In line with this holistic approach, this program uses the formulas provided in the paper to calculate the ROI of AI ethics investments over multiple years. This program prompts users for inputs related to economic returns, reputational returns, and capability returns for each year, as well as the discount factor and initial investment costs.</p>
         <p>By incorporating these variables, the program computes the HROE by discounting future returns to their present value and summing up the total returns from economic, reputational, and capability investments. This multi-year approach allows organizations to better evaluate the long-term benefits of their AI ethics investments, providing a clearer picture of how these investments impact their overall performance and strategic flexibility.</p>
         `,
-        helpPopupSignature: "<strong>Last updated</strong>: August 30, 2024",
+        helpPopupSignature: "<strong>Last updated</strong>: November 2025",
         explanation: {
             years: "<strong>Years:</strong> This represents each year from now (<em>t</em>) to some number of years (<div class='varvalue'>{value}</div>) in the future (<em>t+N</em>).",
             discount: "<strong>Discount Rate (α):</strong> This is a number between 0 and 1 that tells us how much less we value money in the future compared to money now. For example, if the discount rate is <div class='varvalue'>{value}</div>, it means we value money next year at <div class='varvalue'>{percentage}%</div> of what we value it this year.",
@@ -296,7 +296,7 @@ export default {
         <p>En línea con este enfoque holístico, este programa utiliza las fórmulas proporcionadas en el documento para calcular el ROI de las inversiones en ética de IA durante varios años. Este programa solicita a los usuarios que ingresen datos relacionados con los retornos económicos, los retornos reputacionales y los retornos de capacidad para cada año, así como el factor de descuento y los costos de inversión iniciales.</p>
         <p>Al incorporar estas variables, el programa calcula el HROE descontando los retornos futuros a su valor presente y sumando el total de los retornos de las inversiones económicas, reputacionales y de capacidad. Este enfoque a varios años permite a las organizaciones evaluar mejor los beneficios a largo plazo de sus inversiones en ética de IA, proporcionando una imagen más clara de cómo estas inversiones impactan en su rendimiento general y en su flexibilidad estratégica.</p>
     `,
-        helpPopupSignature: "<strong>Última actualización</strong>: 30 de agosto de 2024",
+        helpPopupSignature: "<strong>Última actualización</strong>: noviembre de 2025",
         explanation: {
             years: "<strong>Años:</strong> Esto representa cada año desde ahora (<em>t</em>) hasta algún número de años (<div class='varvalue'>{value}</div>) en el futuro (<em>t+N</em>).",
             discount: "<strong>Tasa de Descuento (α):</strong> Este es un número entre 0 y 1 que nos indica cuánto menos valoramos el dinero en el futuro en comparación con el dinero en el presente. Por ejemplo, si la tasa de descuento es <div class='varvalue'>{value}</div>, significa que valoramos el dinero del próximo año en un <div class='varvalue'>{percentage}%</div> de lo que lo valoramos este año.",
@@ -457,7 +457,7 @@ export default {
         <p>In linea con questo approccio olistico, questo programma utilizza le formule fornite nel documento per calcolare il ROI degli investimenti in etica dell'IA su più anni. Questo programma richiede agli utenti di inserire dati relativi ai ritorni economici, ai ritorni reputazionali e ai ritorni sulle capacità per ciascun anno, nonché il fattore di sconto e i costi di investimento iniziali.</p>
         <p>Incorporando queste variabili, il programma calcola l'HROE scontando i ritorni futuri al loro valore attuale e sommando i ritorni totali degli investimenti economici, reputazionali e sulle capacità. Questo approccio pluriennale consente alle organizzazioni di valutare meglio i benefici a lungo termine dei loro investimenti in etica dell'IA, fornendo un quadro più chiaro di come questi investimenti influenzino le loro prestazioni complessive e la flessibilità strategica.</p>
     `,
-        helpPopupSignature: "<strong>Ultimo aggiornamento</strong>: 30 agosto 2024",
+        helpPopupSignature: "<strong>Ultimo aggiornamento</strong>: novembre 2025",
         explanation: {
             years: "<strong>Anni:</strong> Questo rappresenta ogni anno da ora (<em>t</em>) a un certo numero di anni (<div class='varvalue'>{value}</div>) nel futuro (<em>t+N</em>).",
             discount: "<strong>Tasso di Sconto (α):</strong> Questo è un numero compreso tra 0 e 1 che ci indica quanto meno valorizziamo il denaro in futuro rispetto al denaro attuale. Ad esempio, se il tasso di sconto è <div class='varvalue'>{value}</div>, significa che valorizziamo il denaro del prossimo anno al <div class='varvalue'>{percentage}%</div> di quanto lo valorizziamo quest'anno.",
@@ -618,7 +618,7 @@ export default {
         <p>Conformément à cette approche holistique, ce programme utilise les formules fournies dans le document pour calculer le ROI des investissements en éthique de l'IA sur plusieurs années. Ce programme demande aux utilisateurs de fournir des données relatives aux retours économiques, aux retours réputationnels et aux retours sur les capacités pour chaque année, ainsi que le facteur de réduction et les coûts d'investissement initiaux.</p>
         <p>En incorporant ces variables, le programme calcule l'HROE en actualisant les retours futurs à leur valeur présente et en additionnant les retours totaux des investissements économiques, réputationnels et en capacités. Cette approche sur plusieurs années permet aux organisations de mieux évaluer les avantages à long terme de leurs investissements en éthique de l'IA, en fournissant une image plus claire de la manière dont ces investissements influencent leurs performances globales et leur flexibilité stratégique.</p>
     `,
-        helpPopupSignature: "<strong>Dernière mise à jour</strong>: 30 août 2024",
+        helpPopupSignature: "<strong>Dernière mise à jour</strong>: novembre 2025",
         explanation: {
             years: "<strong>Années:</strong> Cela représente chaque année à partir de maintenant (<em>t</em>) jusqu'à un certain nombre d'années (<div class='varvalue'>{value}</div>) dans le futur (<em>t+N</em>).",
             discount: "<strong>Taux d'Actualisation (α):</strong> C'est un nombre entre 0 et 1 qui nous indique à quel point nous valorisons moins l'argent à l'avenir par rapport à l'argent maintenant. Par exemple, si le taux d'actualisation est <div class='varvalue'>{value}</div>, cela signifie que nous valorisons l'argent l'année prochaine à <div class='varvalue'>{percentage}%</div> de ce que nous le valorisons cette année.",
@@ -779,7 +779,7 @@ export default {
         <p>Im Einklang mit diesem ganzheitlichen Ansatz verwendet dieses Programm die im Artikel bereitgestellten Formeln, um den ROI von Investitionen in die KI-Ethik über mehrere Jahre zu berechnen. Dieses Programm fordert die Benutzer auf, Eingaben zu wirtschaftlichen Erträgen, Reputationsgewinnen und Erträgen aus Fähigkeiten für jedes Jahr sowie zum Diskontfaktor und zu den anfänglichen Investitionskosten zu machen.</p>
         <p>Durch die Einbeziehung dieser Variablen berechnet das Programm das HROE, indem es zukünftige Erträge auf ihren Barwert abzinst und die gesamten Erträge aus wirtschaftlichen, reputationsbezogenen und fähigkeitsbezogenen Investitionen zusammenfasst. Dieser mehrjährige Ansatz ermöglicht es Organisationen, die langfristigen Vorteile ihrer Investitionen in die KI-Ethik besser zu bewerten und ein klareres Bild davon zu erhalten, wie sich diese Investitionen auf ihre Gesamtleistung und strategische Flexibilität auswirken.</p>
     `,
-        helpPopupSignature: "<strong>Zuletzt aktualisiert</strong>: 30. August 2024",
+        helpPopupSignature: "<strong>Zuletzt aktualisiert</strong>: November 2025",
         explanation: {
             years: "<strong>Jahre:</strong> Dies stellt jedes Jahr ab jetzt (<em>t</em>) bis zu einer bestimmten Anzahl von Jahren (<div class='varvalue'>{value}</div>) in der Zukunft (<em>t+N</em>) dar.",
             discount: "<strong>Abzinsungssatz (α):</strong> Dies ist eine Zahl zwischen 0 und 1, die uns angibt, wie viel weniger wir Geld in der Zukunft im Vergleich zu Geld jetzt bewerten. Wenn der Abzinsungssatz beispielsweise <div class='varvalue'>{value}</div> beträgt, bedeutet dies, dass wir Geld im nächsten Jahr zu <div class='varvalue'>{percentage}%</div> dessen bewerten, was wir es in diesem Jahr bewerten.",
