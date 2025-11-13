@@ -36,87 +36,52 @@ import translationsData from './hroe-translations.js';
 import hroeExamples from './hroe-examples.js';
 
 export function highlightFormula(inputId) {
+    // DOM manipulation commented out for Vue compatibility
     // Define elements to highlight for each input type
-    const elements = {
-        years: ['Ny'],
-        capabilities: [],
-        discount: ['Alpha'],
-        economic_returns: ['Re'],
-        fine_avoidance: ['Rr'],
-        capability_returns: ['Rc'],
-        initial_investment: ['It1', 'It2'],
-        investment_cost: ['Ic_t1', 'Ic_t2']
-    };
+    // const elements = {
+    //     years: ['Ny'],
+    //     capabilities: [],
+    //     discount: ['Alpha'],
+    //     economic_returns: ['Re'],
+    //     fine_avoidance: ['Rr'],
+    //     capability_returns: ['Rc'],
+    //     initial_investment: ['It1', 'It2'],
+    //     investment_cost: ['Ic_t1', 'Ic_t2']
+    // };
 
     // Reset color for all elements that may be highlighted
-    document.querySelectorAll('#sum1, #Ny, #Alpha, #Re, #Rr, #Rc, #It1, #It2, #Ic_t1, #Ic_t2').forEach(el => {
-        if (el) el.style.color = '#4f4f4f'; // Default color
-    });
+    // document.querySelectorAll('#sum1, #Ny, #Alpha, #Re, #Rr, #Rc, #It1, #It2, #Ic_t1, #Ic_t2').forEach(el => {
+    //     if (el) el.style.color = '#4f4f4f'; // Default color
+    // });
 
     // Apply highlight color only to elements that exist in the current formula
-    if (elements[inputId]) {
-        elements[inputId].forEach(id => {
-            const element = document.getElementById(id);
-            if (element) {
-                element.style.color = '#3498db'; // Highlight color
-            }
-        });
-    }
+    // if (elements[inputId]) {
+    //     elements[inputId].forEach(id => {
+    //         const element = document.getElementById(id);
+    //         if (element) {
+    //             element.style.color = '#3498db'; // Highlight color
+    //         }
+    //     });
+    // }
 }
 
 
 
 export function updateExplanation(inputId) {
-    const currentLang = document.getElementById('language').value;
-    const translation = translationsData[currentLang].explanation;
-
-    let explanation;
-    switch (inputId) {
-        case 'initial_investment':
-            explanation = translation.initial_investment.replace('{value}', formatValue(document.getElementById('initial_investment').value));
-            break;
-        case 'years':
-            explanation = translation.years.replace('{value}', document.getElementById('years').value);
-            break;
-        case 'discount':
-            const discountValue = document.getElementById('discount').value;
-            explanation = translation.discount.replace('{value}', discountValue).replace('{percentage}', ((1 - discountValue) * 100).toFixed(2));
-            break;
-        case 'org_revenues':
-            this.infoPanelContent = "orgRevenues"
-            // explanation = generateYearlyExplanation('org_revenues', translation.economic_returns);
-            // document.querySelector('.info-panel').innerHTML = explanation;
-            // validateCommaSeparatedInputs();
-            break;
-        case 'fine_avoidance':
-            explanation = translation.fine_avoidance.replace('{value}', document.getElementById('fine_avoidance').value);
-            this.validateCommaSeparatedInputs();
-            break;
-        case 'intangible_value':
-            explanation = translation.intangible_value.replace('{value}', formatValue(document.getElementById('intangible_value').value));
-            this.validateCommaSeparatedInputs();
-            break;
-        case 'investment_cost':
-            explanation = translation.investment_cost.replace('{value}', formatValue(document.getElementById('investment_cost').value));
-            this.validateCommaSeparatedInputs();
-            break;
-        case 'capability_returns':
-            explanation = generateYearlyExplanation('capability_returns', translation.capability_returns);
-            this.validateCommaSeparatedInputs();
-            break;
-        default:
-            explanation = translationsData[currentLang].hoverText;
+    // Use Vue method if available (when called from Vue component context)
+    if (this && typeof this.updateExplanation === 'function') {
+        this.updateExplanation(inputId);
     }
-
-    document.getElementById('explanation-panel').innerHTML = explanation;
 }
 
 export function generateYearlyExplanation(inputId, baseText) {
-    const values = document.getElementById(inputId).value.split(',');
-    const yearExplanations = values.map((value, index) => {
-        return `Year ${index + 1} = <div class="varvalue">${parseFloat(value)} million</div>`;
-    }).join(' ');
-    return baseText.replace('{details}', yearExplanations);
+    // DOM manipulation commented out for Vue compatibility
+    // const values = document.getElementById(inputId).value.split(',');
+    // const yearExplanations = values.map((value, index) => {
+    //     return `Year ${index + 1} = <div class="varvalue">${parseFloat(value)} million</div>`;
+    // }).join(' ');
+    // return baseText.replace('{details}', yearExplanations);
+    return baseText; // Return base text for Vue compatibility
 }
 
 export function formatValue(value) {
@@ -129,8 +94,11 @@ export function formatValue(value) {
 }
 
 export function clearExplanation() {
-    document.getElementById('explanation-panel').innerText = translationsData[document.getElementById('language').value].hoverText;
-    document.querySelectorAll('#sum1, #Ny, #Alpha, #Re, #Rr, #Rc, #It1, #It2, #Ic_t1, #Ic_t2').forEach(el => el.style.color = '#4f4f4f');
+    // Use Vue method if available (when called from Vue component context)
+    if (this && typeof this.clearExplanation === 'function') {
+        this.clearExplanation();
+        this.clearFormulaHighlight();
+    }
 }
 
 export function sumCommaSeparatedNumbers(numberString) {
@@ -151,6 +119,10 @@ export const fieldsToCheck = ['calc_economic_returns', 'intangible_value', 'inve
 export const originalNote = `<img src="icons/notification.svg" alt="Information Icon" style="width: 24px; height: 24px; position:relative;top:-2px;vertical-align: middle;"> The return on investments in AI ethics and governance initiatives should be assessed holistically. While this calculator provides a helpful tool for assessing quantifiable returns, a holistic assessment should also include returns and impacts that are qualitative in nature. It is important to consider a broad set of stakeholders and the impact on society at large during the holistic assessment process.`;
 
 export function validateCommaSeparatedInputs() {
+    // TODO: Convert to Vue-based validation
+    // DOM manipulation commented out - should be handled by Vue computed properties and validation
+    
+    /* 
     const years = parseInt(document.getElementById('years').value);
     const returnsChartContainer = document.getElementById('returnsChartContainer');
     const editableTableContainer = document.getElementById('editableTableContainer');
@@ -233,7 +205,7 @@ export function validateCommaSeparatedInputs() {
             const lastField = fields.pop();
             const fieldList = fields.length > 1
                 ? `${fields.map(f => `<div style="display:inline-block;color:darkblue;">${f}</div>`).join(', ')}, ${translationsData[language].and} <div style="display:inline-block;color:darkblue;">${lastField}</div>`
-                : `<div style="display:inline-block;color:darkblue;">${fields[0]}</div> ${translationsData[language].and} <div style="display:inline-block;color:darkblue;">${lastField}</div>`;
+                : `<div style="display:inline-block;color:darkblue;">${fields[0]}</div> ${translationsData[language].and} <div style="display:inline-block;color:darkblue;">${lastField</div>`;
             extraEntriesMessage += `<div style="display:inline-block;">${fieldList}</div> ${count} ${count == 1 ? translationsData[language].extraEntry : translationsData[language].extraEntries}. `;
         } else {
             extraEntriesMessage += `<div style="display:inline-block;color:darkblue;">${fields[0]}</div> ${count} ${count == 1 ? translationsData[language].extraEntry : translationsData[language].extraEntries}. `;
@@ -256,39 +228,72 @@ export function validateCommaSeparatedInputs() {
         // infoPanel.innerHTML = originalNote; // Reset to the original note message
         // infoPanel.classList.remove('warning');
     }
+    */
 }
 
 export function openDisclaimer() {
+    // TODO: Convert to Vue modal component
+    // DOM manipulation commented out - should be handled by Vue modal components
+    
+    /* 
     document.getElementById('disclaimerModal').style.display = 'block';
+    */
 }
 
 export function closeDisclaimer() {
+    // TODO: Convert to Vue modal component
+    // DOM manipulation commented out - should be handled by Vue modal components
+    
+    /* 
     document.getElementById('disclaimerModal').style.display = 'none';
+    */
 }
 
 // Close the modal if the user clicks outside of the modal content
+/* 
 window.onclick = function (event) {
     var modal = document.getElementById('disclaimerModal');
     if (event.target == modal) {
         modal.style.display = "none";
     }
 }
+*/
 
 
 export function showHelp() {
+    // TODO: Convert to Vue modal component
+    // DOM manipulation commented out - should be handled by Vue modal components
+    
+    /* 
     document.getElementById('helpPopup').style.display = 'block';
+    */
 }
 
 export function closeHelp() {
+    // TODO: Convert to Vue modal component
+    // DOM manipulation commented out - should be handled by Vue modal components
+    
+    /* 
     document.getElementById('helpPopup').style.display = 'none';
+    */
 }
 
 export function showLegalDisclaimer() {
+    // TODO: Convert to Vue modal component
+    // DOM manipulation commented out - should be handled by Vue modal components
+    
+    /* 
     document.getElementById('legalDisclaimer').style.display = 'block';
+    */
 }
 
 export function closeLegalDisclaimer() {
+    // TODO: Convert to Vue modal component
+    // DOM manipulation commented out - should be handled by Vue modal components
+    
+    /* 
     document.getElementById('legalDisclaimer').style.display = 'none';
+    */
 }
 
 
@@ -333,9 +338,14 @@ export function updateValuesForTable() {
 }
 
 export function calculateHROE(vue) {
+    // TODO: Convert DOM result display to Vue data binding
+    // DOM manipulation commented out - should be handled by Vue data binding
+    
+    /* 
     const ROIValueElement = document.getElementById('roi_value');
     const resultsElement = document.querySelector('.results');
     const explanationElement = document.getElementById('initial_explanation');
+    */
 
     resultsPanel('on');
     this.hroeReady = true;
@@ -354,22 +364,22 @@ export function calculateHROE(vue) {
 
     // Process input values and calculate totals
     // economicReturn = document.getElementById('calc_economic_returns').value.split(',').map(Number);
-    economicReturn = this.economicReturns.split(',').map(Number);
+    economicReturn = (this.economicReturns || '').split(',').map(val => parseFloat(val) || 0);
     // fineAvoidanceValue = document.getElementById('fine_avoidance').value.split(',').map(Number);
-    fineAvoidanceValue = this.fineAvoidanceValues.split(',').map(Number);
+    fineAvoidanceValue = (this.fineAvoidanceValues || '').split(',').map(val => parseFloat(val) || 0);
     fineAvoidanceValues = sumCommaSeparatedNumbers(fineAvoidanceValue.join(','));
     economicReturnValues = sumCommaSeparatedNumbers(economicReturn.join(','));
 
     // capabilityReturns = document.getElementById('capability_returns').value.split(',').map(Number);
-    capabilityReturns = this.capabilityReturns.split(',').map(Number);
+    capabilityReturns = (this.capabilityReturns || '').split(',').map(val => parseFloat(val) || 0);
     capabilityReturnValues = sumCommaSeparatedNumbers(capabilityReturns.join(','));
 
     // intangibleValues = document.getElementById('intangible_value').value.split(',').map(Number);
-    intangibleValues = this.reputationalReturns.split(',').map(Number);
+    intangibleValues = (this.reputationalReturns || '').split(',').map(val => parseFloat(val) || 0);
     reputationalReturnValues = sumCommaSeparatedNumbers(intangibleValues.join(','));
 
     // capabilityCosts = document.getElementById('investment_cost').value.split(',').map(Number);
-    capabilityCosts = this.capabilityCosts.split(',').map(Number);
+    capabilityCosts = (this.capabilityCosts || '').split(',').map(val => parseFloat(val) || 0);
     capabilityCostValues = sumCommaSeparatedNumbers(capabilityCosts.join(','));
 
     // Calculate ROI based on the selected formula version
@@ -388,6 +398,10 @@ export function calculateHROE(vue) {
         renderROIOverTimeChart(N, I_t, 0, economicReturn, 0, 0, discountFactor, finalROI);
     }
 
+    // TODO: Convert result display to Vue data binding
+    // DOM manipulation commented out - should be handled by Vue data binding and computed properties
+    
+    /* 
     // Display results
     document.getElementById('resultsHeader').style.display = 'block';
     document.getElementById('hroeDisplay').style.display = 'block';
@@ -411,6 +425,25 @@ export function calculateHROE(vue) {
 
     resultsElement.classList.remove('hidden');
     explanationElement.classList.remove('hidden');
+    */
+    
+    // Store the calculated results for Vue to access
+    this.calculatedROI = finalROI.toFixed(2);
+    this.calculatedTotalReturn = totalReturn.toFixed(2);
+    this.calculatedValues = {
+        I_t,
+        N,
+        fineAvoidanceValues,
+        discountedValue: (fineAvoidanceValues * (1 - alpha)).toFixed(2),
+        alpha: (alpha * 100).toFixed(2),
+        netReturn: (fineAvoidanceValues * (1 - alpha) - I_t).toFixed(2),
+        reputationalReturnValues,
+        discountedIntangibleReturn: (reputationalReturnValues * discountFactor).toFixed(2),
+        totalReturn: totalReturn.toFixed(2),
+        capabilityReturnValues,
+        capabilityCostValues,
+        finalROI: finalROI.toFixed(2)
+    };
 
     showGeneratePDFButton();
 }
@@ -421,6 +454,12 @@ export function renderROIOverTimeChart(N, initialInvestment, capabilityCosts, ec
 
     if (!chartContainer || !chartExplanation) {
         console.error("Chart container or explanation element is missing in the HTML.");
+        return;
+    }
+
+    // Safety check for N
+    if (!N || N <= 0 || isNaN(N)) {
+        console.error("Invalid number of years (N):", N);
         return;
     }
 
@@ -753,27 +792,9 @@ export function saveDefaults() {
 }
 
 export function resultsPanel(toggleSwitch) {
-    // Select the relevant elements
-    // const card = document.querySelector('.card');
-    const bottomPanel = document.querySelector('.bottom-panel');
-    const toggleImage = document.querySelector('.toggle-img');
-
-    if (toggleSwitch === 'off') {
-        // Apply blur and reduce opacity, disable input events
-        bottomPanel.style.filter = 'blur(5px)';
-        bottomPanel.style.opacity = '0.5';
-        bottomPanel.style.pointerEvents = 'none';
-
-        // Reset the explanation panel
-        document.getElementById('explanation-panel').innerText = '';
-        document.getElementById('hroeResultDisplay').innerText = '';
-        document.getElementById('hroeDisplay').style.display = 'none';
-        document.getElementById('resultsHeader').style.display = 'none';
-    } else {
-        // Remove blur, restore opacity, and enable input events
-        bottomPanel.style.filter = 'none';
-        bottomPanel.style.opacity = '1';
-        bottomPanel.style.pointerEvents = 'auto';
+    // Use Vue method if available (when called from Vue component context)
+    if (this && typeof this.toggleResultsPanel === 'function') {
+        this.toggleResultsPanel(toggleSwitch);
     }
 }
 
@@ -883,6 +904,9 @@ export function updateEconomicReturns() {
 // Variable to track the current set index
 let currentIndex = 0;
 
+// Export hroeExamples and currentIndex so they can be used in Vue components
+export { hroeExamples, currentIndex };
+
 // Function to populate form with sample values
 export function populateWithSampleValues(direction) {
     // Adjust index based on the direction
@@ -915,35 +939,29 @@ export function populateWithSampleValues(direction) {
 
     // Populate the form with the current set of values
     // TODO remove this getElementById dependency
-    document.getElementById('initial_investment').value = values.initial_investment;
-    document.getElementById('years').value = values.years;
-    document.getElementById('discount').value = values.discount;
-    document.getElementById('org_revenues').value = values.org_revenues;
-    document.getElementById('calc_economic_returns').value = values.economic_returns;
-    document.getElementById('fine_avoidance').value = values.fine_avoidance;
-    document.getElementById('intangible_value').value = values.intangible_value;
-    document.getElementById('investment_cost').value = values.investment_cost;
-    document.getElementById('capability_returns').value = values.capability_returns;
-
-    this.initialInvestment = values.initial_investment
-    this.years = parseInt(values.years)
-    this.discount = parseFloat(values.discount)
-    this.orgRevenues = values.org_revenues
-    this.fineAvoidanceValues = values.fine_avoidance
-    this.capabilityReturns = values.capability_returns
-    this.capabilityCosts = values.investment_cost
-    this.reputationalReturns = values.intangible_value
-
-    // calculateEconomicReturns();
-    this.economicReturns = updateEconomicReturns(values.economic_returns)
+    // NOTE: Vue component handles its own data updates
+    // This function now only handles DOM elements and example navigation
+    // The Vue component's populateWithSampleValues method handles Vue data updates
     
-    // updateEconomicReturns();
-    // generateEditableTable(values.years);
-    this.showEditableTable = true
-   
-    this.hroeReady = true;
-    this.calculateHROE();
-    resultsPanel('on');
+    // Try to populate DOM elements if they exist (for backward compatibility)
+    const elements = {
+        'initial_investment': values.initial_investment,
+        'years': values.years,
+        'discount': values.discount,
+        'org_revenues': values.org_revenues,
+        // 'calc_economic_returns': values.economic_returns, // Now handled by Vue component
+        'fine_avoidance': values.fine_avoidance,
+        'intangible_value': values.intangible_value,
+        'investment_cost': values.investment_cost,
+        'capability_returns': values.capability_returns
+    };
+    
+    for (const [id, value] of Object.entries(elements)) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.value = value;
+        }
+    }
 }
 
 export function clearMessageOnInput() {
@@ -1130,88 +1148,90 @@ export function displayReturnsChart() {
 }
 
 export function generateEditableTable(years) {
-    const editableTableContainer = document.getElementById("editableTableContainer");
-    editableTableContainer.innerHTML = ""; // Clear previous table
+    // DOM manipulation commented out for Vue compatibility
+    // const editableTableContainer = document.getElementById("editableTableContainer");
+    // editableTableContainer.innerHTML = ""; // Clear previous table
 
-    const editableDataTable = document.createElement("table");
-    editableDataTable.id = "editableDataTable";
+    // const editableDataTable = document.createElement("table");
+    // editableDataTable.id = "editableDataTable";
 
     // Fetch live values from form fields, split by commas
-    const capabilityCosts = document.getElementById('investment_cost').value.split(',');
-    const orgRevenues = document.getElementById('org_revenues').value.split(',');
-    const fineAvoidanceValues = document.getElementById('fine_avoidance').value.split(',');
-    const economicReturns = document.getElementById('calc_economic_returns').value.split(',');
-    const reputationalReturns = document.getElementById('intangible_value').value.split(',');
-    const capabilityReturns = document.getElementById('capability_returns').value.split(',');
+    // const capabilityCosts = document.getElementById('investment_cost').value.split(',');
+    // const orgRevenues = document.getElementById('org_revenues').value.split(',');
+    // const fineAvoidanceValues = document.getElementById('fine_avoidance').value.split(',');
+    // const economicReturns = document.getElementById('calc_economic_returns').value.split(',');
+    // const reputationalReturns = document.getElementById('intangible_value').value.split(',');
+    // const capabilityReturns = document.getElementById('capability_returns').value.split(',');
 
+    // DOM manipulation commented out for Vue compatibility
     // Columns order based on requirements
-    const dataColumns = [capabilityCosts, orgRevenues, fineAvoidanceValues, economicReturns, reputationalReturns, capabilityReturns];
+    // const dataColumns = [capabilityCosts, orgRevenues, fineAvoidanceValues, economicReturns, reputationalReturns, capabilityReturns];
 
     // Create table headers
-    const thead = document.createElement('thead');
-    const headers = ['Year', 'Cost for Capabilities', 'Organizational Revenue', 'Fine Avoidance Value', 'Economic Return', 'Reputational Returns', 'Returns on Capabilities'];
-    const headerRow = document.createElement('tr');
-    headers.forEach(header => {
-        const th = document.createElement('th');
-        th.textContent = header;
-        headerRow.appendChild(th);
-    });
-    thead.appendChild(headerRow);
-    editableDataTable.appendChild(thead);
+    // const thead = document.createElement('thead');
+    // const headers = ['Year', 'Cost for Capabilities', 'Organizational Revenue', 'Fine Avoidance Value', 'Economic Return', 'Reputational Returns', 'Returns on Capabilities'];
+    // const headerRow = document.createElement('tr');
+    // headers.forEach(header => {
+    //     const th = document.createElement('th');
+    //     th.textContent = header;
+    //     headerRow.appendChild(th);
+    // });
+    // thead.appendChild(headerRow);
+    // editableDataTable.appendChild(thead);
 
     // Create table body with editable cells
-    const tbody = document.createElement('tbody');
-    for (let i = 0; i < years; i++) {
-        const row = document.createElement('tr');
+    // const tbody = document.createElement('tbody');
+    // for (let i = 0; i < years; i++) {
+    //     const row = document.createElement('tr');
 
-        // Year column - non-editable
-        const yearCell = document.createElement('td');
-        yearCell.style.backgroundColor = '#f4f4f4';
-        yearCell.className = 'year-column';
-        yearCell.innerText = `${i + 1}`;
-        row.appendChild(yearCell);
+    //     // Year column - non-editable
+    //     const yearCell = document.createElement('td');
+    //     yearCell.style.backgroundColor = '#f4f4f4';
+    //     yearCell.className = 'year-column';
+    //     yearCell.innerText = `${i + 1}`;
+    //     row.appendChild(yearCell);
 
-        // Populate remaining columns based on dataColumns order
-        dataColumns.forEach((dataArray, colIndex) => {
-            const cell = document.createElement('td');
+    //     // Populate remaining columns based on dataColumns order
+    //     dataColumns.forEach((dataArray, colIndex) => {
+    //         const cell = document.createElement('td');
 
-            // Economic Return column - non-editable, calculated based on previous cells
-            if (colIndex === 3) { // Index for Economic Return
-                cell.className = 'economic-return-column';
-                cell.style.backgroundColor = '#f4f4f4';
-                cell.innerText = calculateEconomicReturn(orgRevenues[i] || "0", fineAvoidanceValues[i] || "0");
-            } else {
-                // Other columns - editable
-                cell.contentEditable = true;
-                cell.innerText = dataArray[i] ? dataArray[i].trim() : "0";
+    //         // Economic Return column - non-editable, calculated based on previous cells
+    //         if (colIndex === 3) { // Index for Economic Return
+    //             cell.className = 'economic-return-column';
+    //             cell.style.backgroundColor = '#f4f4f4';
+    //             cell.innerText = calculateEconomicReturn(orgRevenues[i] || "0", fineAvoidanceValues[i] || "0");
+    //         } else {
+    //             // Other columns - editable
+    //             cell.contentEditable = true;
+    //             cell.innerText = dataArray[i] ? dataArray[i].trim() : "0";
 
-                // Event listeners to sync and calculate Economic Return
-                cell.addEventListener("input", () => {
-                    if (colIndex === 1 || colIndex === 2) { // Only if relevant columns change
-                        const economicReturnCell = row.cells[4];
-                        economicReturnCell.innerText = calculateEconomicReturn(row.cells[2].innerText, row.cells[3].innerText);
-                    }
-                    updateFormFromTable();
-                });
-                cell.addEventListener('mouseover', () => cell.style.backgroundColor = "#F4FFF4");
-                cell.addEventListener('mouseout', () => cell.style.backgroundColor = "#fff");
-                // cell.addEventListener("keydown", (event) => handleCellNavigation(event, years, i, colIndex));
-            }
-            row.appendChild(cell);
-        });
+    //             // Event listeners to sync and calculate Economic Return
+    //             cell.addEventListener("input", () => {
+    //                 if (colIndex === 1 || colIndex === 2) { // Only if relevant columns change
+    //                     const economicReturnCell = row.cells[4];
+    //                     economicReturnCell.innerText = calculateEconomicReturn(row.cells[2].innerText, row.cells[3].innerText);
+    //                 }
+    //                 updateFormFromTable();
+    //             });
+    //             cell.addEventListener('mouseover', () => cell.style.backgroundColor = "#F4FFF4");
+    //             cell.addEventListener('mouseout', () => cell.style.backgroundColor = "#fff");
+    //             // cell.addEventListener("keydown", (event) => handleCellNavigation(event, years, i, colIndex));
+    //         }
+    //         row.appendChild(cell);
+    //     });
 
-        tbody.appendChild(row);
-    }
-    editableDataTable.appendChild(tbody);
-    editableTableContainer.appendChild(editableDataTable);
+    //     tbody.appendChild(row);
+    // }
+    // editableDataTable.appendChild(tbody);
+    // editableTableContainer.appendChild(editableDataTable);
 
     // Adjust container scrolling based on row count
-    editableTableContainer.style.maxHeight = years > 15 ? '400px' : 'unset';
-    editableTableContainer.style.overflowY = years > 15 ? 'auto' : 'unset';
-    editableTableContainer.style.display = 'block';
+    // editableTableContainer.style.maxHeight = years > 15 ? '400px' : 'unset';
+    // editableTableContainer.style.overflowY = years > 15 ? 'auto' : 'unset';
+    // editableTableContainer.style.display = 'block';
 
     // Initial synchronization from form data
-    updateTableFromForm();
+    // updateTableFromForm();
 }
 
 
@@ -1225,136 +1245,139 @@ export function calculateEconomicReturn(revenue, fineAvoidance) {
 
 
 export function updateTableFromForm() {
-    const N = parseInt(document.getElementById('years').value);
-    const capabilityCosts = document.getElementById('investment_cost').value.split(',');
-    const orgRevenues = document.getElementById('org_revenues').value.split(',');
-    const fineAvoidanceValues = document.getElementById('fine_avoidance').value.split(',');
-    const economicReturns = document.getElementById('calc_economic_returns').value.split(',');
-    const reputationalReturns = document.getElementById('intangible_value').value.split(',');
-    const capabilityReturns = document.getElementById('capability_returns').value.split(',');
+    // DOM manipulation commented out for Vue compatibility
+    // const N = parseInt(document.getElementById('years').value);
+    // const capabilityCosts = document.getElementById('investment_cost').value.split(',');
+    // const orgRevenues = document.getElementById('org_revenues').value.split(',');
+    // const fineAvoidanceValues = document.getElementById('fine_avoidance').value.split(',');
+    // const economicReturns = document.getElementById('calc_economic_returns').value.split(',');
+    // const reputationalReturns = document.getElementById('intangible_value').value.split(',');
+    // const capabilityReturns = document.getElementById('capability_returns').value.split(',');
 
     // List of all data columns in table order
-    const dataColumns = [capabilityCosts, orgRevenues, fineAvoidanceValues, economicReturns, reputationalReturns, capabilityReturns];
+    // const dataColumns = [capabilityCosts, orgRevenues, fineAvoidanceValues, economicReturns, reputationalReturns, capabilityReturns];
 
-    const tbody = document.getElementById("editableDataTable").querySelector("tbody");
-    if (tbody) {
-        Array.from(tbody.rows).forEach((row, rowIndex) => {
-            if (rowIndex < N) {
-                dataColumns.forEach((columnData, colIndex) => {
-                    const cell = row.cells[colIndex + 1];
-                    if (colIndex === 3) { // Economic Return column
-                        const orgRevenue = parseFloat(orgRevenues[rowIndex] || "0");
-                        const fineAvoidance = parseFloat(fineAvoidanceValues[rowIndex] || "0");
-                        const economicReturn = orgRevenue * (fineAvoidance / 100);
-                        cell.innerText = economicReturn.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    } else {
-                        cell.innerText = columnData[rowIndex] ? columnData[rowIndex].trim() : "0";
-                    }
-                });
-            }
-        });
-    } else {
-        console.error("Table body not found.");
-    }
+    // const tbody = document.getElementById("editableDataTable").querySelector("tbody");
+    // if (tbody) {
+    //     Array.from(tbody.rows).forEach((row, rowIndex) => {
+    //         if (rowIndex < N) {
+    //             dataColumns.forEach((columnData, colIndex) => {
+    //                 const cell = row.cells[colIndex + 1];
+    //                 if (colIndex === 3) { // Economic Return column
+    //                     const orgRevenue = parseFloat(orgRevenues[rowIndex] || "0");
+    //                     const fineAvoidance = parseFloat(fineAvoidanceValues[rowIndex] || "0");
+    //                     const economicReturn = orgRevenue * (fineAvoidance / 100);
+    //                     cell.innerText = economicReturn.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    //                 } else {
+    //                     cell.innerText = columnData[rowIndex] ? columnData[rowIndex].trim() : "0";
+    //                 }
+    //             });
+    //         }
+    //     });
+    // } else {
+    //     console.error("Table body not found.");
+    // }
 }
 
 
 export function updateFormFromTable() {
-    resultsPanel('off');
-    const N = parseInt(document.getElementById('years').value);
+    // DOM manipulation commented out for Vue compatibility
+    // resultsPanel('off');
+    // const N = parseInt(document.getElementById('years').value);
 
-    const capabilityCostsField = document.getElementById('investment_cost');
-    const orgRevenuesField = document.getElementById('org_revenues');
-    const fineAvoidanceField = document.getElementById('fine_avoidance');
-    const economicReturnsField = document.getElementById('calc_economic_returns');
-    const reputationalReturnsField = document.getElementById('intangible_value');
-    const capabilityReturnsField = document.getElementById('capability_returns');
+    // const capabilityCostsField = document.getElementById('investment_cost');
+    // const orgRevenuesField = document.getElementById('org_revenues');
+    // const fineAvoidanceField = document.getElementById('fine_avoidance');
+    // const economicReturnsField = document.getElementById('calc_economic_returns');
+    // const reputationalReturnsField = document.getElementById('intangible_value');
+    // const capabilityReturnsField = document.getElementById('capability_returns');
 
-    const columnValues = [[], [], [], [], [], []];
-    const tbody = document.getElementById("editableDataTable").querySelector("tbody");
+    // const columnValues = [[], [], [], [], [], []];
+    // const tbody = document.getElementById("editableDataTable").querySelector("tbody");
 
-    if (tbody) {
-        Array.from(tbody.rows).forEach((row, rowIndex) => {
-            if (rowIndex < N) {
-                Array.from(row.cells).forEach((cell, colIndex) => {
-                    if (colIndex > 0) {
-                        if (colIndex === 4) { // Economic Return calculation
-                            const orgRevenue = parseFloat(row.cells[2].innerText.replace(/,/g, '')) || 0;
-                            const fineAvoidance = parseFloat(row.cells[3].innerText) || 0;
-                            const economicReturn = orgRevenue * (fineAvoidance / 100);
-                            row.cells[4].innerText = economicReturn.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                            columnValues[3].push(row.cells[4].innerText);
-                        } else {
-                            columnValues[colIndex - 1].push(cell.innerText.trim());
-                        }
-                    }
-                });
-            }
-        });
+    // if (tbody) {
+    //     Array.from(tbody.rows).forEach((row, rowIndex) => {
+    //         if (rowIndex < N) {
+    //             Array.from(row.cells).forEach((cell, colIndex) => {
+    //                 if (colIndex > 0) {
+    //                     if (colIndex === 4) { // Economic Return calculation
+    //                         const orgRevenue = parseFloat(row.cells[2].innerText.replace(/,/g, '')) || 0;
+    //                         const fineAvoidance = parseFloat(row.cells[3].innerText) || 0;
+    //                         const economicReturn = orgRevenue * (fineAvoidance / 100);
+    //                         row.cells[4].innerText = economicReturn.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    //                         columnValues[3].push(row.cells[4].innerText);
+    //                     } else {
+    //                         columnValues[colIndex - 1].push(cell.innerText.trim());
+    //                     }
+    //                 }
+    //             });
+    //         }
+    //     });
 
-        // Update form fields with collected column values
-        capabilityCostsField.value = columnValues[0].join(',');
-        orgRevenuesField.value = columnValues[1].join(',');
-        fineAvoidanceField.value = columnValues[2].join(',');
-        economicReturnsField.value = columnValues[3].join(',');
-        reputationalReturnsField.value = columnValues[4].join(',');
-        capabilityReturnsField.value = columnValues[5].join(',');
-    } else {
-        console.error("Table body not found.");
-    }
+    //     // Update form fields with collected column values
+    //     capabilityCostsField.value = columnValues[0].join(',');
+    //     orgRevenuesField.value = columnValues[1].join(',');
+    //     fineAvoidanceField.value = columnValues[2].join(',');
+    //     // economicReturnsField.value = columnValues[3].join(','); // Now handled by Vue component
+    //     reputationalReturnsField.value = columnValues[4].join(',');
+    //     capabilityReturnsField.value = columnValues[5].join(',');
+    // } else {
+    //     console.error("Table body not found.");
+    // }
 }
 
 // Navigation for cells using arrow keys with wrapping functionality
 export function handleCellNavigation(event, numYears, rowIndex, colIndex) {
-    // Allow only numeric input, decimal points, and essential editing/navigation keys
-    const isNumericInput = (event.key >= "0" && event.key <= "9") || event.key === ".";
-    const isNavigationKey = [
-        "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", // Arrow keys
-        "Backspace", "Delete", "Tab", "Enter", "Escape",   // Editing/navigation keys
-        "Home", "End"                                      // Home and End
-    ].includes(event.key);
+    // DOM manipulation commented out for Vue compatibility
+    // // Allow only numeric input, decimal points, and essential editing/navigation keys
+    // const isNumericInput = (event.key >= "0" && event.key <= "9") || event.key === ".";
+    // const isNavigationKey = [
+    //     "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", // Arrow keys
+    //     "Backspace", "Delete", "Tab", "Enter", "Escape",   // Editing/navigation keys
+    //     "Home", "End"                                      // Home and End
+    // ].includes(event.key);
 
-    // If the key is not numeric or a navigation/editing key, prevent input
-    if (!isNumericInput && !isNavigationKey) {
-        event.preventDefault();
-        return; // Stop further execution if an invalid key is pressed
-    }
-    const currentCell = document.querySelector(`td[data-year="${rowIndex + 1}"][data-col="${colIndex}"]`);
-    // currentCell.style.borderBottom = '1px solid #d4d4d4';
-    currentCell.style.backgroundColor = "#fff";
-    // Only handle navigation logic for arrow keys and Enter
-    if (isNavigationKey && !isNumericInput) {
-        let targetRow = rowIndex;
+    // // If the key is not numeric or a navigation/editing key, prevent input
+    // if (!isNumericInput && !isNavigationKey) {
+    //     event.preventDefault();
+    //     return; // Stop further execution if an invalid key is pressed
+    // }
+    // const currentCell = document.querySelector(`td[data-year="${rowIndex + 1}"][data-col="${colIndex}"]`);
+    // // currentCell.style.borderBottom = '1px solid #d4d4d4';
+    // currentCell.style.backgroundColor = "#fff";
+    // // Only handle navigation logic for arrow keys and Enter
+    // if (isNavigationKey && !isNumericInput) {
+    //     let targetRow = rowIndex;
 
-        switch (event.key) {
-            case "Enter":
-            case "ArrowDown":
-                event.preventDefault();
-                targetRow += 1;
-                if (targetRow >= numYears) targetRow = 0;
-                break;
-            case "ArrowUp":
-                event.preventDefault();
-                targetRow -= 1;
-                if (targetRow < 0) targetRow = numYears - 1;
-                break;
-            case "ArrowRight":
-                event.preventDefault();
-                colIndex += 1;
-                if (colIndex >= 5) colIndex = 0;
-                break;
-            case "ArrowLeft":
-                event.preventDefault();
-                colIndex -= 1;
-                if (colIndex <= -1) colIndex = 4;
-                break;
-        }
+    //     switch (event.key) {
+    //         case "Enter":
+    //         case "ArrowDown":
+    //             event.preventDefault();
+    //             targetRow += 1;
+    //             if (targetRow >= numYears) targetRow = 0;
+    //             break;
+    //         case "ArrowUp":
+    //             event.preventDefault();
+    //             targetRow -= 1;
+    //             if (targetRow < 0) targetRow = numYears - 1;
+    //             break;
+    //         case "ArrowRight":
+    //             event.preventDefault();
+    //             colIndex += 1;
+    //             if (colIndex >= 5) colIndex = 0;
+    //             break;
+    //         case "ArrowLeft":
+    //             event.preventDefault();
+    //             colIndex -= 1;
+    //             if (colIndex <= -1) colIndex = 4;
+    //             break;
+    //     }
 
-        const targetCell = document.querySelector(`td[data-year="${targetRow + 1}"][data-col="${colIndex}"]`);
-        if (targetCell) {
-            targetCell.focus();
-        }
-    }
+    //     const targetCell = document.querySelector(`td[data-year="${targetRow + 1}"][data-col="${colIndex}"]`);
+    //     if (targetCell) {
+    //         targetCell.focus();
+    //     }
+    // }
 }
 
 

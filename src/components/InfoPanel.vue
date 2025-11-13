@@ -12,19 +12,29 @@ export default {
     errorMessage: {
       type: String,
       default: ''
+    },
+    currentLanguage: {
+      type: String,
+      default: 'en'
+    }
+  },
+  watch: {
+    currentLanguage(newLang, oldLang) {
+      console.log('currentLang', newLang);  
     }
   },
   data() {
     return {
+      translationsData
     }
   },
-  methods: {
-    panelContent(tag) {
+  computed: {
+    panelContent() {
+      const tag = this.infoPanelContent;
       if (tag === 'default') {
-        console.log('Default content loaded');
+        return translationsData[this.currentLanguage].explanationPanelDefault;
       } else if (tag === 'orgRevenues') {
-        const currentLang = document.getElementById('language').value;
-        const translation = translationsData[currentLang].explanation;
+        const translation = translationsData[this.currentLanguage].explanation;
         return generateYearlyExplanation('org_revenues', translation.economic_returns);
       } else if (tag === 'warning') {
         return this.errorMessage
@@ -33,8 +43,10 @@ export default {
         return '';
       }
     },
+  },
+  methods: {
     showModal() {
-      this.$emit('showModal');
+      this.$emit('showHelpPopup');
     }
   },
 }
@@ -53,12 +65,12 @@ export default {
       style="width: 24px; height: 24px; position:relative;top:-2px;
       vertical-align: middle;"
     />
-    The return on investments in AI ethics and governance initiatives should be assessed holistically. While this calculator provides a helpful tool for assessing quantifiable returns, a holistic assessment should also include returns and impacts that are qualitative in nature. It is important to consider a broad set of stakeholders and the impact on society at large during the holistic assessment process.
+    <span v-html="panelContent"></span>
     <a href="#" @click="showModal">Additional Information</a>.
   </div>
   <div 
     v-if="infoPanelContent === 'orgRevenues'"
-    v-html="panelContent(infoPanelContent)"
+    v-html="panelContent"
   ></div>
   <div v-if='infoPanelContent === "warning"'>
     <img 
@@ -67,7 +79,7 @@ export default {
       style="width: 24px; height: 24px; position:relative;top:-3px;
       vertical-align: middle;"
     > 
-    <span class="warning-message" v-html=panelContent(infoPanelContent)></span>
+    <div class="warning-message" v-html='panelContent'></div>
     <a href="#" @click="showModal">Additional Information</a>
   </div>
 </div>  

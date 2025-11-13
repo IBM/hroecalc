@@ -3,47 +3,87 @@ import translationsData from "@/scripts/hroe-translations.js";
 
 export default {
   name: 'Translation',
+  props: {
+    currentLanguage: {
+      type: String,
+      default: 'en'
+    }
+  },
+  watch: {
+    currentLanguage(newLang) {
+      this.selectedLanguage = newLang;
+      this.applyTranslations(newLang);
+    }
+  },
   data() {
     return {
       translationsData,
-      selectedLanguage: 'en', // Default language
+      selectedLanguage: this.currentLanguage,
     }
+  },
+  mounted() {
+    this.selectedLanguage = this.currentLanguage;
   },
   methods: {
     switchLanguage(lang) {
-      if (!translationsData[lang]) return
-      document.title = translationsData[lang].title;
-      document.querySelector('h1').textContent = translationsData[lang].title;
-      document.querySelector('.hroebutton').textContent = translationsData[lang].readPaper;
-      document.querySelector('label[for="years"]').textContent = translationsData[lang].yearsLabel;
-      document.querySelector('label[for="discount"]').textContent = translationsData[lang].discountLabel;
-      document.querySelector('label[for="economic_returns"]').textContent = translationsData[lang].economicReturnsLabel;
-      document.querySelector('label[for="fine_avoidance"]').textContent = translationsData[lang].fineAvoidanceLabel;
-      document.querySelector('label[for="initial_investment"]').textContent = translationsData[lang].initialInvestmentLabel;
-      document.querySelector('label[for="intangible_value"]').textContent = translationsData[lang].intangibleValueLabel;
-      document.querySelector('label[for="capability_returns"]').textContent = translationsData[lang].capabilityReturnsLabel;
-      document.querySelector('label[for="investment_cost"]').textContent = translationsData[lang].investmentCostLabel;
-      document.querySelector('div.hroebutton').textContent = translationsData[lang].calculate;
-      document.getElementById('explanation-panel').innerHTML = translationsData[lang].hoverText;
-      document.getElementById('helpFormToolbar').innerHTML = translationsData[lang].helpFormToolbar;
-      // document.getElementById('resultsHeader').textContent = translationsData[lang].results;
-      this.applyTranslations(lang);
-      // Recalculate results to update the language
-      // calculateHROE();
+      if (!translationsData[lang]) return;
+      this.$emit('language-changed', lang);
     },
     applyTranslations(language) {
-      document.getElementById('page-title').textContent = translationsData[language]['title'];
-      document.getElementById('read-paper').textContent = translationsData[language]['readPaper'];
-      document.getElementById('return-calculator').textContent = translationsData[language]['returnToCalculator'];
-      document.getElementById('hroeformula').textContent = translationsData[language].hroeformula;
-      document.getElementById('economic').textContent = translationsData[language]['economic'];
-      document.getElementById('intangible').textContent = translationsData[language]['intangible'];
-      document.getElementById('capabilities').textContent = translationsData[language]['capabilities'];
-      document.getElementById('explanationPanelDefault').innerHTML = translationsData[language]['explanationPanelDefault'];
-      document.getElementById('helpPopupTitle').innerHTML = translationsData[language].helpPopupTitle;
-      document.getElementById('helpPopupContent').innerHTML = translationsData[language].helpPopupContent;
-      document.getElementById('helpPopupSignature').innerHTML = translationsData[language].helpPopupSignature;
-      document.getElementById('generatePDFButton').innerHTML = translationsData[language].generatePDF;
+      // Only update DOM elements that are NOT controlled by Vue components
+      // Update document title
+      document.title = translationsData[language]['title'];
+      
+      // Update form labels that are still in the main template
+      const yearLabel = document.querySelector('label[for="years"]');
+      if (yearLabel) yearLabel.textContent = translationsData[language].yearsLabel;
+      
+      const discountLabel = document.querySelector('label[for="discount"]');
+      if (discountLabel) discountLabel.textContent = translationsData[language].discountLabel;
+      
+      const economicLabel = document.querySelector('label[for="economic_returns"]');
+      if (economicLabel) economicLabel.textContent = translationsData[language].economicReturnsLabel;
+      
+      const fineLabel = document.querySelector('label[for="fine_avoidance"]');
+      if (fineLabel) fineLabel.textContent = translationsData[language].fineAvoidanceLabel;
+      
+      const initialLabel = document.querySelector('label[for="initial_investment"]');
+      if (initialLabel) initialLabel.textContent = translationsData[language].initialInvestmentLabel;
+      
+      const intangibleLabel = document.querySelector('label[for="intangible_value"]');
+      if (intangibleLabel) intangibleLabel.textContent = translationsData[language].intangibleValueLabel;
+      
+      const capabilityLabel = document.querySelector('label[for="capability_returns"]');
+      if (capabilityLabel) capabilityLabel.textContent = translationsData[language].capabilityReturnsLabel;
+      
+      const investmentLabel = document.querySelector('label[for="investment_cost"]');
+      if (investmentLabel) investmentLabel.textContent = translationsData[language].investmentCostLabel;
+      
+      // Update other elements that exist in the main template
+      const pageTitle = document.getElementById('page-title');
+      if (pageTitle) pageTitle.textContent = translationsData[language]['title'];
+      
+      const readPaper = document.getElementById('read-paper');
+      if (readPaper) readPaper.textContent = translationsData[language]['readPaper'];
+      
+      const returnCalc = document.getElementById('return-calculator');
+      if (returnCalc) returnCalc.textContent = translationsData[language]['returnToCalculator'];
+      
+      const hroeFormula = document.getElementById('hroeformula');
+      if (hroeFormula) hroeFormula.textContent = translationsData[language].hroeformula;
+      
+      const economic = document.getElementById('economic');
+      if (economic) economic.textContent = translationsData[language]['economic'];
+      
+      const intangible = document.getElementById('intangible');
+      if (intangible) intangible.textContent = translationsData[language]['intangible'];
+      
+      const capabilities = document.getElementById('capabilities');
+      if (capabilities) capabilities.textContent = translationsData[language]['capabilities'];
+      
+      const generatePDF = document.getElementById('generatePDFButton');
+      if (generatePDF) generatePDF.innerHTML = translationsData[language].generatePDF;
+      
       // Update tooltip translations
       const tooltipElements = document.querySelectorAll('[data-tooltip-key]');
       tooltipElements.forEach(el => {

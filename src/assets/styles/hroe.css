@@ -206,11 +206,23 @@ body {
     margin-bottom: 5px;
 }
 
+.label-secondary {
+    font-size: 14px;
+    color: #666;
+    font-weight: normal;
+    font-style: italic;
+}
+
 .form-group input {
     font-size: 18px;
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
+}
+
+.form-group input[readonly] {
+    border: none !important;
+    box-shadow: none !important;
 }
 
 button {
@@ -710,17 +722,10 @@ input[readonly] {
 }
 
 .formula-container {
-    background-color: #f4f6f7;
-    display: flex;
-    align-items: stretch;
-    width: 100%;
-    max-width: 100%;
-    height: 65px;
-    /* min-height:100px; */
-    position: relative;
-    text-align:center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
+    position: fixed;
+    bottom: 20px;
+    right: 35px;
+    z-index: 99;
 }
 
 #formulaExplanationContainer {
@@ -795,9 +800,8 @@ input[readonly] {
 }
 
 #helpPopup {
-    display: none;
     position: fixed;
-    top: 500px;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 900px;
@@ -805,7 +809,7 @@ input[readonly] {
     background-color: #fefeff;
     border: 3px solid #3498db;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    max-height: 980px;
+    max-height: 80vh;
     overflow: hidden;
     z-index: 1000;
 }
@@ -820,7 +824,7 @@ input[readonly] {
 #helpFormToolbar {
     display: none;
     position: fixed;
-    top: 500px;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 900px;
@@ -829,7 +833,7 @@ input[readonly] {
     border: 5px solid #99b6d9;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     z-index: 300;
-    max-height: 980px;
+    max-height: 80vh;
     overflow: hidden;
 }
 
